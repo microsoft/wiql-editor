@@ -1,5 +1,6 @@
 {
-    "id": "wiql-editor-dev",
-    "name": "Wit Editor: Development Edition",
-    "public": false
+    "id": "estimate-dev",
+    "name": "Wit Editor (dev)",
+    "public": false,
+    "baseUri": "https://localhost:3000"    
 }

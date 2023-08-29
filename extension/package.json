@@ -2,7 +2,8 @@
   "scripts": {
     "postinstall": "typings install && npm run package-dev",
     "package-dev": "node ./node_modules/gulp/bin/gulp.js",
-    "package-release": "node ./node_modules/gulp/bin/gulp.js --release"
+    "package-release": "node ./node_modules/gulp/bin/gulp.js --release",
+    "build:release": "node ./node_modules/gulp/bin/gulp.js --release"
   },
   "devDependencies": {
     "@types/applicationinsights-js": "^1.0.4",
