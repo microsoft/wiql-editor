@@ -43,7 +43,6 @@ stages:
     - script: |
         cd extension
         npm install -g typings tfx-cli
-      name: 'Install build dependencies'
 
     - template: build.yml@pipeline-templates
     - template: package.yml@pipeline-templates
