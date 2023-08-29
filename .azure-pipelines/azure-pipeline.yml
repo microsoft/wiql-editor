@@ -40,11 +40,12 @@ stages:
       inputs:
         versionSpec: '13.x'
 
-    - script: |
-        cd extension
-        npm install -g typings tfx-cli
+    - script: npm install -g typings tfx-cli
 
     - template: build.yml@pipeline-templates
+      parameters:
+        workingDirectory: '$(Build.SourcesDirectory)/extension'
+
     - template: package.yml@pipeline-templates
       parameters:
         extensionName: $(extensionName)
