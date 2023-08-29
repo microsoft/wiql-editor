@@ -25,8 +25,8 @@ function renderToolbar(callback: () => void) {
                     <button className="open-in-queries" hidden>Open in queries</button>
                 </span>
                 <span className="links">
-                    <a href="https://marketplace.visualstudio.com/items?itemName=ottostreifel.wiql-editor" target="_blank">Review</a>{" | "}
-                    <a href="https://github.com/ostreifel/wiql-editor/issues" target="_blank">Report an issue</a>
+                    <a href="https://marketplace.visualstudio.com/items?itemName=ms-devlabs.wiql-editor" target="_blank">Review</a>{" | "}
+                    <a href="https://github.com/microsoft/wiql-editor/issues" target="_blank">Report an issue</a>
                 </span>
             </div>
         , elem, callback);

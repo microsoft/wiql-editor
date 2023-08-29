@@ -6,7 +6,7 @@
     "scopes": [ "vso.work", "vso.work_write" ],
     "public": false,
     "description": "Search work items with wiql queries.",
-    "publisher": "ottostreifel",
+    "publisher": "ms-devlabs",
     "icons": {
         "default": "img/logo.png"
     },
@@ -28,7 +28,7 @@
     },
     "repository": {
         "type": "git",
-        "uri": "https://github.com/ostreifel/wiql-editor"
+        "uri": "https://github.com/microsoft/wiql-editor"
     },
     "branding": {
         "color": "rgb(220, 235, 252)",
