@@ -50,6 +50,7 @@ stages:
       parameters:
         extensionName: $(extensionName)
         outputPath: 'out'
+        rootPath: '$(Build.SourcesDirectory)/extension'
 
 - stage: 'DeployDev'
   displayName: 'Deploy to dev'
