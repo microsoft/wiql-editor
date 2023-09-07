@@ -83,6 +83,8 @@ gulp.task('package', gulp.series('clean', 'build', async () => {
         const manifest = require('./vss-extension.json');
         overrides.name = manifest.name + ": Development Edition";
         overrides.id = manifest.id + "-dev2";
+        overrides.public = false;
+        overrides.baseUri = "https://localhost:3000/";
     }
     const overridesArg = `--override "${JSON.stringify(overrides).replace(/"/g, '\\"')}"`;
     const rootArg = `--root ${distFolder}`;
