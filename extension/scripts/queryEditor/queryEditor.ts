@@ -34,40 +34,47 @@ editor.addAction({
         return null as any;
     },
 });
-async function saveQuery(): Promise<string | null> {
-    try {
-        const context = VSS.getWebContext();
-        const queryItem = <QueryHierarchyItem>{
-            wiql: editor.getValue(),
-            path: configuration.query.path,
-            name: configuration.query.name,
-        };
-        console.log("TEST", queryItem);
 
-        trackEvent("SaveQuery", { wiqlLength: "" + editor.getValue().length, isNew: "" + !configuration.query.id });
-        if (configuration.query.id && configuration.query.id !== "00000000-0000-0000-0000-000000000000") {
-            const updated = await getWitClient().updateQuery(queryItem, context.project.name, configuration.query.id);
-            const html = updated._links ? updated._links.html : null;
+async function saveQuery(): Promise<string | null> {
+    const context = VSS.getWebContext();
+    const queryItem = <QueryHierarchyItem> {
+        wiql: editor.getValue(),
+        path: configuration.query.path,
+        name: configuration.query.name,
+    };
+    console.log("test", queryItem)
+    trackEvent("SaveQuery", {wiqlLength: "" + editor.getValue().length, isNew: "" + !configuration.query.id});
+    if (configuration.query.id && configuration.query.id !== "00000000-0000-0000-0000-000000000000") {
+       try {
+        const updated = await getWitClient().updateQuery(queryItem, context.project.name, configuration.query.id);
+        const html = updated._links ? updated._links.html : null;
+        return html ? html.href : "";
+       }
+       catch (err){
+        console.log("Error", err)
+       }
+    } else {
+        const path = configuration.query.isPublic ? "Shared Queries" : "My Queries";
+        const name = prompt("Enter name for query");
+        if (name) {
+        try{
+            queryItem.name = name;
+            const created = await getWitClient().createQuery(queryItem, context.project.name, path);
+            const html = created._links ? created._links.html : null;
             return html ? html.href : "";
-        } else {
-            const path = configuration.query.isPublic ? "Shared Queries" : "My Queries";
-            const name = prompt("Enter name for query");
-            if (name) {
-                queryItem.name = name;
-                const created = await getWitClient().createQuery(queryItem, context.project.name, path);
-                const html = created._links ? created._links.html : null;
-                return html ? html.href : "";
-            }
         }
-        return null;
-    } catch (error) {
-        
-        console.error("An error occurred in saveQuery:", error);
-        return null; 
+        catch (err){
+            console.log("err",err)
+        }
+            
+        }
     }
+    return null;
 }
 
 const callbacks: ICallbacks = {
     okCallback: () => saveQuery(),
 };
+
 configuration.loaded(callbacks);
+
