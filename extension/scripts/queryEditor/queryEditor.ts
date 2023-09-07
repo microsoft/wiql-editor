@@ -36,16 +36,16 @@ editor.addAction({
 });
 
 async function saveQuery(): Promise<string | null> {
-     console.log("Test!",);
-    const context = VSS.getWebContext();
-    const queryItem = <QueryHierarchyItem> {
+     console.log("Test!");
+     const context = VSS.getWebContext();
+     const queryItem = <QueryHierarchyItem> {
         wiql: editor.getValue(),
         path: configuration.query.path,
         name: configuration.query.name,
     };
-    console.log("Test", queryItem, context);
-    trackEvent("SaveQuerys", { wiqlLength: "" + editor.getValue().length, isNew: "" + !configuration.query.id });
-    if (configuration.query.id && configuration.query.id !== "00000000-0000-0000-0000-000000000000") {
+     console.log("Test", queryItem, context);
+     trackEvent("SaveQuerys", { wiqlLength: "" + editor.getValue().length, isNew: "" + !configuration.query.id });
+     if (configuration.query.id && configuration.query.id !== "00000000-0000-0000-0000-000000000000") {
         try {
             const updated = await getWitClient().updateQuery(queryItem, context.project.name, configuration.query.id);
             const html = updated._links ? updated._links.html : null;
@@ -67,7 +67,7 @@ async function saveQuery(): Promise<string | null> {
             }
         }
     }
-    return null;
+     return null;
 
 }
 
