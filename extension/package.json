@@ -5,10 +5,9 @@
     "package-release": "node ./node_modules/gulp/bin/gulp.js --release",
     "build:release": "node ./node_modules/gulp/bin/gulp.js --release"
   },
-  "dependencies": {
-    "vss-web-extension-sdk": "^5.141.0"
-  },
+  
   "devDependencies": {
+    "vss-web-extension-sdk": "^5.141.0",
     "@types/applicationinsights-js": "^1.0.4",
     "@types/jquery": "^2.0.34",
     "@types/knockout": "^3.4.38",
