@@ -5,6 +5,10 @@
     "package-release": "node ./node_modules/gulp/bin/gulp.js --release",
     "build:release": "node ./node_modules/gulp/bin/gulp.js --release"
   },
+
+  "dependencies": {
+    "vss-web-extension-sdk": "^1.152.0"
+  },
   "devDependencies": {
     "@types/applicationinsights-js": "^1.0.4",
     "@types/jquery": "^2.0.34",
@@ -23,7 +27,7 @@
     "tslint": "^5.9.1",
     "typescript": "^2.8.1",
     "typings": "^2.1.1",
-    "vss-web-extension-sdk": "^5.141.0",
+  
     "webpack": "^4.26.0",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.1.2",
@@ -31,6 +35,6 @@
   },
   "name": "wiql-editor",
   "private": true,
-  "version": "0.6.0",
-  "dependencies": {}
+  "version": "0.6.0"
+  
 }
