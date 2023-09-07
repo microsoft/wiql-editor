@@ -15,7 +15,8 @@
         "forin": false,
         "no-namespace": false,
         "no-unused-variable": true,
-        "no-unused-expression": true
+        "no-unused-expression": true,
+        "no-console": false
     },
     "rulesDirectory": []
 }
