@@ -43,7 +43,7 @@ async function saveQuery(): Promise<string | null> {
         name: configuration.query.name,
     };
     console.log("Test", queryItem, context);
-    trackEvent("SaveQuery", { wiqlLength: "" + editor.getValue().length, isNew: "" + !configuration.query.id });
+    trackEvent("SaveQuery s", { wiqlLength: "" + editor.getValue().length, isNew: "" + !configuration.query.id });
     if (configuration.query.id && configuration.query.id !== "00000000-0000-0000-0000-000000000000") {
         try {
             const updated = await getWitClient().updateQuery(queryItem, context.project.name, configuration.query.id);
