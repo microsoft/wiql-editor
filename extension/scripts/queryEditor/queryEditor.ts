@@ -41,6 +41,9 @@ async function saveQuery(): Promise<string | null> {
         path: configuration.query.path,
         name: configuration.query.name,
     };
+    console.log(queryItem)
+    
+  try{
     trackEvent("SaveQuery", {wiqlLength: "" + editor.getValue().length, isNew: "" + !configuration.query.id});
     if (configuration.query.id && configuration.query.id !== "00000000-0000-0000-0000-000000000000") {
         const updated = await getWitClient().updateQuery(queryItem, context.project.name, configuration.query.id);
@@ -56,7 +59,11 @@ async function saveQuery(): Promise<string | null> {
             return html ? html.href : "";
         }
     }
-    return null;
+  }
+  catch (err){
+console.log(err)
+  }
+    
 }
 const callbacks: ICallbacks = {
     okCallback: () => saveQuery(),
