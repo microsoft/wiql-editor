@@ -35,15 +35,14 @@ editor.addAction({
     },
 });
 
-
 async function saveQuery(): Promise<string | null> {
     const context = VSS.getWebContext();
-    const queryItem = <QueryHierarchyItem>{
+    const queryItem = <QueryHierarchyItem> {
         wiql: editor.getValue(),
         path: configuration.query.path,
         name: configuration.query.name,
     };
-     console.log("Test", queryItem, context)
+    console.log("Test", queryItem, context);
     trackEvent("SaveQuery", { wiqlLength: "" + editor.getValue().length, isNew: "" + !configuration.query.id });
     if (configuration.query.id && configuration.query.id !== "00000000-0000-0000-0000-000000000000") {
         try {
@@ -71,10 +70,8 @@ async function saveQuery(): Promise<string | null> {
 
 }
 
-
 const callbacks: ICallbacks = {
     okCallback: saveQuery,
 };
 
 configuration.loaded(callbacks);
-

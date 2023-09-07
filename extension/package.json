@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "postinstall": "typings install && npm run package-dev",
     "package-dev": "node ./node_modules/gulp/bin/gulp.js",
     "package-release": "node ./node_modules/gulp/bin/gulp.js --release",
     "build:release": "node ./node_modules/gulp/bin/gulp.js --release",
@@ -27,13 +28,10 @@
     "webpack": "^4.26.0",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^4.15.1",
     "yargs": "^11.0.0"
   },
   "name": "wiql-editor",
   "private": true,
   "version": "0.6.0",
-  "dependencies": {
-    "npm": "^10.0.0"
-  }
+  "dependencies": {}
 }
