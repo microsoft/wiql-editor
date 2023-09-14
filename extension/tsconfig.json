@@ -16,5 +16,6 @@
             "dom",
             "es5"
         ]
-    }
+    },
+    "exclude": ["node_modules", "typings"]
 }
