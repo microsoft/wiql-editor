@@ -29,6 +29,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
     alias: {
+      'monaco-editor': 'monaco-editor/esm/vs/editor/editor.api',
       "VSSUI": path.resolve(__dirname, "node_modules/azure-devops-ui"),
       "VSS": path.resolve(__dirname, "node_modules/vss-web-extension-sdk"),
       "monaco": path.resolve(__dirname, "node_modules/monaco-editor"),

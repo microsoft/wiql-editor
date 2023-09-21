@@ -2,10 +2,11 @@ import * as Symbols from "../compiler/symbols";
 import { ICompletionContext } from "./completionContext";
 import { isInsideString } from "./isIn";
 
+
 export function pushStringCompletions(
     ctx: ICompletionContext,
     strings: string[],
-    completions: monaco.languages.CompletionItem[],
+    completions: ,
 ): monaco.languages.CompletionItem[] {
     const inString = isInsideString(ctx);
     for (const str of strings) {
