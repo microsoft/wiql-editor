@@ -31,6 +31,7 @@ module.exports = {
     alias: {
       "VSSUI": path.resolve(__dirname, "node_modules/azure-devops-ui"),
       "VSS": path.resolve(__dirname, "node_modules/vss-web-extension-sdk"),
+      "monaco": path.resolve(__dirname, "node_modules/monaco-editor"),
     },
     modules: [path.resolve("."), "node_modules"]
   },
@@ -42,7 +43,8 @@ module.exports = {
         enforce: "pre",
         options: {
             emitErrors: true,
-            failOnHint: true
+            failOnHint: true,
+            
         }
     },
       {
@@ -70,8 +72,8 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin({
       patterns: [
-        { from: "**/*.html", to: "./",  },
-        { from: "**/*.png", to: "./img", context: "img" },
+        { from: "./*.html", to: "./",  },
+        { from: "**/*.png", to: "./img", context: "./"},
         { from: "./styles", to: "./styles", context: "./" },
         { from: "./azure-devops-extension.json", to: "./azure-devops-extension.json" },
         { from: "./node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js", to: "./" },

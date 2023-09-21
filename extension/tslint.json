@@ -4,12 +4,12 @@
         "tslint:recommended"
     ],
     "linterOptions": {
-        "exclude": [
-            "bin",
-            "configs/**/*.js",
-            "node_modules/**/*.ts"
-        ]
-    },
+    "exclude": [
+        "bin",
+        "configs/**/*.js",
+        "node_modules/**/"
+    ]
+},
     "jsRules": {},
     "rules": {
         "max-line-length": [true, 200],

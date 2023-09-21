@@ -3,7 +3,7 @@
         "module": "es6",
         "moduleResolution": "node",
         "target": "es5",
-        "noImplicitAny": true,
+        "noImplicitAny": false,
         "noUnusedParameters": true,
         "noImplicitThis": true,
         "pretty": true,
@@ -11,6 +11,7 @@
         "jsx": "react",
         "sourceMap": true,
         "strictNullChecks": true,
+        "rootDir": "scripts",
         "lib": [
             "es2015.promise",
             "dom",
