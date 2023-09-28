@@ -14,6 +14,8 @@ if (!target) {
     throw new Error("Could not find wiql editor div");
 }
 
+
+console.log("test")
 const editor = setupEditor(target, undefined, configuration.query.wiql, configuration.query.name);
 editor.addAction({
     id: "save",
@@ -58,7 +60,8 @@ async function saveQuery(): Promise<string | null> {
     }
     return null;
 }
-const callbacks: ICallbacks = {
-    okCallback: ()=> saveQuery(),
+const callbacks = {
+
+    okCallback:()=> saveQuery(),
 };
-configuration.loaded(callbacks);
+configuration.loaded(callbacks as ICallbacks);
