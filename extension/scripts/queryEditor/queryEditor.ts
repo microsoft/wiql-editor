@@ -75,6 +75,6 @@ console.log("callbacks" , callbacks);
 try {
 
     configuration.loaded(callbacks);
-}catch(err) {
+} catch (err) {
     console.log("Error configuration.loaded", err);
 }
