@@ -7,6 +7,7 @@ import { trackEvent } from "../events";
 import { ICallbacks, IContextOptions } from "../queryContext/contextContracts";
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
 
+console.log("test")
 trackEvent("pageLoad");
 const configuration: IContextOptions = VSS.getConfiguration();
 const target = document.getElementById("wiql-box");
