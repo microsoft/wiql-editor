@@ -15,7 +15,7 @@ if (!target) {
 }
 
 
-console.log("test")
+console.log()
 const editor = setupEditor(target, undefined, configuration.query.wiql, configuration.query.name);
 editor.addAction({
     id: "save",
@@ -37,6 +37,7 @@ editor.addAction({
     },
 });
 async function saveQuery(): Promise<string | null> {
+    console.log("Test")
     const context = VSS.getWebContext();
     const queryItem = <QueryHierarchyItem> {
         wiql: editor.getValue(),
@@ -61,7 +62,6 @@ async function saveQuery(): Promise<string | null> {
     return null;
 }
 const callbacks = {
-
-    okCallback:()=> saveQuery(),
+okCallback:()=> saveQuery(),
 };
 configuration.loaded(callbacks as ICallbacks);
