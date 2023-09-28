@@ -15,7 +15,9 @@
             "es2015.promise",
             "dom",
             "es5"
-        ],
-        "allowJs": true
+        ]
+    },
+    "rules": {
+        "no-console": "off"
     }
 }
