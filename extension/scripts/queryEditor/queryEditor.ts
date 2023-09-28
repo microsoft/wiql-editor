@@ -7,7 +7,7 @@ import { trackEvent } from "../events";
 import { ICallbacks, IContextOptions } from "../queryContext/contextContracts";
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
 
-console.log("test")
+console.log("test");
 trackEvent("pageLoad");
 const configuration: IContextOptions = VSS.getConfiguration();
 const target = document.getElementById("wiql-box");
@@ -60,7 +60,7 @@ async function saveQuery(): Promise<string | null> {
     }
     return null;
 }
-const callbacks = {
-okCallback: () => saveQuery(),
+const callbacks: ICallbacks = {
+okCallback:()=>saveQuery(),
 };
-configuration.loaded(callbacks as ICallbacks);
+configuration.loaded(callbacks);
