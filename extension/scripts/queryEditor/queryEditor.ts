@@ -59,6 +59,6 @@ async function saveQuery(): Promise<string | null> {
     return null;
 }
 const callbacks: ICallbacks = {
-    okCallback: saveQuery(),
+    okCallback: ()=> saveQuery(),
 };
 configuration.loaded(callbacks);
