@@ -15,7 +15,7 @@ if (!target) {
 }
 
 
-console.log()
+
 const editor = setupEditor(target, undefined, configuration.query.wiql, configuration.query.name);
 editor.addAction({
     id: "save",
