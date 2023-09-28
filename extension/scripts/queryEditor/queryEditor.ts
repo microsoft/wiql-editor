@@ -7,34 +7,41 @@ import { trackEvent } from "../events";
 import { ICallbacks, IContextOptions } from "../queryContext/contextContracts";
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
 
-console.log("test");
 trackEvent("pageLoad");
 const configuration: IContextOptions = VSS.getConfiguration();
+console.log(configuration);
 const target = document.getElementById("wiql-box");
 if (!target) {
     throw new Error("Could not find wiql editor div");
 }
 
 const editor = setupEditor(target, undefined, configuration.query.wiql, configuration.query.name);
-editor.addAction({
-    id: "save",
-    contextMenuGroupId: "modification",
-    label: "Save",
-    keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S],
-    run: () => {
-        configuration.save();
-        return null as any;
-    },
-});
-editor.addAction({
-    id: "exit",
-    contextMenuGroupId: "navigation",
-    label: "Exit",
-    run: () => {
-        configuration.close();
-        return null as any;
-    },
-});
+try {
+    editor.addAction({
+        id: "save",
+        contextMenuGroupId: "modification",
+        label: "Save",
+        keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S],
+        run: () => {
+            configuration.save();
+            return null as any;
+        },
+    });
+
+    editor.addAction({
+        id: "exit",
+        contextMenuGroupId: "navigation",
+        label: "Exit",
+        run: () => {
+            configuration.close();
+            return null as any;
+        },
+    });
+
+} catch (err) {
+    console.log("Wiql", err);
+}
+
 async function saveQuery(): Promise<string | null> {
     console.log("Test");
     const context = VSS.getWebContext();
@@ -61,6 +68,13 @@ async function saveQuery(): Promise<string | null> {
     return null;
 }
 const callbacks: ICallbacks = {
-okCallback:()=>saveQuery(),
+okCallback: saveQuery,
 };
-configuration.loaded(callbacks);
+console.log("callbacks" , callbacks);
+
+try {
+
+    configuration.loaded(callbacks);
+}catch(err) {
+    console.log("Error configuration.loaded", err);
+}
