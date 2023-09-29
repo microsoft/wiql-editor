@@ -78,7 +78,7 @@ gulp.task('build', gulp.parallel('html', 'tslint', 'webpack'));
 gulp.task('package', gulp.series('clean', 'build', async () => {
     const overrides = {}
     if (yargs.argv.release) {
-        overrides.public = true;
+        overrides.public = false;
     } else {
         const manifest = require('./vss-extension.json');
         overrides.name = manifest.name + ": Development Edition";
