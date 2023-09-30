@@ -1,5 +1,5 @@
 import { trackEvent } from "../events";
-
+import * as monaco from 'monaco-editor';
 function toDocument(wiql: string): string {
     const rootDoc = jQuery.parseXML(`<WorkItemQuery Version="1"/>`);
     const root = rootDoc.documentElement as HTMLElement;
@@ -36,7 +36,7 @@ export async function importWiq(editor: monaco.editor.IStandaloneCodeEditor) {
         const model = editor.getModel();
         reader.onload = async () => {
             try {
-                const documentText: string = reader.result;
+                const documentText: string  = reader.result as string;
                 const wiql = fromDocument(documentText);
                 const edit = <monaco.editor.IIdentifiedSingleEditOperation> {
                     text: wiql,
@@ -67,14 +67,15 @@ export function exportWiq(editor: monaco.editor.IStandaloneCodeEditor, queryName
     trackEvent("exportWiq", {wiqlLength: String(documentStr.length)});
 
     // IE workaround
-    if (navigator.msSaveBlob) {
-        navigator.msSaveBlob(blob, name);
-    } else {
+    //Remove temporarily IE support
+    // if (window.navigator.msSaveBlob) {
+    //     navigator.msSaveBlob(blob, name);
+    // } else {
         const a = document.createElement("a");
         a.href = window.URL.createObjectURL(blob);
         a.download = name;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-    }
+    // }
 }

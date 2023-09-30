@@ -9,6 +9,7 @@ import { pushStringCompletions } from "./pushStringCompletions";
 import { getStringValueCompletions } from "./valueCompletions";
 import { getVariableParameterCompletions } from "./variableArgumentCompletion";
 import { getCurrentVariableCompletions, getVariableCompletions } from "./variableCompletion";
+import * as monaco from 'monaco-editor';
 
 function parseFromPosition(model: monaco.editor.IReadOnlyModel, position: monaco.Position): IParseResults {
     const lines = model.getLinesContent().slice(0, position.lineNumber);
@@ -17,16 +18,16 @@ function parseFromPosition(model: monaco.editor.IReadOnlyModel, position: monaco
     }
     return parse(lines, ParseMode.Suggest);
 }
-
 async function provideCompletionItems(
     model: monaco.editor.IReadOnlyModel,
     position: monaco.Position,
-    // token: monaco.CancellationToken,
-): Promise<monaco.languages.CompletionItem[]> {
+    context: monaco.languages.CompletionContext,
+    token: monaco.CancellationToken,
+): Promise<monaco.languages.CompletionList> {
     const parseNext = parseFromPosition(model, position);
     if (!(parseNext instanceof ParseError) || parseNext.remainingTokens.length > 2) {
         // valid query, can't suggest
-        return [];
+        return { suggestions: [] };
     }
     const ctx = createContext(model, parseNext, await fieldsVal.getValue());
     const completions: monaco.languages.CompletionItem[] = [
@@ -34,7 +35,7 @@ async function provideCompletionItems(
         ...await getCurrentVariableCompletions(ctx, position),
     ];
     if (completions.length > 0) {
-        return completions;
+        return { suggestions: completions };
     }
     // Don't symbols complete inside strings
     if (!isInsideString(ctx)) {
@@ -45,19 +46,19 @@ async function provideCompletionItems(
         );
     }
     if (completions.length > 0) {
-        return completions;
+        return { suggestions: completions };
     }
     completions.push(...await getVariableParameterCompletions(ctx));
     if (completions.length > 0) {
-        return completions;
+        return { suggestions: completions };
     }
     // Field Values
     if (ctx.fieldRefName && ctx.isInCondition) {
         const values = await getStringValueCompletions(ctx);
-        return pushStringCompletions(ctx, values, completions);
+        return { suggestions: pushStringCompletions(ctx, values, completions) };;
     }
 
-    return completions;
+    return { suggestions: completions };
 }
 
 export const completionProvider: monaco.languages.CompletionItemProvider = {

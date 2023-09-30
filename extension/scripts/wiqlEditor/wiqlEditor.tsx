@@ -10,7 +10,7 @@ import { format } from "./formatter";
 import { getHoverProvider } from "./hoverProvider";
 import { exportWiq, importWiq } from "./importExport";
 import * as Wiql from "./wiqlDefinition";
-
+import * as monaco from 'monaco-editor';
 function renderToolbar(callback: () => void) {
     const elem = document.getElementById("header-bar");
     if (!elem) {
@@ -68,7 +68,7 @@ ORDER BY [System.ChangedDate] DESC
         language: Wiql.def.id,
         value: intialValue || defaultVal,
         automaticLayout: true,
-        wordWrap: true,
+        wordWrap: "on",
         theme: getCurrentTheme() === "dark" ? "vs-dark" : "vs",
     });
 

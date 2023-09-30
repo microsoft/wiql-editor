@@ -8,7 +8,7 @@ import { symbolsOfType } from "../parseAnalysis/findSymbol";
 import { lowerDefinedVariables } from "../wiqlDefinition";
 import { decorationFromSym } from "./errorDecorations";
 import { IErrorChecker } from "./IErrorChecker";
-
+import * as monaco from 'monaco-editor';
 export interface IComparisonType {
     fieldType: FieldType;
     literal: Function[];

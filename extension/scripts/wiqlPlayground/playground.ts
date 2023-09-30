@@ -5,7 +5,7 @@ import { getClient as getWitClient } from "TFS/WorkItemTracking/RestClient";
 import { trackEvent } from "../events";
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
 import { renderResult, setError, setMessage } from "./queryResults";
-
+import * as monaco from 'monaco-editor';
 trackEvent("pageLoad");
 
 function loadWorkItems(result: WorkItemQueryResult) {
@@ -95,7 +95,8 @@ editor.addAction({
     },
 });
 function getAction(id: string) {
-    return () => editor.getActions().filter((a) => a.id.match(`:${id}$`))[0].run();
+    return () => editor.getAction(id).run();
+      //old - > getActions().filter((a) => a.id.match(`:${id}$`))[0].run();
 }
 $(".run-button").click(getAction("run"));
 $(".format-button").click(getAction("format"));

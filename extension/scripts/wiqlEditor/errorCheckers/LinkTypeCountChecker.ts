@@ -3,7 +3,7 @@ import * as Symbols from "../compiler/symbols";
 import { symbolsOfType } from "../parseAnalysis/findSymbol";
 import { decorationFromSym } from "./errorDecorations";
 import { IErrorChecker } from "./IErrorChecker";
-
+import * as monaco from 'monaco-editor';
 export class LinkTypeCountChecker implements IErrorChecker {
     public async check(parseResult: IParseResults): Promise<monaco.editor.IModelDeltaDecoration[]> {
         const errors: monaco.editor.IModelDeltaDecoration[] = [];

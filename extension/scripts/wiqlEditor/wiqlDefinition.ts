@@ -1,5 +1,5 @@
 import { FieldType } from "TFS/WorkItemTracking/Contracts";
-
+import * as monaco from 'monaco-editor';
 export const definedVariables: {[name: string]: FieldType} = {
     "@me": FieldType.String,
     "@currentiteration": FieldType.TreePath,

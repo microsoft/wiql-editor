@@ -4,7 +4,7 @@ import * as Symbols from "../compiler/symbols";
 import { ICompletionContext } from "./completionContext";
 import { isInVariable, IVariableContext } from "./isIn";
 import { pushStringCompletions } from "./pushStringCompletions";
-
+import * as monaco from 'monaco-editor';
 async function getSingleTeamArgumentCompletion(ctx: ICompletionContext, {args}: IVariableContext): Promise<string[]> {
     if (!args || args.length !== 0) {
         return [];

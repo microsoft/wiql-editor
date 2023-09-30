@@ -6,6 +6,8 @@ import { getClient as getWitClient } from "TFS/WorkItemTracking/RestClient";
 import { trackEvent } from "../events";
 import { ICallbacks, IContextOptions } from "../queryContext/contextContracts";
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
+import * as monaco from "monaco-editor"
+
 
 trackEvent("pageLoad");
 const configuration: IContextOptions = VSS.getConfiguration();

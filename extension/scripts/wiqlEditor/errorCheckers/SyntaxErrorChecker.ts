@@ -2,7 +2,7 @@ import { IParseResults, ParseError } from "../compiler/parser";
 import * as Symbols from "../compiler/symbols";
 import { decorationFromSym } from "./errorDecorations";
 import { IErrorChecker } from "./IErrorChecker";
-
+import * as monaco from 'monaco-editor';
 export class SyntaxErrorChecker implements IErrorChecker {
     public async check(parseResult: IParseResults): Promise<monaco.editor.IModelDeltaDecoration[]> {
         if (!(parseResult instanceof ParseError)) {

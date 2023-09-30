@@ -1,7 +1,7 @@
 import { FieldLookup, fieldsVal } from "../cachedData/fields";
 import { parse } from "./compiler/parser";
 import * as Symbols from "./compiler/symbols";
-
+import * as monaco from 'monaco-editor';
 function insert(line: string, text: string) {
     const match = line.match(/(\s*)(.*)/);
     if (match) {
@@ -247,7 +247,12 @@ function formatSelect(select: Symbols.FlatSelect | Symbols.OneHopSelect | Symbol
 
 function formatSync(editor: monaco.editor.IStandaloneCodeEditor, fieldLookup: FieldLookup) {
     const model = editor.getModel();
-    const tab = model.getOneIndent();
+    //workaround 
+    const getOneIndent = (editor) => {
+        const options = editor.getModel().getOptions()
+        return options.insertSpaces ? ' '.repeat(options.tabSize) : '\t'
+    }
+    const tab = getOneIndent(editor);
 
     const parseTree = parse(model.getLinesContent());
     let lines: string[];

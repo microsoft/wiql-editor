@@ -5,7 +5,7 @@ import * as Symbols from "../compiler/symbols";
 import { symbolsOfType } from "../parseAnalysis/findSymbol";
 import { decorationFromString, decorationFromSym } from "./errorDecorations";
 import { IErrorChecker } from "./IErrorChecker";
-
+import * as monaco from 'monaco-editor';
 export class VariableParametersChecker implements IErrorChecker {
     private async checkSingleParameterVariable(variable: Symbols.VariableExpression): Promise<monaco.editor.IModelDeltaDecoration[]> {
         const name = variable.name.text;

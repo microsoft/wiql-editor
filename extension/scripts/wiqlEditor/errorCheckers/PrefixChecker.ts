@@ -3,7 +3,7 @@ import * as Symbols from "../compiler/symbols";
 import { symbolsOfType } from "../parseAnalysis/findSymbol";
 import { decorationFromSym } from "./errorDecorations";
 import { IErrorChecker } from "./IErrorChecker";
-
+import * as monaco from 'monaco-editor';
 type Prefix = null | "Source" | "Target";
 export class PrefixChecker implements IErrorChecker {
     private checkCondition(condition: Symbols.LinkCondition,

@@ -1,4 +1,5 @@
 import { DelayedFunction } from "VSS/Utils/Core";
+import ApplicationInsights from "applicationinsights-js";
 
 export interface IValueWithTimings<T> {
     value: T;
@@ -41,11 +42,11 @@ export function trackPage(properties?: IProperties, measurements?: IMeasurements
     if (insights) {
         const { host } = VSS.getWebContext();
         properties = { ...(properties || {}), host: host.name || host.authority };
-        insights.trackPageView(undefined, undefined, properties, measurements);
+        insights.trackPageView(undefined,  properties, measurements);
         flush.reset();
     }
 }
 
-function getInsights(): Microsoft.ApplicationInsights.IAppInsights | undefined {
+function getInsights(): ApplicationInsights.IAppInsights | undefined {
     return (window as any).appInsights;
 }

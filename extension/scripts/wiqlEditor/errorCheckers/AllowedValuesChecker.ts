@@ -4,6 +4,7 @@ import * as Symbols from "../compiler/symbols";
 import { symbolsOfType } from "../parseAnalysis/findSymbol";
 import { decorationFromSym } from "./errorDecorations";
 import { IErrorChecker } from "./IErrorChecker";
+import * as monaco from "monaco-editor";
 
 export class AllowedValuesChecker implements IErrorChecker {
     constructor(readonly fieldRefName: string, readonly fieldName: string, readonly allowedValuesVal: CachedValue<string[]>, readonly errorMessage?: string) {

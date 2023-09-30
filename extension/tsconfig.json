@@ -1,22 +1,29 @@
 {
     "compilerOptions": {
-        "module": "es6",
+        "module": "amd",
         "moduleResolution": "node",
         "target": "es5",
         "noImplicitAny": false,
-        "noUnusedParameters": true,
         "noImplicitThis": true,
-        "pretty": true,
-        "noUnusedLocals": true,
+        "noUnusedParameters": false,
+        "noUnusedLocals": false,
         "jsx": "react",
         "sourceMap": true,
-        "strictNullChecks": true,
-        "rootDir": "scripts",
-        "lib": [
-            "es2015.promise",
-            "dom",
-            "es5"
-        ]
+        "strictNullChecks": false,
+        "rootDir": "scripts/",
+        "outDir": "dist/",
+        "skipLibCheck": true,
+       "lib": [
+          "es5",
+          "es6",
+          "dom",
+          "es2015.promise"
+        ],
+         "types": [
+            "react",
+        ],
+        "esModuleInterop": true
     },
-    "exclude": ["node_modules", "typings"]
+    "include": ["scripts/**/*"],
+    "exclude": ["node_modules", "**/node_modules/**", "typings"]
 }
