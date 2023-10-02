@@ -5,6 +5,7 @@ const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = {
   target: "web",
+  mode: "production",
   entry: {
     playground: "./scripts/wiqlPlayground/playground.ts",
     queryContext: "./scripts/queryContext/queryContext.ts",
@@ -18,6 +19,12 @@ module.exports = {
     publicPath: "./dist",
   },
   devtool: "inline-source-map",
+  devServer: {
+    https: true,
+    port: 3000,
+    open: true
+  },
+
   externals: [{
     "q": true,
     "react": true,
@@ -37,8 +44,8 @@ module.exports = {
   module: {
     rules: [
       { 
-        test: /\.([cm]?ts|tsx)$/, 
-        loader: "ts-loader"
+        test: /\.tsx?$/,
+        loader: "ts-loader",
       },
       {
         test: /\.scss$/,
@@ -71,14 +78,17 @@ module.exports = {
     ]
   },
   plugins: [
-    new MonacoWebpackPlugin({languages: ['typescript']}),
+    new MonacoWebpackPlugin(
+      {
+        languages: [], 
+      }),
     new CopyWebpackPlugin({
       patterns: [
         { from: "./*.html", to: "./", },
         { from: "**/*.png", to: "./img", context: "./" },
         { from: "./styles", to: "./styles", context: "./" },
         { from: "./azure-devops-extension.json", to: "./azure-devops-extension.json" },
-        { from: "./node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js", to: "./" },
+        { from: "./node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js", to: "./" }
       ]
     })
   ]

@@ -1,6 +1,7 @@
 {
     "id": "wiql-editor-dev",
-    "name": "Wit Editor (dev)",
+    "name": "Wiql Editor (dev)",
+    "publisher": "solidify-labs",
     "public": false,
     "baseUri": "https://localhost:3000"    
 }

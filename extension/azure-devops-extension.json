@@ -9,7 +9,7 @@
     ],
     "public": false,
     "description": "Search work items with wiql queries.",
-    "publisher": "ms-devlabs",
+    "publisher": "epsteam",
     "icons": {
         "default": "img/logo.png"
     },
