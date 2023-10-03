@@ -2,13 +2,20 @@
   "scripts": {
     "package-dev": "node ./node_modules/gulp/bin/gulp.js",
     "package-release": "node ./node_modules/gulp/bin/gulp.js --release",
-    "build:release": "node ./node_modules/gulp/bin/gulp.js --release",
+    "build:release:gulp": "node ./node_modules/gulp/bin/gulp.js --release",
     "start": "webpack-dev-server --hot --progress --static ./dist --https --port 3000",
     "clean:vsix": "rimraf *.vsix",
     "clean": "npm run clean:vsix && rimraf dist",
-    "build:dev": "npm run clean && webpack --progress --mode development",
+    "compile:css": "sass ./styles:./dist/dist/",
+    "build:dev": "npm run clean && webpack --progress --mode development && npm run compile:css",
+    "build:release": "npm run clean && webpack --progress ",
     "package:dev": "npm run clean:vsix && node ./package/packageDev",
-    "dev": "npm run build:dev && webpack-dev-server --hot --progress --static ./"
+    "package:test": "npm run clean:vsix && node ./package/packageTest",
+    "package:prod": "npm run clean:vsix && node ./package/packageProd",
+    "dev": "npm run build:dev && webpack-dev-server --hot --progress",
+    "dev:serve": "webpack-dev-server --hot --progress"
+    
+
   },
   "devDependencies": {
     "applicationinsights-js": "^1.0.20",
@@ -20,7 +27,8 @@
     "css-loader": "^5.2.4",
     "del": "^3.0.0",
     "file-loader": "^6.2.0",
-    "monaco-editor-webpack-plugin": "^2.1.0",
+    "monaco-editor": "^0.21.0",
+    "mini-css-extract-plugin": "^1.6.0",
     "path": "^0.12.7",
     "promise-polyfill": "^8.1.0",
     "rimraf": "~3.0.2",
@@ -41,7 +49,6 @@
   "private": true,
   "version": "0.6.0",
   "dependencies": {
-    "monaco-editor": "^0.21.0",
     "vss-web-extension-sdk": "^5.141.0"
   }
 }

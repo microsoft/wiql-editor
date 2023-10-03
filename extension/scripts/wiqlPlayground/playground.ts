@@ -6,6 +6,7 @@ import { trackEvent } from "../events";
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
 import { renderResult, setError, setMessage } from "./queryResults";
 import * as monaco from 'monaco-editor';
+
 trackEvent("pageLoad");
 
 function loadWorkItems(result: WorkItemQueryResult) {

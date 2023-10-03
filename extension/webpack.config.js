@@ -1,7 +1,5 @@
 const path = require("path");
-const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = {
   target: "web",
@@ -14,7 +12,6 @@ module.exports = {
   },
   output: {
     libraryTarget: "amd",
-    path: path.resolve(__dirname, "dist"),
     filename: "[name].js",
     publicPath: "./dist",
   },
@@ -22,7 +19,12 @@ module.exports = {
   devServer: {
     https: true,
     port: 3000,
-    open: true
+    open: true,
+    hot: true,
+    static: {
+      directory: path.join(__dirname, "./"),
+    },
+    
   },
 
   externals: [{
@@ -36,7 +38,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
     alias: {
-      'monaco-editor': path.resolve(__dirname, "node_modules/monaco-editor"),
+      'monaco-editor': path.resolve(__dirname, "node_modules/monaco-editor/esm/vs/editor/editor.worker.js"),
       "vss-web-extension-sdk": path.resolve(__dirname, "node_modules/vss-web-extension-sdk"),
     },
     modules: [path.join(__dirname, 'node_modules')],
@@ -52,12 +54,15 @@ module.exports = {
         use: [
           "style-loader",
           "css-loader",
-          "sass-loader"
+          "sass-loader",
         ]
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: [
+          "style-loader", 
+          "css-loader"
+        ]
       },
       {
         test: /\.(png|svg|jpg|gif|html)$/,
@@ -78,17 +83,17 @@ module.exports = {
     ]
   },
   plugins: [
-    new MonacoWebpackPlugin(
-      {
-        languages: [], 
-      }),
     new CopyWebpackPlugin({
       patterns: [
         { from: "./*.html", to: "./", },
         { from: "**/*.png", to: "./img", context: "./" },
-        { from: "./styles", to: "./styles", context: "./" },
+        // { from: "./styles", to: "./dist", context: "./" },
         { from: "./azure-devops-extension.json", to: "./azure-devops-extension.json" },
-        { from: "./node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js", to: "./" }
+        { from: "./node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js", to: "./dist" },
+        { from: "./node_modules/monaco-editor/min/vs/loader.js", to: "./monaco-editor/min/vs" },
+        { from: "./node_modules/monaco-editor/min/vs/editor/", to: "./monaco-editor/min/vs/editor", context: "./"  },
+        { from: "./node_modules/monaco-editor/min/vs/base/", to: "./monaco-editor/min/vs/base", context: "./" },
+        { from: "./node_modules/monaco-editor/min/vs/basic-languages/", to: "./monaco-editor/min/vs/basic-languages", context: "./" }
       ]
     })
   ]
