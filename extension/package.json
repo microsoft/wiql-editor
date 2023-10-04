@@ -7,7 +7,7 @@
     "clean:vsix": "rimraf *.vsix",
     "clean": "npm run clean:vsix && rimraf dist",
     "compile:css": "sass ./styles:./dist/",
-    "build:dev": "npm run clean &&  npm run compile:css && webpack --progress --mode development;gulp htmlOnly ",
+    "build:dev": "npm run clean &&  npm run compile:css && webpack --progress --mode development && gulp htmlOnly ",
     "build:release": "npm run clean && webpack --progress --mode production ",
     "package:dev": "npm run clean:vsix && node ./package/packageDev",
     "package:test": "npm run clean:vsix && node ./package/packageTest",
