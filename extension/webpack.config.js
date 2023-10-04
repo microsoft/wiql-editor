@@ -1,15 +1,20 @@
 const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 module.exports = {
   target: "web",
-  mode: "production",
+  mode: "development",
   entry: {
     playground: "./scripts/wiqlPlayground/playground.ts",
     queryContext: "./scripts/queryContext/queryContext.ts",
     queryEditor: "./scripts/queryEditor/queryEditor.ts"
 
   },
+  // optimization: {
+  //   chunkIds: "deterministic",
+  //   concatenateModules: true
+  // },
   output: {
     libraryTarget: "amd",
     filename: "[name].js",
@@ -32,14 +37,13 @@ module.exports = {
     "react": true,
     "react-dom": true,
   },
-    /^TFS\//, // Ignore TFS/* since they are coming from VSTS host 
-    /^VSS\//  // Ignore VSS/* since they are coming from VSTS host
+    /^VSS\/.*/, /^TFS\/.*/, /^q$/
   ],
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
     alias: {
       'monaco-editor': path.resolve(__dirname, "node_modules/monaco-editor/esm/vs/editor/editor.worker.js"),
-      "vss-web-extension-sdk": path.resolve(__dirname, "node_modules/vss-web-extension-sdk"),
+      "vss-web-extension-sdk": path.resolve(__dirname, "node_modules/vss-web-extension-sdk/lib/VSS.SDK")
     },
     modules: [path.join(__dirname, 'node_modules')],
   },
@@ -47,10 +51,13 @@ module.exports = {
     rules: [
       { 
         test: /\.tsx?$/,
+        exclude: [/node_modules/],
+        include: path.resolve(__dirname, "scripts"),
         loader: "ts-loader",
       },
       {
         test: /\.scss$/,
+        exclude: [/node_modules/],
         use: [
           "style-loader",
           "css-loader",
@@ -59,6 +66,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        exclude: [/node_modules/],
         use: [
           "style-loader", 
           "css-loader"
@@ -66,10 +74,11 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|gif|html)$/,
+        exclude: [/node_modules/],
         use: "file-loader"
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        test: /\.(ttf)$/,
         use: [
           {
             loader: 'file-loader',
@@ -83,13 +92,17 @@ module.exports = {
     ]
   },
   plugins: [
+    // new BundleAnalyzerPlugin({
+    //   openAnalyzer: false,
+    //   reportFilename: "bundle-analysis.html",
+    //   analyzerMode: "static"
+    // }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: "./*.html", to: "./", },
+        // { from: "./*.html", to: "./", },
         { from: "**/*.png", to: "./img", context: "./" },
-        // { from: "./styles", to: "./dist", context: "./" },
         { from: "./azure-devops-extension.json", to: "./azure-devops-extension.json" },
-        { from: "./node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js", to: "./dist" },
+        { from: "./node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js", to: "./" },
         { from: "./node_modules/monaco-editor/min/vs/loader.js", to: "./monaco-editor/min/vs" },
         { from: "./node_modules/monaco-editor/min/vs/editor/", to: "./monaco-editor/min/vs/editor", context: "./"  },
         { from: "./node_modules/monaco-editor/min/vs/base/", to: "./monaco-editor/min/vs/base", context: "./" },

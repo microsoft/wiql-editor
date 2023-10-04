@@ -53,19 +53,8 @@
         {
             "path": "styles",
             "addressable": true
-        },
-        {
-            "path": "playground.html",
-            "addressable": true
-        },
-        {
-            "path": "queryEditor.html",
-            "addressable": true
-        },
-        {
-            "path": "queryContext.html",
-            "addressable": true
         }
+       
     ],
     "categories": [
         "Azure Boards"

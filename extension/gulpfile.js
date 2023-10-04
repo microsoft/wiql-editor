@@ -2,12 +2,11 @@ const path = require("path");
 const gulp = require('gulp');
 const yargs = require("yargs");
 const {exec, execSync} = require('child_process');
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('sass'));
 const del = require("del");
 const {Linter} = require("tslint");
 const tslint = require('gulp-tslint');
 const inlinesource = require('gulp-inline-source');
-
 const distFolder = 'dist';
 
 gulp.task('clean', gulp.series(() => {
@@ -64,10 +63,15 @@ gulp.task('html', gulp.series(gulp.parallel('copy', 'styles'), () => {
         .pipe(inlinesource())
         .pipe(gulp.dest(distFolder));
 }));
+gulp.task('htmlOnly', gulp.series(() => {
+    return gulp.src("*.html")
+        .pipe(inlinesource())
+        .pipe(gulp.dest(distFolder));
+}));
 
 gulp.task('webpack', gulp.series(async () => {
     // const option = yargs.argv.release ? "-p" : "-d";
-    const option = "-d";
+    const option = "-d eval";
     execSync(`node ./node_modules/webpack-cli/bin/cli.js ${option}`, {
         stdio: [null, process.stdout, process.stderr]
     });
@@ -117,3 +121,4 @@ gulp.task('generate-table', gulp.series('build-table', () => {
         stdio: [null, process.stdout, process.stderr]
     });
 }));
+
