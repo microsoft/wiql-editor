@@ -42,7 +42,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
     alias: {
-      'monaco-editor': path.resolve(__dirname, "node_modules/monaco-editor/esm/vs/editor/editor.worker"),
+      'monaco-editor': path.resolve(__dirname, "node_modules/monaco-editor/esm/vs/editor/editor.api"),
       "VSS": path.resolve(__dirname, "node_modules/vss-web-extension-sdk/lib/VSS.SDK")
     },
     modules: [path.join(__dirname, 'node_modules')],
@@ -63,7 +63,6 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: [/node_modules/],
         use: [
           "style-loader", 
           "css-loader"
@@ -96,9 +95,9 @@ module.exports = {
         { from: "./azure-devops-extension.json", to: "./azure-devops-extension.json" },
         { from: "./node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js", to: "./" },
         { from: "./node_modules/monaco-editor/min/vs/loader.js", to: "./monaco-editor/min/vs" },
-        { from: "./node_modules/monaco-editor/min/vs/editor/", to: "./monaco-editor/min/vs/editor", context: "./"  },
-        { from: "./node_modules/monaco-editor/min/vs/base/", to: "./monaco-editor/min/vs/base", context: "./" },
-        { from: "./node_modules/monaco-editor/min/vs/basic-languages/", to: "./monaco-editor/min/vs/basic-languages", context: "./" }
+        { from: "./node_modules/monaco-editor/min/vs/editor/", to: "./monaco-editor/min/vs/editor", globOptions: { ignore: ["**/*.svg"] } },
+        { from: "./node_modules/monaco-editor/min/vs/base/", to: "./monaco-editor/min/vs/base",  globOptions: { ignore: ["**/*.svg"] } },
+        { from: "./node_modules/monaco-editor/min/vs/basic-languages/", to: "./monaco-editor/min/vs/basic-languages", globOptions: { ignore: ["**/*.svg"] } }
       ]
     })
   ]

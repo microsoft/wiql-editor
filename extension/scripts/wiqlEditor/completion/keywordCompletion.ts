@@ -40,7 +40,7 @@ function getSymbolCompletionMap(
                 kind: monaco.languages.CompletionItemKind.Keyword,
                 //add to avoid error
                 insertText: "",
-                range: <monaco.IRange>{}
+                // range: <monaco.IRange>{}
             };
         }
     }
