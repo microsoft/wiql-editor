@@ -17,10 +17,13 @@
           "es5",
           "es6",
           "dom",
-          "es2015.promise"
+          "es2015.promise",
         ],
          "types": [
             "react",
+            "react-dom",
+            "vss-web-extension-sdk",
+            "monaco-editor",
         ],
         "esModuleInterop": true
     },

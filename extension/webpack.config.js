@@ -3,7 +3,6 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 module.exports = {
-  target: "web",
   mode: "development",
   entry: {
     playground: "./scripts/wiqlPlayground/playground.ts",
@@ -17,10 +16,10 @@ module.exports = {
   // },
   output: {
     libraryTarget: "amd",
+    path: path.resolve(__dirname, 'dist'),
     filename: "[name].js",
-    publicPath: "./dist",
   },
-  devtool: "inline-source-map",
+  devtool: "source-map",
   devServer: {
     https: true,
     port: 3000,
@@ -36,14 +35,15 @@ module.exports = {
     "q": true,
     "react": true,
     "react-dom": true,
+    "monaco": true,
   },
     /^VSS\/.*/, /^TFS\/.*/, /^q$/
   ],
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
     alias: {
-      'monaco-editor': path.resolve(__dirname, "node_modules/monaco-editor/esm/vs/editor/editor.worker.js"),
-      "vss-web-extension-sdk": path.resolve(__dirname, "node_modules/vss-web-extension-sdk/lib/VSS.SDK")
+      'monaco-editor': path.resolve(__dirname, "node_modules/monaco-editor/esm/vs/editor/editor.worker"),
+      "VSS": path.resolve(__dirname, "node_modules/vss-web-extension-sdk/lib/VSS.SDK")
     },
     modules: [path.join(__dirname, 'node_modules')],
   },
@@ -51,13 +51,10 @@ module.exports = {
     rules: [
       { 
         test: /\.tsx?$/,
-        exclude: [/node_modules/],
-        include: path.resolve(__dirname, "scripts"),
         loader: "ts-loader",
       },
       {
         test: /\.scss$/,
-        exclude: [/node_modules/],
         use: [
           "style-loader",
           "css-loader",
@@ -74,7 +71,6 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|gif|html)$/,
-        exclude: [/node_modules/],
         use: "file-loader"
       },
       {
@@ -82,10 +78,6 @@ module.exports = {
         use: [
           {
             loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'fonts/'
-            }
           }
         ]
       }
@@ -99,7 +91,7 @@ module.exports = {
     // }),
     new CopyWebpackPlugin({
       patterns: [
-        // { from: "./*.html", to: "./", },
+        { from: "./*.html", to: "./", },
         { from: "**/*.png", to: "./img", context: "./" },
         { from: "./azure-devops-extension.json", to: "./azure-devops-extension.json" },
         { from: "./node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js", to: "./" },
