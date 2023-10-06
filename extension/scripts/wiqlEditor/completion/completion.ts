@@ -27,8 +27,7 @@ async function provideCompletionItems(
     const parseNext = parseFromPosition(model, position);
     if (!(parseNext instanceof ParseError) || parseNext.remainingTokens.length > 2) {
         // valid query, can't suggest
-        // return { suggestions: [] };
-        return { items: [] };
+        return { suggestions: [] };
     }
     const ctx = createContext(model, parseNext, await fieldsVal.getValue());
     const completions: monaco.languages.CompletionItem[] = [
@@ -36,8 +35,7 @@ async function provideCompletionItems(
         ...await getCurrentVariableCompletions(ctx, position),
     ];
     if (completions.length > 0) {
-        // return { suggestions: completions };
-        return { items: completions };
+        return { suggestions: completions };
     }
     // Don't symbols complete inside strings
     if (!isInsideString(ctx)) {
@@ -48,23 +46,19 @@ async function provideCompletionItems(
         );
     }
     if (completions.length > 0) {
-        // return { suggestions: completions };
-        return { items: completions };
+        return { suggestions: completions };
     }
     completions.push(...await getVariableParameterCompletions(ctx));
     if (completions.length > 0) {
-        // return { suggestions: completions };
-        return { items: completions };
+        return { suggestions: completions };
     }
     // Field Values
     if (ctx.fieldRefName && ctx.isInCondition) {
         const values = await getStringValueCompletions(ctx);
-        // return { suggestions: pushStringCompletions(ctx, values, completions) };
-        return { items: pushStringCompletions(ctx, values, completions) };
+        return { suggestions: pushStringCompletions(ctx, values, completions) };
     }
 
-    // return { suggestions: completions };
-    return { items: completions };
+    return { suggestions: completions };
 }
 
 export const completionProvider: monaco.languages.CompletionItemProvider = {

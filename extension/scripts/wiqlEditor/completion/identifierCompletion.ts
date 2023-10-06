@@ -23,7 +23,7 @@ export async function getCurrentIdentifierCompletions(ctx: ICompletionContext, p
                         kind: monaco.languages.CompletionItemKind.Variable,
                         insertText: s.label.toString().substr(charIdx + 1),
                         //add empty IRange property to avoid error
-                        // range: <monaco.IRange>{}
+                        range: <monaco.IRange>{}
                     };
                 });
         }
