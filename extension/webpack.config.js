@@ -19,7 +19,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: "[name].js",
   },
-  devtool: "source-map",
+  devtool: "inline-source-map",
   devServer: {
     https: true,
     port: 3000,
@@ -43,7 +43,8 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js"],
     alias: {
       'monaco-editor': path.resolve(__dirname, "node_modules/monaco-editor/esm/vs/editor/editor.api"),
-      "VSS": path.resolve(__dirname, "node_modules/vss-web-extension-sdk/lib/VSS.SDK")
+      "VSS": path.resolve(__dirname, "node_modules/vss-web-extension-sdk/lib/VSS.SDK"),
+     
     },
     modules: [path.join(__dirname, 'node_modules')],
   },
