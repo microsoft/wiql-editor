@@ -1,4 +1,4 @@
-import { FieldType } from "TFS/WorkItemTracking/Contracts";
+import { FieldType } from "azure-devops-extension-api/WorkItemTracking/WorkItemTracking";
 
 import { FieldLookup } from "../../cachedData/fields";
 import * as Symbols from "../compiler/symbols";

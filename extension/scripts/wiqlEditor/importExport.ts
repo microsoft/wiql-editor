@@ -1,3 +1,12 @@
+import * as VSS from "azure-devops-extension-sdk";
+import {
+    CommonServiceIds,
+    IHostPageLayoutService,
+    IHostNavigationService,
+    IDialogOptions,
+} from "azure-devops-extension-api";
+
+
 import { trackEvent } from "../events";
 import * as monaco from 'monaco-editor';
 function toDocument(wiql: string): string {
@@ -5,7 +14,9 @@ function toDocument(wiql: string): string {
     const root = rootDoc.documentElement as HTMLElement;
 
     const server = rootDoc.createElement("TeamFoundationServer");
-    server.appendChild(rootDoc.createTextNode(VSS.getWebContext().collection.uri));
+
+    //TODO: Check if this is correct
+    // server.appendChild(rootDoc.createTextNode(VSS.getWebContext().collection.uri));
     root.appendChild(server);
 
     const project = rootDoc.createElement("TeamProject");
@@ -46,7 +57,7 @@ export async function importWiq(editor: monaco.editor.IStandaloneCodeEditor) {
                 model.pushEditOperations(editor.getSelections(), [edit], () => [new monaco.Selection(1, 1, 1, 1)]);
                 trackEvent("importWiq", {wiqlLength: String(wiql.length)});
             } catch (e) {
-                const dialogService = await VSS.getService<IHostDialogService>(VSS.ServiceIds.Dialog);
+                const dialogService = await VSS.getService<IHostPageLayoutService>(CommonServiceIds.HostPageLayoutService);
                 const message = e.message || e + "";
                 dialogService.openMessageDialog(message, {
                     title: "Error importing query",

@@ -1,15 +1,23 @@
+import * as VSS from "azure-devops-extension-sdk";
 import "promise-polyfill/src/polyfill";
-import { WorkItemQueryResult } from "TFS/WorkItemTracking/Contracts";
-import { getClient as getWitClient } from "TFS/WorkItemTracking/RestClient";
+import {
+
+    getClient
+} from "azure-devops-extension-api";
+import { WorkItemQueryResult, WorkItemTrackingRestClient} from "azure-devops-extension-api/WorkItemTracking"
+// import { WorkItemQueryResult } from "TFS/WorkItemTracking/Contracts";
+// import { getClient as getWitClient } from "TFS/WorkItemTracking/RestClient";
 
 import { trackEvent } from "../events";
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
 import { renderResult, setError, setMessage } from "./queryResults";
 import * as monaco from 'monaco-editor';
+import { getProject } from "../getProject";
 
 trackEvent("pageLoad");
 
-function loadWorkItems(result: WorkItemQueryResult) {
+
+async function loadWorkItems(result: WorkItemQueryResult) {
     if (result.workItems.length === 0) {
         setMessage("No work items found");
         return;
@@ -17,11 +25,13 @@ function loadWorkItems(result: WorkItemQueryResult) {
     setMessage("Loading workitems...");
 
     const wiIds = result.workItems.map((wi) => wi.id);
+    const project =  await getProject()
     const fieldRefNames = result.columns.map((col) => col.referenceName);
-    getWitClient().getWorkItems(wiIds, fieldRefNames, result.asOf).then(
+    const getWitClient = getClient(WorkItemTrackingRestClient);
+    getWitClient.getWorkItems(wiIds, project.name,fieldRefNames, result.asOf).then(
         (workItems) => renderResult(result, workItems), setError);
 }
-function loadWorkItemRelations(result: WorkItemQueryResult) {
+async function loadWorkItemRelations(result: WorkItemQueryResult) {
     if (result.workItemRelations.length === 0) {
         setMessage("No work item relations found");
         return;
@@ -40,7 +50,9 @@ function loadWorkItemRelations(result: WorkItemQueryResult) {
     const fieldRefNames = result.columns.length < 10 ?
         result.columns.map((col) => col.referenceName)
         : undefined;
-    getWitClient().getWorkItems(ids, fieldRefNames, result.asOf).then(
+        const project = await getProject();
+        const client = getClient(WorkItemTrackingRestClient) 
+        client.getWorkItems(ids, project.name, fieldRefNames, result.asOf).then(
         (workitems) => renderResult(result, workitems), (error) => {
             const message = typeof error === "string" ? error : (error.serverError || error).message;
             trackEvent("GetWorkItemFailure", { message });
@@ -51,8 +63,9 @@ function search() {
     const wiqlText = editor.getValue();
     setMessage("Running query...");
     trackEvent("RunQuery", {wiqlLength: "" + wiqlText.length});
+    const client = getClient(WorkItemTrackingRestClient) 
     const context = VSS.getWebContext();
-    getWitClient().queryByWiql({ query: wiqlText }, context.project.name, context.team.name, true, 50).then(
+    client.queryByWiql({ query: wiqlText }, context.project.name, context.team.name, true, 50).then(
         (result) => {
             result.workItems = result.workItems && result.workItems.splice(0, 50);
             result.workItemRelations = result.workItemRelations && result.workItemRelations.splice(0, 50);
@@ -110,4 +123,4 @@ setMessage([
 ]);
 
 // Register context menu action provider
-VSS.register(VSS.getContribution().id, {});
+VSS.register(VSS.getContributionId(), {});

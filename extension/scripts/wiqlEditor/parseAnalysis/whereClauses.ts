@@ -1,3 +1,4 @@
+import * as VSS from "azure-devops-extension-sdk";
 import { FieldLookup, fieldsVal } from "../../cachedData/fields";
 import { projectsVal } from "../../cachedData/projects";
 import { getWitNamesByProjects } from "../../cachedData/workItemTypes";

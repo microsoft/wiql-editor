@@ -1,4 +1,4 @@
-import { FieldType } from "TFS/WorkItemTracking/Contracts";
+import { FieldType } from "azure-devops-extension-api/WorkItemTracking/WorkItemTracking";
 
 import { fieldsVal } from "../cachedData/fields";
 import { getWitsByProjects } from "../cachedData/workItemTypes";

@@ -1,5 +1,6 @@
-import { GetFieldsExpand, WorkItemField } from "TFS/WorkItemTracking/Contracts";
-import { getClient as getWitClient } from "TFS/WorkItemTracking/RestClient";
+import { getClient } from "azure-devops-extension-api";
+import { WorkItemTrackingRestClient, GetFieldsExpand, WorkItemField } from "azure-devops-extension-api/WorkItemTracking";
+
 
 import { CachedValue } from "./CachedValue";
 
@@ -10,11 +11,11 @@ async function getFieldLookup() {
 }
 
 async function getFields(): Promise<WorkItemField[]> {
-    if (getWitClient().getFields.length === 2) {
-        return getWitClient().getFields(undefined, GetFieldsExpand.ExtensionFields);
+    if (getClient(WorkItemTrackingRestClient).getFields.length === 2) {
+        return getClient(WorkItemTrackingRestClient).getFields(undefined, GetFieldsExpand.ExtensionFields);
     }
     // Older server -- fallback
-    return getWitClient().getFields(GetFieldsExpand && GetFieldsExpand.ExtensionFields as any);
+    return getClient(WorkItemTrackingRestClient).getFields(GetFieldsExpand && GetFieldsExpand.ExtensionFields as any);
 }
 
 export class FieldLookup {

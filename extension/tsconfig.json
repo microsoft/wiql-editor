@@ -22,8 +22,9 @@
          "types": [
             "react",
             "react-dom",
-            "vss-web-extension-sdk",
+            "azure-devops-extension-sdk",
             "monaco-editor",
+            "jquery"
         ],
         "esModuleInterop": true
     },

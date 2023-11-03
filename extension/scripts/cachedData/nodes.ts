@@ -1,6 +1,7 @@
-import { TeamProjectReference } from "TFS/Core/Contracts";
-import { TreeStructureGroup, WorkItemClassificationNode } from "TFS/WorkItemTracking/Contracts";
-import { getClient as getWitClient } from "TFS/WorkItemTracking/RestClient";
+import { TeamProjectReference } from "azure-devops-extension-api/Core";
+import { TreeStructureGroup, WorkItemClassificationNode } from "azure-devops-extension-api/WorkItemTracking";
+import { getClient } from "azure-devops-extension-api";
+import { WorkItemTrackingRestClient } from "azure-devops-extension-api/WorkItemTracking";
 
 import { CachedValue } from "./CachedValue";
 import { projectsVal } from "./projects";
@@ -14,7 +15,7 @@ export const areaNodesByProject: CachedValue<IProjectNodes[]> = new CachedValue(
 async function getTreeNodes(type: TreeStructureGroup): Promise<IProjectNodes[]> {
     const projs = await projectsVal.getValue();
     const projPromises = projs.map(async (project): Promise<IProjectNodes> =>
-        getWitClient().getClassificationNode(project.name, type, undefined, 2147483647).then(
+        getClient(WorkItemTrackingRestClient).getClassificationNode(project.name, type, undefined, 2147483647).then(
             (iterationNode): IProjectNodes => ({project, iterationNode}),
         ),
     );

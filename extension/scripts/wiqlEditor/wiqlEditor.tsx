@@ -1,6 +1,8 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import { DelayedFunction } from "VSS/Utils/Core";
+import * as VSS from "azure-devops-extension-sdk";
+// import { DelayedFunction } from "azure-devops-ui/Core/Util/DelayedFunction";
+import { CommonServiceIds,IHostNavigationService } from "azure-devops-extension-api";
 import { trackEvent } from "../events";
 import { getCurrentTheme } from "../getCurrentTheme";
 import { parse } from "./compiler/parser";
@@ -11,6 +13,7 @@ import { getHoverProvider } from "./hoverProvider";
 import { exportWiq, importWiq } from "./importExport";
 import * as Wiql from "./wiqlDefinition";
 import * as monaco from 'monaco-editor';
+import { getProject } from "../getProject";
 function renderToolbar(callback: () => void) {
     const elem = document.getElementById("header-bar");
     if (!elem) {
@@ -37,12 +40,14 @@ export function setupEditor(target: HTMLElement, onChange?: (errorCount: number)
         if (queryName) {
             return;
         }
-        const navigationService = await VSS.getService(VSS.ServiceIds.Navigation) as IHostNavigationService;
+        const project = await getProject();
+        const navigationService = await VSS.getService(CommonServiceIds.HostNavigationService) as IHostNavigationService;
         $(".open-in-queries").show().click(() => {
             const wiql = editor.getModel().getValue();
             trackEvent("openInQueries", {wiqlLength: String(wiql.length)});
-            const {host, project} = VSS.getWebContext();
-            const url = `${host.uri}/${project.id}/_queries/query/?wiql=${encodeURIComponent(wiql)}`;
+            const host = VSS.getHost(); // this is actually org name
+            //TODO: Url should not be static
+            const url = `https://dev.azure.com/${host.name}/${project.id}/_queries/query/?wiql=${encodeURIComponent(wiql)}`;
             navigationService.openNewWindow(url, "");
         });
     });
@@ -102,16 +107,17 @@ ORDER BY [System.ChangedDate] DESC
     }
     checkErrors();
 
-    const updateErrors = new DelayedFunction(null, 200, "CheckErrors", () => {
-        checkErrors().then((errorCount) => {
-            if (onChange) {
-                onChange(errorCount);
-            }
-        });
-    });
-    editor.onDidChangeModelContent(() => {
-        updateErrors.reset();
-    });
+    //TODO: Need to re-rewrite this part
+    // const updateErrors = new DelayedFunction(null, 200, "CheckErrors", () => {
+    //     checkErrors().then((errorCount) => {
+    //         if (onChange) {
+    //             onChange(errorCount);
+    //         }
+    //     });
+    // });
+    // editor.onDidChangeModelContent(() => {
+    //     updateErrors.reset();
+    // });
 
     editor.focus();
     return editor;

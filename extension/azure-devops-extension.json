@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "wiql-editor",
-    "version": "2.0.98",
+    "version": "2.0.102",
     "name": "Wiql Editor",
     "scopes": [
         "vso.work",
@@ -104,7 +104,7 @@
             "targets": [],
             "properties": {
                 "uri": "queryEditor.html",
-                "registeredObjectId": "dist/dialogCallbacks"
+                "registeredObjectId": "contextForm"
             }
         }
     ]

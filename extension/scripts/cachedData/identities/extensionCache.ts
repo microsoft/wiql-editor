@@ -1,7 +1,9 @@
 import { CachedValue } from "../CachedValue";
+import * as VSS from "azure-devops-extension-sdk";
+import { IExtensionDataService, CommonServiceIds } from "azure-devops-extension-api";
 
 const collection = "extension-cache";
-const service = new CachedValue<IExtensionDataService>(() => VSS.getService(VSS.ServiceIds.ExtensionData));
+const service = new CachedValue<IExtensionDataService>(() => VSS.getService(CommonServiceIds.ExtensionDataService));
 
 interface IExtensionCacheEntry<T> {
     id: string;
@@ -25,8 +27,8 @@ export async function store<T>(key: string, value: T, expiration?: Date): Promis
 }
 
 export async function get<T>(key: string): Promise<T | null> {
-    const dataService = await VSS.getService<IExtensionDataService>(VSS.ServiceIds.ExtensionData);
-    return dataService.getDocument(collection, key).then((doc: IExtensionCacheEntry<T>) => {
+    const dataService = await VSS.getService<IExtensionDataService>(CommonServiceIds.ExtensionDataService);
+    return dataService.getExtensionDataManager(collection, key).then((doc: IExtensionCacheEntry<T>) => {
         if (doc.formatVersion !== formatVersion) {
             return null;
         }
@@ -34,7 +36,7 @@ export async function get<T>(key: string): Promise<T | null> {
             return null;
         }
         return doc.value;
-    }, (error: TfsError): T | null => {
+    }, (error: any): T | null => {
         const status = Number(error.status);
         // If collection has not been created yet;
         if (status === 404 ||

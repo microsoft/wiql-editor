@@ -12,7 +12,7 @@
     "dev:serve": "webpack-dev-server --hot --progress"
   },
   "devDependencies": {
-    "@types/jquery": "^2.0.34",
+    "@types/jquery": "^3.2.18",
     "@types/knockout": "^3.4.38",
     "@types/react": "^15.6.15",
     "@types/react-dom": "^15.5.1",
@@ -40,9 +40,11 @@
     "webpack-dev-server": "^4.9.3"
   },
   "dependencies": {
+    "azure-devops-extension-api": "^2.226.0",
+    "azure-devops-extension-sdk": "^4.0.2",
+    "azure-devops-ui": "^2.167.83",
     "react": "^15.6.2",
-    "react-dom": "^15.6.2",
-    "vss-web-extension-sdk": "^5.141.0"
+    "react-dom": "^15.6.2"
   },
   "name": "wiql-editor",
   "private": true,

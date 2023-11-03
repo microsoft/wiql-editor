@@ -1,7 +1,14 @@
+import * as VSS from "azure-devops-extension-sdk";
 import { trackEvent } from "../events";
 import { IContextOptions, IQuery } from "../queryContext/contextContracts";
+import {
+    CommonServiceIds,
+    IHostPageLayoutService,
+    IHostNavigationService,
+    IDialogOptions,
+} from "azure-devops-extension-api";
 
-function saveErrorMessage(error: TfsError, query: IQuery) {
+function saveErrorMessage(error: any, query: IQuery) {
     if (!isSupportedQueryId(query.id)) {
         return "Only queries in saved in My Queries or Shared Queries can be updated with this extension";
     }
@@ -12,7 +19,8 @@ function saveErrorMessage(error: TfsError, query: IQuery) {
 }
 
 export async function showDialog(query: IQuery) {
-    const dialogService = await VSS.getService<IHostDialogService>(VSS.ServiceIds.Dialog);
+    
+    const dialogService = await VSS.getService<IHostPageLayoutService>(CommonServiceIds.HostPageLayoutService);
     let okCallback: () => Promise<any> = async () => {
         throw new Error("ok callback not set");
     };
@@ -28,13 +36,13 @@ export async function showDialog(query: IQuery) {
             if (typeof result !== "string") {
                 return;
             }
-            const navigationService = await VSS.getService(VSS.ServiceIds.Navigation) as IHostNavigationService;
+            const navigationService = await VSS.getService(CommonServiceIds.HostNavigationService) as IHostNavigationService;
             if (result === "") {
                 navigationService.reload();
             } else {
                 navigationService.navigate(result);
             }
-        }, (error: TfsError) => {
+        }, (error: any) => {
             const message = saveErrorMessage(error, query);
             dialogService.openMessageDialog(message, {
                 title: "Error saving query",
@@ -49,22 +57,37 @@ export async function showDialog(query: IQuery) {
         close,
         loaded: async (callbacks) => {
             okCallback = callbacks.okCallback;
-            dialog.updateOkButton(true);
+            //TODO: WHere to add ?
+            // dialog.updateOkButton(true);
         },
     };
-    const dialogOptions: IHostDialogOptions = {
-        title: query.name,
-        width: Number.MAX_VALUE,
-        height: Number.MAX_VALUE,
-        getDialogResult: save,
-        okText: "Save Query",
-        resizable: true,
-    };
+    // const dialogOptions: IDialogOptions = {
+    //     title: query.name,
+    //     width: Number.MAX_VALUE,
+    //     height: Number.MAX_VALUE,
+    //     getDialogResult: save,
+    //     okText: "Save Query",
+    //     resizable: true,
+    // };
+  
     const extInfo = VSS.getExtensionContext();
 
     const contentContribution = `${extInfo.publisherId}.${extInfo.extensionId}.contextForm`;
-    const dialog = await dialogService.openDialog(contentContribution, dialogOptions, context);
-    closeDialog = () => dialog.close();
+    dialogService.openCustomDialog<boolean | undefined>(contentContribution, {
+        title: query.name,
+        configuration: {
+            message: "Whats this ?",
+            initialValue: false
+        },
+        onClose: (result) => {
+            if (result !== undefined) {
+                save();
+            }
+        },
+        
+    });
+    // const dialog = dialogService.openCustomDialog(contentContribution, dialogOptions);
+    // closeDialog = () => dialog.close();
 }
 
 namespace WellKnownQueries {

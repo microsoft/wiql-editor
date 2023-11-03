@@ -36,14 +36,15 @@ module.exports = {
     "react": true,
     "react-dom": true,
     "monaco": true,
+    "jquery": true,
   },
-    /^VSS\/.*/, /^TFS\/.*/, /^q$/
+    // /^VSS\/.*/, /^TFS\/.*/, /^q$/
   ],
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
     alias: {
       'monaco-editor': path.resolve(__dirname, "node_modules/monaco-editor/esm/vs/editor/editor.api"),
-      "VSS": path.resolve(__dirname, "node_modules/vss-web-extension-sdk/lib/VSS.SDK"),
+      "azure-devops-extension-sdk": path.resolve("node_modules/azure-devops-extension-sdk")
      
     },
     modules: [path.join(__dirname, 'node_modules')],

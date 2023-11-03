@@ -1,3 +1,4 @@
+import * as VSS from "azure-devops-extension-sdk";
 import "promise-polyfill/src/polyfill";
 import { trackEvent } from "../events";
 import { getCurrentTheme } from "../getCurrentTheme";

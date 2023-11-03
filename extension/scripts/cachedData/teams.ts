@@ -1,8 +1,9 @@
-import { WebApiTeam } from "TFS/Core/Contracts";
-import { getClient } from "TFS/Core/RestClient";
+import { WebApiTeam } from "azure-devops-extension-api/Core";
+import { getClient } from "azure-devops-extension-api";
+import { CoreRestClient } from "azure-devops-extension-api/Core";
 
 async function getTeamsRest(project: string, top: number, skip: number): Promise<WebApiTeam[]> {
-    const client = getClient();
+    const client = getClient(CoreRestClient);
     const get = client.getTeams.bind(client);
     if (get.length === 3) {
         // fallback

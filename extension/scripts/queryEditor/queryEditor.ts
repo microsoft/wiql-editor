@@ -1,16 +1,18 @@
-/// <reference types="vss-web-extension-sdk" />
+import * as VSS from "azure-devops-extension-sdk";
 import "promise-polyfill/src/polyfill";
-import { QueryHierarchyItem } from "TFS/WorkItemTracking/Contracts";
-import { getClient as getWitClient } from "TFS/WorkItemTracking/RestClient";
-
+import { getClient } from "azure-devops-extension-api";
+import { WorkItemTrackingRestClient } from "azure-devops-extension-api/WorkItemTracking";
+import { QueryHierarchyItem } from "azure-devops-extension-api/WorkItemTracking";
 import { trackEvent } from "../events";
 import { ICallbacks, IContextOptions } from "../queryContext/contextContracts";
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
 import * as monaco from "monaco-editor"
+import { get } from "jquery";
 
 
 trackEvent("pageLoad");
-const configuration: IContextOptions = VSS.getConfiguration();
+//TODO: before configuration: IContextOptions
+const configuration: any = VSS.getConfiguration();
 const target = document.getElementById("wiql-box");
 if (!target) {
     throw new Error("Could not find wiql editor div");
@@ -38,7 +40,7 @@ editor.addAction({
 });
 
 async function saveQuery(): Promise<string | null> {
-     console.log("Test!");
+    const client = getClient(WorkItemTrackingRestClient);
      const context = VSS.getWebContext();
      const queryItem = <QueryHierarchyItem> {
         wiql: editor.getValue(),
@@ -49,7 +51,7 @@ async function saveQuery(): Promise<string | null> {
      trackEvent("SaveQuerys", { wiqlLength: "" + editor.getValue().length, isNew: "" + !configuration.query.id });
      if (configuration.query.id && configuration.query.id !== "00000000-0000-0000-0000-000000000000") {
         try {
-            const updated = await getWitClient().updateQuery(queryItem, context.project.name, configuration.query.id);
+            const updated = await client.updateQuery(queryItem, context.project.name, configuration.query.id);
             const html = updated._links ? updated._links.html : null;
             return html ? html.href : "";
         } catch (err) {
@@ -61,7 +63,7 @@ async function saveQuery(): Promise<string | null> {
         if (name) {
             try {
                 queryItem.name = name;
-                const created = await getWitClient().createQuery(queryItem, context.project.name, path);
+                const created = await client.createQuery(queryItem, context.project.name, path);
                 const html = created._links ? created._links.html : null;
                 return html ? html.href : "";
             } catch (err) {

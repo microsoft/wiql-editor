@@ -1,4 +1,4 @@
-import { FieldType } from "TFS/WorkItemTracking/Contracts";
+import { FieldType } from "azure-devops-extension-api/WorkItemTracking/WorkItemTracking";
 
 import * as Symbols from "../compiler/symbols";
 import { definedVariables } from "../wiqlDefinition";
