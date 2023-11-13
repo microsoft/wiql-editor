@@ -1,6 +1,7 @@
 import { CachedValue } from "../CachedValue";
 import * as VSS from "azure-devops-extension-sdk";
 import { IExtensionDataService, CommonServiceIds } from "azure-devops-extension-api";
+import * as SDK from "azure-devops-extension-sdk";
 
 const collection = "extension-cache";
 const service = new CachedValue<IExtensionDataService>(() => VSS.getService(CommonServiceIds.ExtensionDataService));
@@ -22,13 +23,16 @@ export async function store<T>(key: string, value: T, expiration?: Date): Promis
         expiration: expiration ? expiration.toJSON() : "",
         __etag: -1,
     };
-    const dataService = await service.getValue();
-    await dataService.setDocument(collection, entry);
+
+    const dataService = await SDK.getService<IExtensionDataService>(CommonServiceIds.ExtensionDataService);
+    const extensionDataManager = await dataService.getExtensionDataManager(SDK.getExtensionContext().id, CommonServiceIds.ExtensionDataService);
+    await extensionDataManager.setDocument(collection, entry);
 }
 
 export async function get<T>(key: string): Promise<T | null> {
-    const dataService = await VSS.getService<IExtensionDataService>(CommonServiceIds.ExtensionDataService);
-    return dataService.getExtensionDataManager(collection, key).then((doc: IExtensionCacheEntry<T>) => {
+    const dataService = await SDK.getService<IExtensionDataService>(CommonServiceIds.ExtensionDataService);
+    const extensionDataManager = await dataService.getExtensionDataManager(SDK.getExtensionContext().id, CommonServiceIds.ExtensionDataService);
+    return extensionDataManager.getDocument(collection, key).then((doc: IExtensionCacheEntry<T>) => {
         if (doc.formatVersion !== formatVersion) {
             return null;
         }

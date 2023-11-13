@@ -22,7 +22,6 @@
          "types": [
             "react",
             "react-dom",
-            "azure-devops-extension-sdk",
             "monaco-editor",
             "jquery"
         ],

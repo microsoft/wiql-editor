@@ -1,5 +1,4 @@
 import * as VSS from "azure-devops-extension-sdk";
-import { authTokenManager } from "VSS/Authentication/Services";
 export function callApi<T>(
     url: string,
     method: string,
@@ -9,7 +8,8 @@ export function callApi<T>(
     failure: (error: any, errorThrown: string, status: number) => void,
 ) {
     VSS.getAccessToken().then((sessionToken) => {
-        const authorizationHeaderValue = authTokenManager.getAuthorizationHeader(sessionToken);
+        // const authorizationHeaderValue = authTokenManager.getAuthorizationHeader(sessionToken);
+        const authorizationHeaderValue = "Bearer " + sessionToken;
         $.ajax({
             url,
             method,

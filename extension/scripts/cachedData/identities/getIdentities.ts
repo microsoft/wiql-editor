@@ -19,23 +19,12 @@ interface IProjectIdentities {
 async function hardGetAllIdentitiesInTeam(project: { id: string, name: string }, team: WebApiTeam): Promise<ITeamIdentities> {
     const teamIdentity = <IdentityRef> { displayName: `[${project.name}]\\${team.name}`, id: team.id, isContainer: true };
     const client = getClient(CoreRestClient);
-
-    if ("getTeamMembers" in client) {
         const members = await client.getTeamMembersWithExtendedProperties(project.id, team.id);
         const teamId: ITeamIdentities = {
             team: teamIdentity,
             members: members.map(({identity}) => identity),
         };
         return teamId;
-
-    } else {
-        const members = await client.getTeamMembersWithExtendedProperties(project.id, team.id);
-        const teamId: ITeamIdentities = {
-            team: teamIdentity,
-            members: members.map(({identity}) => identity),
-        };
-        return teamId;
-    }
 }
 
 async function getTeamsRest(project: string, top: number, skip: number): Promise<WebApiTeam[]> {

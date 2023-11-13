@@ -48,9 +48,8 @@ async function getTagsForProject(project: string): Promise<string[]> {
         }
     }
 
-    const webContext = VSS.getWebContext();
-    //TODO:  HOW TO GET URL
-    let tagsUrl = webContext.account.uri;
+    const host = VSS.getHost();
+    let tagsUrl = host.name + "/";
     if (!tagsUrl.match(/DefaultCollection/i)) {
         tagsUrl += "DefaultCollection/";
     }

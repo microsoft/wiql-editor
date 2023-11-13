@@ -1,5 +1,6 @@
-import { DelayedFunction } from "VSS/Utils/Core";
+// import { DelayedFunction } from "VSS/Utils/Core";
 import ApplicationInsights from "applicationinsights-js";
+import * as VSS from "azure-devops-extension-sdk";
 
 export interface IValueWithTimings<T> {
     value: T;
@@ -13,37 +14,38 @@ export interface IMeasurements {
     [name: string]: number;
 }
 
-const flush = new DelayedFunction(null, 100, "flush", () => {
-    const insights = getInsights();
-    if (insights) {
-        insights.flush();
-    }
-});
-export function flushNow() {
-    flush.invokeNow();
-}
+//TODO: Need to re-write this part  
+// const flush = new DelayedFunction(null, 100, "flush", () => {
+//     const insights = getInsights();
+//     if (insights) {
+//         insights.flush();
+//     }
+// });
+// export function flushNow() {
+//     flush.invokeNow();
+// }
 
 export function trackEvent(name: string, properties?: IProperties, measurements?: IMeasurements) {
     const insights = getInsights();
     if (insights) {
-        const { host } = VSS.getWebContext();
+        const  host  = VSS.getHost();
         properties = {
             ...(properties || {}),
-            host: host.name || host.authority,
+            host: host.name,
             location: (window as any).extensionLocation as string,
         };
         insights.trackEvent(name, properties, measurements);
-        flush.reset();
+        // flush.reset();
     }
 }
 
 export function trackPage(properties?: IProperties, measurements?: IMeasurements) {
     const insights = getInsights();
     if (insights) {
-        const { host } = VSS.getWebContext();
-        properties = { ...(properties || {}), host: host.name || host.authority };
+        const host = VSS.getHost();
+        properties = { ...(properties || {}), host: host.name};
         insights.trackPageView(undefined,  properties, measurements);
-        flush.reset();
+        // flush.reset();
     }
 }
 

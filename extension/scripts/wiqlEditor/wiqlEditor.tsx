@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
 import * as VSS from "azure-devops-extension-sdk";
-// import { DelayedFunction } from "azure-devops-ui/Core/Util/DelayedFunction";
 import { CommonServiceIds,IHostNavigationService } from "azure-devops-extension-api";
 import { trackEvent } from "../events";
 import { getCurrentTheme } from "../getCurrentTheme";
