@@ -1,9 +1,11 @@
 const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const webpack = require("webpack");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 module.exports = {
   mode: "development",
+  target: "web",
   entry: {
     playground: "./scripts/wiqlPlayground/playground.ts",
     queryContext: "./scripts/queryContext/queryContext.ts",
@@ -15,7 +17,7 @@ module.exports = {
   //   concatenateModules: true
   // },
   output: {
-    libraryTarget: "amd",
+    // libraryTarget: "amd",
     path: path.resolve(__dirname, 'dist'),
     filename: "[name].js",
   },
@@ -33,10 +35,10 @@ module.exports = {
 
   externals: [{
     "q": true,
-    "react": true,
-    "react-dom": true,
+    // "react": true,
+    // "react-dom": true,
     "monaco": true,
-    "jquery": true,
+    // "jquery": true,
   },
     // /^VSS\/.*/, /^TFS\/.*/, /^q$/
   ],
@@ -44,8 +46,9 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js"],
     alias: {
       'monaco-editor': path.resolve(__dirname, "node_modules/monaco-editor/esm/vs/editor/editor.api"),
-      "azure-devops-extension-sdk": path.resolve("node_modules/azure-devops-extension-sdk")
-     
+      "azure-devops-extension-sdk": path.resolve("node_modules/azure-devops-extension-sdk"),
+      "VSSUI": path.resolve(__dirname, "node_modules/azure-devops-ui"),
+      'jquery': path.resolve(__dirname, 'node_modules/jquery/dist/jquery.min.js')
     },
     modules: [path.join(__dirname, 'node_modules')],
   },
@@ -67,7 +70,9 @@ module.exports = {
         test: /\.css$/,
         use: [
           "style-loader", 
-          "css-loader"
+          "css-loader",
+          "azure-devops-ui/buildScripts/css-variables-loader",
+          "sass-loader"
         ]
       },
       {
@@ -90,6 +95,12 @@ module.exports = {
     //   reportFilename: "bundle-analysis.html",
     //   analyzerMode: "static"
     // }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.$': 'jquery',
+      'window.jQuery': 'jquery',
+    }),
     new CopyWebpackPlugin({
       patterns: [
         { from: "./*.html", to: "./", },

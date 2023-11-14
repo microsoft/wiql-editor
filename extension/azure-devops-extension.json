@@ -70,7 +70,8 @@
             "properties": {
                 "name": "Wiql Playground",
                 "uri": "dist/playground.html",
-                "icon": "asset://img/logo.png"
+                "icon": "asset://img/logo.png",
+                "registeredObjectId": "wiql-playground-hub-menu"
             }
         },
         {

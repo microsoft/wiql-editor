@@ -14,7 +14,7 @@ import { renderResult, setError, setMessage } from "./queryResults";
 import * as monaco from 'monaco-editor';
 import { getProject } from "../getProject";
 
-trackEvent("pageLoad");
+// trackEvent("pageLoad");
 
 
 async function loadWorkItems(result: WorkItemQueryResult) {
@@ -123,4 +123,6 @@ setMessage([
 ]);
 
 // Register context menu action provider
-VSS.register(VSS.getContributionId(), {});
+// VSS.register(VSS.getContributionId(), {});
+VSS.register("wiql-playground-hub-menu", {});
+VSS.init();

@@ -37,11 +37,12 @@
         <button class="format-button">Format</button>
     </div>
     <div id="query-results"></div>
-
-    <script src="VSS.SDK.min.js"></script>
+    <div id="root"></div>
+    <script type="text/javascript" src="playground.js" charset="utf-8"></script>
+    <!-- <script src="SDK.min.js"></script>
     <script type="text/javascript">
         // Initialize framework 
-        VSS.init({
+        SDK.init({
             explicitNotifyLoaded: true,
             usePlatformScripts: true,
             configureModuleLoader: true,
@@ -51,25 +52,25 @@
 
         var require = { paths: { 'vs': 'dist/monaco-editor/min/vs' } };
         // Loader needs to be done async or it errors with vss sdk 
-        VSS.require(['dist/monaco-editor/min/vs/loader'], function () {
+        SDK.require(['dist/monaco-editor/min/vs/loader'], function () {
             require(['vs/editor/editor.main'], function() {
                 // Load main entry point for extension
-                VSS.require([
+                SDK.require([
                     'react',
                     'react-dom',
-                    'TFS/Core/Contracts',
-                    'TFS/Core/RestClient',
-                    'TFS/WorkItemTracking/Contracts',
-                    'TFS/WorkItemTracking/RestClient',
-                    'VSS/Operations/Contracts',
+                    // 'TFS/Core/Contracts',
+                    // 'TFS/Core/RestClient',
+                    // 'TFS/WorkItemTracking/Contracts',
+                    // 'TFS/WorkItemTracking/RestClient',
+                    // 'VSS/Operations/Contracts',
                     'dist/playground',
                 ], function() {
                     // Loading succeeded
-                    VSS.notifyLoadSucceeded();
+                    SDK.notifyLoadSucceeded();
                 });
             });
         });
-    </script>
+    </script> -->
 </body>
 
 </html>

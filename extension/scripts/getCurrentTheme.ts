@@ -1,3 +1,4 @@
+
 export function getCurrentTheme(): "light" | "dark" {
     const styles = $("style[type='text/css']").toArray().map((s) => s.innerHTML);
     const [themeStyle] = styles.filter((s) => s.indexOf("palette-neutral-0: ") > 0);

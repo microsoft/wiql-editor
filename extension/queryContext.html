@@ -19,21 +19,23 @@
 
 <body>
 
-    <script inline src="VSS.SDK.min.js"></script>
+        <div id="root"></div>
+        <script type="text/javascript" src="queryContext.js" charset="utf-8"></script>
+    <!-- <script inline src="SDK.min.js"></script>
     <script type="text/javascript">
         // Initialize framework 
-        VSS.init({
+        SDK.init({
             explicitNotifyLoaded: true,
             usePlatformScripts: true,
             configureModuleLoader: true,
             applyTheme: true,
         });
 
-        VSS.require(['dist/queryContext'], function() {
+        SDK.require(['dist/queryContext'], function() {
             // Loading succeeded
-            VSS.notifyLoadSucceeded();
+            SDK.notifyLoadSucceeded();
         });
-    </script>
+    </script> -->
 </body>
 
 </html>

@@ -29,11 +29,11 @@
     <div id="header-bar"></div>
     <div id="wiql-box"></div>
 
-    <script inline src="VSS.SDK.min.js"></script>
+    <!-- <script inline src="SDK.min.js"></script>
     <script type="text/javascript">
-        VSS.notifyLoadSucceeded();
+        SDK.notifyLoadSucceeded();
         // Initialize framework 
-        VSS.init({
+        SDK.init({
             explicitNotifyLoaded: true,
             usePlatformScripts: true,
             configureModuleLoader: true,
@@ -42,20 +42,20 @@
         });
         var require = { paths: { 'vs': 'dist/monaco-editor/min/vs' } };
         // Loader needs to be done async or it errors with vss sdk 
-        VSS.require(['dist/monaco-editor/min/vs/loader'], function () {
+        SDK.require(['dist/monaco-editor/min/vs/loader'], function () {
             require(['vs/editor/editor.main'], function() {
                 // Load main entry point for extension
                 VSS.require([
-                    'TFS/WorkItemTracking/Contracts',
-                    'TFS/WorkItemTracking/RestClient',
-                    'VSS/Utils/Core',
+                    // 'TFS/WorkItemTracking/Contracts',
+                    // 'TFS/WorkItemTracking/RestClient',
+                    // 'VSS/Utils/Core',
                     'dist/queryEditor'
                 ], function() {
                     // Loading succeeded
                 });
             });
         });
-    </script>
+    </script> -->
 </body>
 
 </html>
