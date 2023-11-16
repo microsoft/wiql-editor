@@ -9,10 +9,11 @@ export interface IContextOptions {
     query: IQuery;
     save: () => void;
     close: () => void;
-    loaded: (callbacks: ICallbacks) => Promise<void>;
+    loaded: any
 }
 
 export interface ICallbacks {
     /** To be set by consumer and read by provider */
-    okCallback: () => Promise<any>;
+    okCallback: any
 }
+// loaded:  Promise<string | null>

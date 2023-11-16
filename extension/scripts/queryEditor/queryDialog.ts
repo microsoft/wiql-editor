@@ -1,5 +1,6 @@
 import { trackEvent } from "../events";
 import { IContextOptions, IQuery } from "../queryContext/contextContracts";
+import { callbacks } from "./queryEditor";
 
 function saveErrorMessage(error: TfsError, query: IQuery) {
     if (!isSupportedQueryId(query.id)) {
@@ -12,6 +13,7 @@ function saveErrorMessage(error: TfsError, query: IQuery) {
 }
 
 export async function showDialog(query: IQuery) {
+   console.log("toto" ,callbacks.okCallback)
     const dialogService = await VSS.getService<IHostDialogService>(VSS.ServiceIds.Dialog);
     let okCallback: () => Promise<any> = async () => {
         throw new Error("ok callback not set");
@@ -47,8 +49,8 @@ export async function showDialog(query: IQuery) {
         query,
         save,
         close,
-        loaded: async (callbacks) => {
-            okCallback = callbacks.okCallback;
+        loaded: async () => {
+        okCallback = callbacks.okCallback;
             dialog.updateOkButton(true);
         },
     };

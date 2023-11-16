@@ -72,9 +72,14 @@ async function saveQuery(): Promise<string | null> {
      return null;
 
 }
-
-const callbacks: ICallbacks = {
+export const callbacks: ICallbacks = {
     okCallback: saveQuery,
 };
 
-configuration.loaded(callbacks);
+
+
+
+
+ configuration.loaded(callbacks);
+
+
