@@ -17,6 +17,7 @@
     "@types/react": "^15.6.15",
     "@types/react-dom": "^15.5.1",
     "applicationinsights-js": "^1.0.20",
+    "copy-webpack-plugin": "^7.0.0",
     "css-loader": "^5.2.4",
     "del": "^3.0.0",
     "file-loader": "^6.2.0",
@@ -33,9 +34,8 @@
     "tslint": "^5.18.0",
     "tslint-loader": "^3.5.4",
     "typescript": "^3.9.10",
-    "copy-webpack-plugin": "^7.0.0",
-    "webpack-bundle-analyzer": "^3.3.2",
     "webpack": "^5.76.0",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.9.3"
   },
