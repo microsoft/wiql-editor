@@ -71,7 +71,7 @@
                 "name": "Wiql Playground",
                 "uri": "dist/playground.html",
                 "icon": "asset://img/logo.png",
-                "registeredObjectId": "wiql-playground-hub-menu"
+                "registeredObjectId": "wiql-playground-hub" 
             }
         },
         {
