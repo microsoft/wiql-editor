@@ -9,7 +9,9 @@ import {
 
 import { trackEvent } from "../events";
 import * as monaco from 'monaco-editor';
-function toDocument(wiql: string): string {
+import { get } from "jquery";
+import { getProject } from "../getProject";
+async function toDocument(wiql: string) {
     const rootDoc = jQuery.parseXML(`<WorkItemQuery Version="1"/>`);
     const root = rootDoc.documentElement as HTMLElement;
 
@@ -20,7 +22,8 @@ function toDocument(wiql: string): string {
     root.appendChild(server);
 
     const project = rootDoc.createElement("TeamProject");
-    project.appendChild(rootDoc.createTextNode(VSS.getWebContext().project.name));
+    const getProjectName = await getProject();
+    project.appendChild(rootDoc.createTextNode(getProjectName.name));
     root.appendChild(project);
 
     const wiqlNode = rootDoc.createElement("Wiql");
@@ -68,8 +71,8 @@ export async function importWiq(editor: monaco.editor.IStandaloneCodeEditor) {
         reader.readAsText(files[0]);
         $(".wiq-input").val("");
 }
-export function exportWiq(editor: monaco.editor.IStandaloneCodeEditor, queryName?: string) {
-    const documentStr = toDocument(editor.getModel().getValue());
+export async function exportWiq(editor: monaco.editor.IStandaloneCodeEditor, queryName?: string) {
+    const documentStr = await toDocument(editor.getModel().getValue());
     const blob = new Blob([documentStr], {type: "text/plain;charset=utf-8;"});
     let name = queryName || prompt("Enter file name") || "query";
     if (name.toLocaleLowerCase().indexOf(".wiq", name.length - 4) < 0) {

@@ -6,7 +6,7 @@ import { showDialog } from "../queryEditor/queryDialog";
 import { IQuery } from "./contextContracts";
 
 
-trackEvent("pageLoad");
+// trackEvent("pageLoad");
 // const menuAction: Partial<IContributedMenuSource> = {
 //     getMenuItems: (context: {query: IQuery}): IContributedMenuItem[] => {
 //         if (!context || !context.query) {
@@ -23,20 +23,27 @@ trackEvent("pageLoad");
 // };
 
 const menuAction =  {
-    getMenuItems: (context: { query: IQuery }) => {
-        if (!context || !context.query) {
-            return [];
-        }
-        return [{
-            text: "Edit query wiql",
-            icon: getCurrentTheme() === "dark" ? "img/smallDarkThemeLogo.png" : "img/smallLogo.png",
-            action: (actionContext) => {
-                showDialog(actionContext.query);
-            },
-        }];
+    execute: (actionContext: { query: IQuery }) => {
+        showDialog(actionContext.query);
+        // if (!actionContext || !actionContext.query) {
+        //     return {};
+        // }
+        // return {
+        //     text: "Edit query wiql",
+        //     // icon: getCurrentTheme() === "dark" ? "img/smallDarkThemeLogo.png" : "img/smallLogo.png",
+        //     action: (actionContext) => {
+                
+        //     },
+        // };
     },
 };
 
-const extensionContext = VSS.getExtensionContext();
-VSS.register(`${extensionContext.publisherId}.${extensionContext.extensionId}.query-menu`, menuAction);
-VSS.register(`${extensionContext.publisherId}.${extensionContext.extensionId}.query-results-menu`, menuAction);
+
+// place VSS.getExtensionContext in a a ready function to wait until VSS.Init is called
+// $(document).ready(() => {
+//     const extensionContext = VSS.getExtensionContext();
+
+// const extensionContext = VSS.getExtensionContext();
+VSS.register(`query-menu`, menuAction);
+VSS.register(`query-results-menu`, menuAction);
+VSS.init();

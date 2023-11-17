@@ -1,9 +1,7 @@
 import * as VSS from "azure-devops-extension-sdk";
 import "promise-polyfill/src/polyfill";
-import {
-
-    getClient
-} from "azure-devops-extension-api";
+import { getClient } from "azure-devops-extension-api";
+import { CoreRestClient } from "azure-devops-extension-api/Core";
 import { WorkItemQueryResult, WorkItemTrackingRestClient} from "azure-devops-extension-api/WorkItemTracking"
 // import { WorkItemQueryResult } from "TFS/WorkItemTracking/Contracts";
 // import { getClient as getWitClient } from "TFS/WorkItemTracking/RestClient";
@@ -59,26 +57,31 @@ async function loadWorkItemRelations(result: WorkItemQueryResult) {
             setError(error);
         });
 }
-function search() {
+async function search() {
     const wiqlText = editor.getValue();
     setMessage("Running query...");
     trackEvent("RunQuery", {wiqlLength: "" + wiqlText.length});
     const client = getClient(WorkItemTrackingRestClient) 
-    const context = VSS.getWebContext();
-    client.queryByWiql({ query: wiqlText }, context.project.name, context.team.name, true, 50).then(
-        (result) => {
-            result.workItems = result.workItems && result.workItems.splice(0, 50);
-            result.workItemRelations = result.workItemRelations && result.workItemRelations.splice(0, 50);
-            if (result.workItems) {
-                loadWorkItems(result);
-            } else {
-                loadWorkItemRelations(result);
-            }
-        }, (error) => {
-            const message = typeof error === "string" ? error : (error.serverError || error).message;
-            trackEvent("RunQueryFailure", { message });
-            setError(error);
-        });
+    const coreClient = getClient(CoreRestClient);
+    // const context = VSS.getWebContext();
+    const project = await getProject();
+    const projectData = await coreClient.getProject(project.name);
+    // VSS.ready().then(() => {
+        client.queryByWiql({ query: wiqlText }, project.name, projectData.defaultTeam.name, true, 50).then(
+            (result) => {
+                result.workItems = result.workItems && result.workItems.splice(0, 50);
+                result.workItemRelations = result.workItemRelations && result.workItemRelations.splice(0, 50);
+                if (result.workItems) {
+                    loadWorkItems(result);
+                } else {
+                    loadWorkItemRelations(result);
+                }
+            }, (error) => {
+                const message = typeof error === "string" ? error : (error.serverError || error).message;
+                trackEvent("RunQueryFailure", { message });
+                setError(error);
+            });
+    // });
 }
 
 const target = document.getElementById("wiql-box");
