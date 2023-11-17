@@ -71,7 +71,7 @@
                 "name": "Wiql Playground",
                 "uri": "dist/playground.html",
                 "icon": "asset://img/logo.png",
-                "registeredObjectId": "wiql-playground-hub" 
+                "registeredObjectId": "wiql-playground-hub-menu" 
             }
         },
         {
@@ -84,7 +84,7 @@
             "properties": {
                 "group": "contributed",
                 "uri": "dist/queryContext.html",
-                "registeredObjectId": "wiql-playground-hub-menu"
+                "registeredObjectId": "query-menu"
             }
         },
         {
@@ -107,6 +107,7 @@
             "properties": {
                 "uri": "queryEditor.html",
                 "registeredObjectId": "contextForm"
+             
             }
         }
     ]
