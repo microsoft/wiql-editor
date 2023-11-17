@@ -10,6 +10,7 @@ import { FieldType, WorkItem, WorkItemFieldReference, WorkItemQueryResult } from
 // import { localeFormat, parseDateString } from "VSS/Utils/Date";
 
 import { FieldLookup, fieldsVal } from "../cachedData/fields";
+import { getProject } from "../getProject";
 
 function parseDateString(dateString: string): Date {
     return new Date(dateString);
@@ -21,13 +22,20 @@ class WorkItemRow extends React.Component<{
     rel?: string,
     fields: FieldLookup,
 }, {}> {
+
+    public async componentDidMount() {
+        const project = await getProject();
+        this.setState({ project: project.name });
+    }
+
     public render() {
         const { fields, columns, wi, rel} = this.props;
+        const project  = this.state;
 
         //TODO: get host url from VSS
         const host = VSS.getHost();
         const org = host.name;
-        const project = VSS.getWebContext().project.name;
+        // const project = VSS.getWebContext().project.name;
         //TODO: how to handle if it is Server?
         const wiUrl = `https:dev.azure.com/${org}${project}/_workitems?id=${wi.id}&_a=edit&fullScreen=true`;
 

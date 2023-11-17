@@ -8,6 +8,7 @@ import { ICallbacks, IContextOptions } from "../queryContext/contextContracts";
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
 import * as monaco from "monaco-editor"
 import { get } from "jquery";
+import { getProject } from "../getProject";
 
 
 trackEvent("pageLoad");
@@ -41,17 +42,18 @@ editor.addAction({
 
 async function saveQuery(): Promise<string | null> {
     const client = getClient(WorkItemTrackingRestClient);
-     const context = VSS.getWebContext();
+    //  const context = VSS.getWebContext();
+     const project = await getProject();
      const queryItem = <QueryHierarchyItem> {
         wiql: editor.getValue(),
         path: configuration.query.path,
         name: configuration.query.name,
     };
-     console.log("Test", queryItem, context);
+    console.log("Test", queryItem, project);
      trackEvent("SaveQuerys", { wiqlLength: "" + editor.getValue().length, isNew: "" + !configuration.query.id });
      if (configuration.query.id && configuration.query.id !== "00000000-0000-0000-0000-000000000000") {
         try {
-            const updated = await client.updateQuery(queryItem, context.project.name, configuration.query.id);
+            const updated = await client.updateQuery(queryItem, project.name, configuration.query.id);
             const html = updated._links ? updated._links.html : null;
             return html ? html.href : "";
         } catch (err) {
@@ -63,7 +65,7 @@ async function saveQuery(): Promise<string | null> {
         if (name) {
             try {
                 queryItem.name = name;
-                const created = await client.createQuery(queryItem, context.project.name, path);
+                const created = await client.createQuery(queryItem, project.name, path);
                 const html = created._links ? created._links.html : null;
                 return html ? html.href : "";
             } catch (err) {
