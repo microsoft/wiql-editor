@@ -11,7 +11,7 @@ import { get } from "jquery";
 import { getProject } from "../getProject";
 
 
-trackEvent("pageLoad");
+// trackEvent("pageLoad");
 //TODO: before configuration: IContextOptions
 const configuration: any = VSS.getConfiguration();
 const target = document.getElementById("wiql-box");

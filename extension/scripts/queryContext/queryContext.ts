@@ -38,12 +38,17 @@ const menuAction =  {
     },
 };
 
+const queryMenuAction = {
+    execute: async (actionContext: IQuery) => {
+       showDialog(actionContext);
+    }
+}
 
 // place VSS.getExtensionContext in a a ready function to wait until VSS.Init is called
 // $(document).ready(() => {
 //     const extensionContext = VSS.getExtensionContext();
 
 // const extensionContext = VSS.getExtensionContext();
-VSS.register(`query-menu`, menuAction);
-VSS.register(`query-results-menu`, menuAction);
+VSS.register(`query-menu`, queryMenuAction);
+VSS.register(`query-results-menu`, queryMenuAction);
 VSS.init();
