@@ -1,4 +1,4 @@
-import * as VSS from "azure-devops-extension-sdk";
+
 import { trackEvent } from "../events";
 import { IContextOptions, IQuery } from "../queryContext/contextContracts";
 import {
@@ -7,6 +7,7 @@ import {
     IHostNavigationService,
     IDialogOptions,
 } from "azure-devops-extension-api";
+import * as SDK from "azure-devops-extension-sdk";
 
 function saveErrorMessage(error: any, query: IQuery) {
     if (!isSupportedQueryId(query.id)) {
@@ -20,7 +21,7 @@ function saveErrorMessage(error: any, query: IQuery) {
 
 export async function showDialog(query: IQuery) {
     
-    const dialogService = await VSS.getService<IHostPageLayoutService>(CommonServiceIds.HostPageLayoutService);
+    const dialogService = await SDK.getService<IHostPageLayoutService>(CommonServiceIds.HostPageLayoutService);
     let okCallback: () => Promise<any> = async () => {
         throw new Error("ok callback not set");
     };
@@ -36,7 +37,7 @@ export async function showDialog(query: IQuery) {
             if (typeof result !== "string") {
                 return;
             }
-            const navigationService = await VSS.getService(CommonServiceIds.HostNavigationService) as IHostNavigationService;
+            const navigationService = await SDK.getService(CommonServiceIds.HostNavigationService) as IHostNavigationService;
             if (result === "") {
                 navigationService.reload();
             } else {
@@ -70,7 +71,7 @@ export async function showDialog(query: IQuery) {
     //     resizable: true,
     // };
   
-    const extInfo = VSS.getExtensionContext();
+    const extInfo = SDK.getExtensionContext();
 
     const contentContribution = `${extInfo.publisherId}.${extInfo.extensionId}.contextForm`;
     dialogService.openCustomDialog<boolean | undefined>(contentContribution, {
