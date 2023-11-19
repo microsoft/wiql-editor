@@ -82,14 +82,8 @@
                 "ms.vss-work-web.work-item-query-menu"
             ],
             "properties": {
-                "text": "Edit query wiql",
-                "icon":{
-                    "light": "img/smallDarkThemeLogo.png",
-                    "dark": "img/smallLogo.pngg"
-                },
                 "group": "contributed",
-                "uri": "dist/queryContext.html",
-                "registeredObjectId": "query-menu"
+                "uri": "dist/queryContext.html"
             }
         },
         {
