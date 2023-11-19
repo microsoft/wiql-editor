@@ -88,8 +88,8 @@
                     "dark": "img/smallLogo.pngg"
                 },
                 "group": "contributed",
-                "uri": "dist/queryContext.html",
-                "registeredObjectId": "query-menu"
+                "uri": "dist/queryContext.html"
+               
             }
         },
         
@@ -99,6 +99,7 @@
             "description": "Edit query in menu",
             "targets": [
                 "ms.vss-work-web.work-item-query-results-toolbar-menu"
+                
             ],
             "properties": {
                 "text": "Edit query wiql",
@@ -107,8 +108,8 @@
                     "dark": "img/smallLogo.pngg"
                 },
                 "group": "contributed",
-                "uri": "dist/queryContext.html",
-                "registeredObjectId": "query-results-menu"
+                "uri": "dist/queryContext.html"
+               
             }
         },
         {
@@ -118,7 +119,7 @@
             "targets": [],
             "properties": {
                 "uri": "queryEditor.html",
-                "registeredObjectId": "contextForm"
+           
              
             }
         }
