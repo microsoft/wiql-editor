@@ -118,7 +118,7 @@
             "description": "Editor for the given query",
             "targets": [],
             "properties": {
-                "uri": "queryEditor.html",
+                "uri": "queryEditor.html"
            
              
             }
