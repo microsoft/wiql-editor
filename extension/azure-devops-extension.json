@@ -82,10 +82,28 @@
                 "ms.vss-work-web.work-item-query-menu"
             ],
             "properties": {
+                "text": "Edit query wiql",
+                "icon":{
+                    "light": "img/smallDarkThemeLogo.png",
+                    "dark": "img/smallLogo.pngg"
+                },
                 "group": "contributed",
-                "uri": "dist/queryContext.html"
+                "uri": "dist/queryContext.html",
+                "registeredObjectId": "query-menu"
             }
         },
+        {
+            "id": "wiql-editor-menu",
+            "type": "ms.vss-web.action-provider",
+            "description": "Open WIQL Editor",
+            "targets": [
+              "ms.vss-work-web.work-item-query-menu"
+            ],
+            "properties": {
+              "group": "contributed",
+              "uri": "dist/wiqlEditor.html"
+            }
+          },
         {
             "id": "query-results-menu",
             "type": "ms.vss-web.action-provider",
