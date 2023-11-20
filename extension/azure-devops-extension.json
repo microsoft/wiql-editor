@@ -92,12 +92,14 @@
                 "registeredObjectId": "query-menu"
             }
         },
+        
         {
             "id": "query-results-menu",
             "type": "ms.vss-web.action-provider",
             "description": "Edit query in menu",
             "targets": [
                 "ms.vss-work-web.work-item-query-results-toolbar-menu"
+                
             ],
             "properties": {
                 "text": "Edit query wiql",
@@ -110,6 +112,7 @@
                 "registeredObjectId": "query-results-menu"
             }
         },
+       
         {
             "id": "contextForm",
             "type": "ms.vss-web.control",
