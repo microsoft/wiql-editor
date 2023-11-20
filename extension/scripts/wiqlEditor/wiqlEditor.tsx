@@ -43,7 +43,7 @@ export function setupEditor(target: HTMLElement, onChange?: (errorCount: number)
         const navigationService = await VSS.getService(CommonServiceIds.HostNavigationService) as IHostNavigationService;
         $(".open-in-queries").show().click(() => {
             const wiql = editor.getModel().getValue();
-            trackEvent("openInQueries", {wiqlLength: String(wiql.length)});
+            // trackEvent("openInQueries", {wiqlLength: String(wiql.length)});
             const host = VSS.getHost(); // this is actually org name
             //TODO: Url should not be static
             const url = `https://dev.azure.com/${host.name}/${project.id}/_queries/query/?wiql=${encodeURIComponent(wiql)}`;

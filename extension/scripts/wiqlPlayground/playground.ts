@@ -53,14 +53,14 @@ async function loadWorkItemRelations(result: WorkItemQueryResult) {
         client.getWorkItems(ids, project.name, fieldRefNames, result.asOf).then(
         (workitems) => renderResult(result, workitems), (error) => {
             const message = typeof error === "string" ? error : (error.serverError || error).message;
-            trackEvent("GetWorkItemFailure", { message });
+            // trackEvent("GetWorkItemFailure", { message });
             setError(error);
         });
 }
 async function search() {
     const wiqlText = editor.getValue();
     setMessage("Running query...");
-    trackEvent("RunQuery", {wiqlLength: "" + wiqlText.length});
+    // trackEvent("RunQuery", {wiqlLength: "" + wiqlText.length});
     const client = getClient(WorkItemTrackingRestClient) 
     const coreClient = getClient(CoreRestClient);
     // const context = VSS.getWebContext();
@@ -78,7 +78,7 @@ async function search() {
                 }
             }, (error) => {
                 const message = typeof error === "string" ? error : (error.serverError || error).message;
-                trackEvent("RunQueryFailure", { message });
+                // trackEvent("RunQueryFailure", { message });
                 setError(error);
             });
     // });

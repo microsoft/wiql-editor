@@ -20,7 +20,7 @@ function saveErrorMessage(error: any, query: IQuery) {
 }
 
 export async function showDialog(query: IQuery) {
-    
+    // debugger
     const dialogService = await SDK.getService<IHostPageLayoutService>(CommonServiceIds.HostPageLayoutService);
     let okCallback: () => Promise<any> = async () => {
         throw new Error("ok callback not set");
@@ -29,7 +29,7 @@ export async function showDialog(query: IQuery) {
         throw new Error("could not find close dialog function");
     };
     function close() {
-        trackEvent("keyboardExit");
+        // trackEvent("keyboardExit");
         closeDialog();
     }
     function save() {
@@ -48,7 +48,7 @@ export async function showDialog(query: IQuery) {
             dialogService.openMessageDialog(message, {
                 title: "Error saving query",
             });
-            trackEvent("SaveQueryFailure", {message});
+            // trackEvent("SaveQueryFailure", {message});
         });
         throw Error("Exception to block dialog close");
     }
@@ -72,7 +72,7 @@ export async function showDialog(query: IQuery) {
     // };
   
     const extInfo = SDK.getExtensionContext();
-
+    // debugger
     const contentContribution = `${extInfo.publisherId}.${extInfo.extensionId}.contextForm`;
     dialogService.openCustomDialog<boolean | undefined>(contentContribution, {
         title: query.name,
@@ -80,6 +80,7 @@ export async function showDialog(query: IQuery) {
             message: "Whats this ?",
             initialValue: false
         },
+        
         onClose: (result) => {
             if (result !== undefined) {
                 save();

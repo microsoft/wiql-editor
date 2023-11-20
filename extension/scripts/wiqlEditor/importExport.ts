@@ -58,14 +58,14 @@ export async function importWiq(editor: monaco.editor.IStandaloneCodeEditor) {
                     forceMoveMarkers: true,
                 };
                 model.pushEditOperations(editor.getSelections(), [edit], () => [new monaco.Selection(1, 1, 1, 1)]);
-                trackEvent("importWiq", {wiqlLength: String(wiql.length)});
+                // trackEvent("importWiq", {wiqlLength: String(wiql.length)});
             } catch (e) {
                 const dialogService = await VSS.getService<IHostPageLayoutService>(CommonServiceIds.HostPageLayoutService);
                 const message = e.message || e + "";
                 dialogService.openMessageDialog(message, {
                     title: "Error importing query",
                 });
-                trackEvent("importError", {message});
+                // trackEvent("importError", {message});
             }
         };
         reader.readAsText(files[0]);

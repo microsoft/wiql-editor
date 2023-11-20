@@ -1,9 +1,10 @@
-import * as VSS from "azure-devops-extension-sdk";
+import * as SDK from "azure-devops-extension-sdk";
 import "promise-polyfill/src/polyfill";
 import { trackEvent } from "../events";
 import { getCurrentTheme } from "../getCurrentTheme";
 import { showDialog } from "../queryEditor/queryDialog";
 import { IQuery } from "./contextContracts";
+
 
 
 // trackEvent("pageLoad");
@@ -25,30 +26,42 @@ import { IQuery } from "./contextContracts";
 const menuAction =  {
     execute: (actionContext: { query: IQuery }) => {
         showDialog(actionContext.query);
-        // if (!actionContext || !actionContext.query) {
-        //     return {};
-        // }
-        // return {
-        //     text: "Edit query wiql",
-        //     // icon: getCurrentTheme() === "dark" ? "img/smallDarkThemeLogo.png" : "img/smallLogo.png",
-        //     action: (actionContext) => {
-                
-        //     },
-        // };
+        if (!actionContext || !actionContext.query) {
+            return {};
+        }
+        return {
+            action: (actionContext) => {
+                console.log("actionContext", actionContext);
+                showDialog(actionContext.query);
+            },
+        };
     },
 };
 
 const queryMenuAction = {
-    execute: async (actionContext: IQuery) => {
+    execute: async (actionContext) => {
        showDialog(actionContext);
     }
 }
 
-// place VSS.getExtensionContext in a a ready function to wait until VSS.Init is called
-// $(document).ready(() => {
-//     const extensionContext = VSS.getExtensionContext();
-
 // const extensionContext = VSS.getExtensionContext();
-VSS.register(`query-menu`, queryMenuAction);
-VSS.register(`query-results-menu`, queryMenuAction);
-VSS.init();
+// VSS.register(`${extensionContext.publisherId}.${extensionContext.extensionId}.query-menu`, menuAction);
+// VSS.register(`${extensionContext.publisherId}.${extensionContext.extensionId}.query-results-menu`, menuAction);
+// SDK.register(`query-menu`, menuAction);
+// SDK.register(`query-results-menu`, function (actionContext ){
+//     return  {
+//         execute: function (actionContext) {
+//             showDialog(actionContext);
+//         }
+//     }});
+
+
+SDK.register("query-menu", menuAction);
+SDK.register("query-results-menu", function (actionContext) {
+    return {
+        execute: function (actionContext) {
+            showDialog(actionContext);
+        }
+    }
+});
+SDK.init();
