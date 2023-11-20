@@ -76,18 +76,19 @@
         },
         {
             "id": "query-menu",
-            "type": "ms.vss-web.action-provider",
+            "type": "ms.vss-web.action",
             "description": "Edit query in menu",
             "targets": [
                 "ms.vss-work-web.work-item-query-menu"
             ],
             "properties": {
+                 "title": "Edit query wiql",
                 "text": "Edit query wiql",
                 "icon":{
                     "light": "asset://img/smallDarkThemeLogo.png",
                     "dark": "asset://img/smallLogo.png"
                 },
-                "group": "contributed",
+                "group": "actions",
                 "uri": "dist/queryContext.html",
                 "registeredObjectId": "query-menu"
             }
@@ -95,19 +96,20 @@
         
         {
             "id": "query-results-menu",
-            "type": "ms.vss-web.action-provider",
+            "type": "ms.vss-web.action",
             "description": "Edit query in menu",
             "targets": [
                 "ms.vss-work-web.work-item-query-results-toolbar-menu"
                 
             ],
             "properties": {
+                "title": "Edit query wiql",
                 "text": "Edit query wiql",
                 "icon":{
                     "light": "asset://img/smallDarkThemeLogo.png",
                     "dark": "asset://img/smallLogo.pngg"
                 },
-                "group": "contributed",
+                "group": "actions",
                 "uri": "dist/queryContext.html",
                 "registeredObjectId": "query-results-menu"
             }
@@ -115,7 +117,7 @@
        
         {
             "id": "contextForm",
-            "type": "ms.vss-web.control",
+            "type": "ms.vss-web.external-content",
             "description": "Editor for the given query",
             "targets": [],
             "properties": {
