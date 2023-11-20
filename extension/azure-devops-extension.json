@@ -119,7 +119,7 @@
             "description": "Editor for the given query",
             "targets": [],
             "properties": {
-                "uri": "queryEditor.html",
+                "uri": "dist/queryEditor.html",
                 "registeredObjectId": "contextForm"
              
             }
