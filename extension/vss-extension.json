@@ -81,42 +81,62 @@
             "properties": {
                 "name": "Wiql Playground",
                 "uri": "dist/playground.html",
-                "icon": "asset://img/logo.png"
+                "icon": "asset://img/logo.png",
+                "registeredObjectId": "wiql-playground-hub-menu" 
             }
         },
         {
             "id": "query-menu",
-            "type": "ms.vss-web.action-provider",
+            "type": "ms.vss-web.action",
             "description": "Edit query in menu",
             "targets": [
                 "ms.vss-work-web.work-item-query-menu"
             ],
             "properties": {
-                "group": "contributed",
-                "uri": "dist/queryContext.html"
+                 "title": "Edit query wiql",
+                "text": "Edit query wiql",
+                "icon":{
+                    "light": "asset://img/smallDarkThemeLogo.png",
+                    "dark": "asset://img/smallLogo.png"
+                },
+                "group": "actions",
+                "uri": "dist/queryContext.html",
+                "registeredObjectId": "query-menu"
             }
         },
+        
         {
             "id": "query-results-menu",
-            "type": "ms.vss-web.action-provider",
+            "type": "ms.vss-web.action",
             "description": "Edit query in menu",
             "targets": [
                 "ms.vss-work-web.work-item-query-results-toolbar-menu"
+                
             ],
             "properties": {
-                "group": "contributed",
-                "uri": "dist/queryContext.html"
+                "title": "Edit query wiql",
+                "text": "Edit query wiql",
+                "icon":{
+                    "light": "asset://img/smallDarkThemeLogo.png",
+                    "dark": "asset://img/smallLogo.pngg"
+                },
+                "group": "actions",
+                "uri": "dist/queryContext.html",
+                "registeredObjectId": "query-results-menu"
             }
         },
+       
         {
             "id": "contextForm",
-            "type": "ms.vss-web.control",
+            "type": "ms.vss-web.external-content",
             "description": "Editor for the given query",
             "targets": [],
             "properties": {
-                "uri": "queryEditor.html",
-                "registeredObjectId": "dist/dialogCallbacks"
+                "uri": "dist/queryEditor.html",
+                "registeredObjectId": "contextForm"
+             
             }
         }
     ]
+
 }

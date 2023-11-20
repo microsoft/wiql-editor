@@ -21,5 +21,12 @@ const menuAction: Partial<IContributedMenuSource> = {
 };
 
 const extensionContext = VSS.getExtensionContext();
-VSS.register(`${extensionContext.publisherId}.${extensionContext.extensionId}.query-menu`, menuAction);
-VSS.register(`${extensionContext.publisherId}.${extensionContext.extensionId}.query-results-menu`, menuAction);
+VSS.register("query-menu", menuAction);
+VSS.register("query-results-menu", function (actionContext) {
+    return {
+        execute: function (actionContext) {
+            showDialog(actionContext);
+        }
+    }
+});
+VSS.init();
