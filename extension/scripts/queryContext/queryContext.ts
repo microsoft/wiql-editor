@@ -29,4 +29,3 @@ VSS.register("query-results-menu", function (actionContext) {
         }
     }
 });
-VSS.init();
