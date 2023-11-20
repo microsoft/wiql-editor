@@ -88,8 +88,8 @@
                     "dark": "img/smallLogo.pngg"
                 },
                 "group": "contributed",
-                "uri": "dist/queryContext.html"
-               
+                "uri": "dist/queryContext.html",
+                "registeredObjectId": "query-menu"
             }
         },
         
@@ -108,8 +108,24 @@
                     "dark": "img/smallLogo.pngg"
                 },
                 "group": "contributed",
-                "uri": "dist/queryContext.html"
-               
+                "uri": "dist/queryContext.html",
+                "registeredObjectId": "query-results-menu"
+            }
+        },
+        {
+            "id": "showProperties_24",
+            "type": "ms.vss-web.action",
+            "description": "Shows the target properties for work item query results toolbar menu.",
+            "targets": [
+                "ms.vss-work-web.work-item-query-results-toolbar-menu"
+            ],
+            "properties": {
+                "text": "Custom query results toolbar menu",
+                "title": "ms.vss-work-web.work-item-query-results-toolbar-menu (Custom query results toolbar action)",
+                "icon": "images/show-properties.png",
+                "group": "actions",
+                "uri": "dist/queryContext.html",
+                "registeredObjectId": "showProperties"
             }
         },
         {
@@ -118,8 +134,8 @@
             "description": "Editor for the given query",
             "targets": [],
             "properties": {
-                "uri": "queryEditor.html"
-           
+                "uri": "queryEditor.html",
+                "registeredObjectId": "contextForm"
              
             }
         }
