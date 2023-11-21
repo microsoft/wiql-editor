@@ -13,6 +13,10 @@ import { exportWiq, importWiq, saveQuery } from "./importExport";
 import * as Wiql from "./wiqlDefinition";
 import * as monaco from 'monaco-editor';
 import { getProject } from "../getProject";
+
+
+const styles = {backgroundColor: "#0078D7", color: "white", margin: "5px", outline: "none" , padding: "8px 12px", borderRadius: "5px" , border: "  none" }
+
 function renderToolbar(callback: () => void) {
     const elem = document.getElementById("header-bar");
     if (!elem) {
@@ -21,11 +25,11 @@ function renderToolbar(callback: () => void) {
     ReactDom.render(
             <div className="header">
                 <span className="bowtie">
-                    <input className="wiq-input" accept=".wiq" type="file"/>
-                    <button onClick={() => $(".wiq-input").click()}>Import</button>
-                    <button className="wiq-export">Export</button>
-                    <button  onClick={() => $("#save").click()} id="save" className="save">TestSave</button>
-                    <button className="open-in-queries" hidden>Open in queries</button>
+                    <input className="wiq-input" accept=".wiq" type="file" style={styles}/>
+                    <button onClick={() => $(".wiq-input").click()} style={styles}>Import</button>
+                    <button className="wiq-export" style={styles}>Export</button>
+                    <button  onClick={() => $("#save").click()} id="save" className="save" style={styles}>Save query</button>
+                    <button className="open-in-queries" hidden style={styles}>Open in queries</button>
                 </span>
                 <span className="links">
                     <a href="https://marketplace.visualstudio.com/items?itemName=ms-devlabs.wiql-editor" target="_blank">Review</a>{" | "}
