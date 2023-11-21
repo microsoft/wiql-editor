@@ -98,19 +98,19 @@ editor.addAction({
     contextMenuOrder: 1,
     run: () => { search(); return <any> null; },
 });
-editor.addAction({
-    id: "focus-results",
-    label: "Focus Results",
-    contextMenuGroupId: "results",
-    keybindings: [monaco.KeyMod.Alt | monaco.KeyCode.KEY_R],
-    run: () => {
-        const trs = $(".row");
-        if (trs.length > 0) {
-            trs.first().focus();
-        }
-        return null as any;
-    },
-});
+// editor.addAction({
+//     id: "focus-results",
+//     label: "Focus Results",
+//     contextMenuGroupId: "results",
+//     keybindings: [monaco.KeyMod.Alt | monaco.KeyCode.KEY_R],
+//     run: () => {
+//         const trs = $(".row");
+//         if (trs.length > 0) {
+//             trs.first().focus();
+//         }
+//         return null as any;
+//     },
+// });
 function getAction(id: string) {
     return () => editor.getAction(id).run();
       //old - > getActions().filter((a) => a.id.match(`:${id}$`))[0].run();
