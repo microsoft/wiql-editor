@@ -16,7 +16,7 @@ import { conf } from "../wiqlEditor/wiqlDefinition";
 
 // trackEvent("pageLoad");
 //TODO: before configuration: IContextOptions
-// debugger
+
 SDK.init().then(() => {
     console.log("SHOW THIS?!?!")
     const configuration: any = SDK.getConfiguration();
@@ -50,7 +50,7 @@ SDK.init().then(() => {
                 
     
     async  function saveQuery(): Promise<string | null> {
-        debugger;
+        
         const client = getClient(WorkItemTrackingRestClient);
         //  const context = VSS.getWebContext();
         const project = await getProject();
