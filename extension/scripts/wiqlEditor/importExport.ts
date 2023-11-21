@@ -97,7 +97,7 @@ export async function exportWiq(editor: monaco.editor.IStandaloneCodeEditor, que
 }
 
 export async function saveQuery(editor, configuration): Promise<string | null> {
-    debugger;
+    
     const client = getClient(WorkItemTrackingRestClient);
     //  const context = VSS.getWebContext();
     const project = await getProject();
@@ -122,7 +122,9 @@ export async function saveQuery(editor, configuration): Promise<string | null> {
     } else {
         const path = configuration.query.isPublic ? "Shared Queries" : "My Queries";
         const name = prompt("Enter name for query");
+        console.log("test", 1,name)
         if (name) {
+            console.log("test", 2,name)
             try {
                 queryItem.name = name;
                 const created = await client.createQuery(queryItem, project.name, path);

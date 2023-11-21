@@ -21,10 +21,10 @@ function saveErrorMessage(error: any, query: IQuery) {
 }
 
 export async function showDialog(query: IQuery) {
-    // debugger
+  
     const dialogService = await SDK.getService<IHostPageLayoutService>(CommonServiceIds.HostPageLayoutService);
     let okCallback: () => Promise<any> = async () => {
-        debugger
+   
         throw new Error("ok callback not set");
     };
     let closeDialog = (): void => {
@@ -35,7 +35,7 @@ export async function showDialog(query: IQuery) {
         closeDialog();
     }
     async function save(result?: any) {
-        debugger;
+
         // okCallback().then(async (result) => {
             try {
             if (typeof result !== "string") {
