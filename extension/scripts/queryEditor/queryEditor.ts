@@ -75,7 +75,9 @@ SDK.init().then(() => {
         } else {
             const path = configuration.query.isPublic ? "Shared Queries" : "My Queries";
             const name = prompt("Enter name for query");
+            console.log("test", 1,name)
             if (name) {
+                console.log("test", 2,name)
                 try {
                     queryItem.name = name;
                     const created = await client.createQuery(queryItem, project.name, path);
