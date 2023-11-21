@@ -38,12 +38,6 @@ const menuAction =  {
     },
 };
 
-const queryMenuAction = {
-    execute: async (actionContext) => {
-       showDialog(actionContext);
-    }
-}
-
 // const extensionContext = VSS.getExtensionContext();
 // VSS.register(`${extensionContext.publisherId}.${extensionContext.extensionId}.query-menu`, menuAction);
 // VSS.register(`${extensionContext.publisherId}.${extensionContext.extensionId}.query-results-menu`, menuAction);
@@ -57,11 +51,5 @@ const queryMenuAction = {
 
 
 SDK.register("query-menu", menuAction);
-SDK.register("query-results-menu", function (actionContext) {
-    return {
-        execute: function (actionContext) {
-            showDialog(actionContext);
-        }
-    }
-});
+SDK.register("query-results-menu", menuAction);
 SDK.init();

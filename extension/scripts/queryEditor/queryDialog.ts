@@ -6,6 +6,7 @@ import {
     IHostPageLayoutService,
     IHostNavigationService,
     IDialogOptions,
+    PanelSize,
 } from "azure-devops-extension-api";
 import * as SDK from "azure-devops-extension-sdk";
 
@@ -23,6 +24,7 @@ export async function showDialog(query: IQuery) {
     // debugger
     const dialogService = await SDK.getService<IHostPageLayoutService>(CommonServiceIds.HostPageLayoutService);
     let okCallback: () => Promise<any> = async () => {
+        debugger
         throw new Error("ok callback not set");
     };
     let closeDialog = (): void => {
@@ -32,8 +34,10 @@ export async function showDialog(query: IQuery) {
         // trackEvent("keyboardExit");
         closeDialog();
     }
-    function save() {
-        okCallback().then(async (result) => {
+    async function save(result?: any) {
+        debugger;
+        // okCallback().then(async (result) => {
+            try {
             if (typeof result !== "string") {
                 return;
             }
@@ -43,25 +47,26 @@ export async function showDialog(query: IQuery) {
             } else {
                 navigationService.navigate(result);
             }
-        }, (error: any) => {
+        } catch (error) {
             const message = saveErrorMessage(error, query);
             dialogService.openMessageDialog(message, {
                 title: "Error saving query",
             });
             // trackEvent("SaveQueryFailure", {message});
-        });
-        throw Error("Exception to block dialog close");
+        // });
+        // throw Error("Exception to block dialog close");
+        }
     }
-    const context: IContextOptions = {
-        query,
-        save,
-        close,
-        loaded: async (callbacks) => {
-            okCallback = callbacks.okCallback;
-            //TODO: WHere to add ?
-            // dialog.updateOkButton(true);
-        },
-    };
+    // const context: IContextOptions = {
+    //     query,
+    //     save,
+    //     close,
+    //     loaded: async (callbacks) => {
+    //         okCallback = callbacks.okCallback;
+    //         //TODO: WHere to add ?
+    //         // dialog.updateOkButton(true);
+    //     },
+    // };
     // const dialogOptions: IDialogOptions = {
     //     title: query.name,
     //     width: Number.MAX_VALUE,
@@ -72,21 +77,29 @@ export async function showDialog(query: IQuery) {
     // };
   
     const extInfo = SDK.getExtensionContext();
-    // debugger
     const contentContribution = `${extInfo.publisherId}.${extInfo.extensionId}.contextForm`;
-    dialogService.openCustomDialog<boolean | undefined>(contentContribution, {
+    // const contentContribution = `contextForm`;
+    // dialogService.setFullScreenMode(true);
+    console.log("name: "+ query.name + ", wiql: "+ query.wiql)
+    dialogService.openPanel(contentContribution, {
+    // dialogService.openCustomDialog<boolean | undefined>(contentContribution, {
         title: query.name,
         configuration: {
-            message: "Whats this ?",
-            initialValue: false
+            query: query,
+            initialValue: false,
+            save: save,
+            loaded: async (callbacks) => {
+                okCallback = callbacks.okCallback;
+        }
         },
-        
+        size: PanelSize.Large,
         onClose: (result) => {
             if (result !== undefined) {
-                save();
+                // save();
+                console.log("do somehting on close")
             }
-        },
-        
+        }
+    
     });
     // const dialog = dialogService.openCustomDialog(contentContribution, dialogOptions);
     // closeDialog = () => dialog.close();

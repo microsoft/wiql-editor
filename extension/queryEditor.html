@@ -3,23 +3,23 @@
 <head>
     <meta charset="utf-8" />
     <script type="text/javascript">
-    var appInsights=window.appInsights||function(config){
-        function i(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s="AuthenticatedUserContext",h="start",c="stop",l="Track",a=l+"Event",v=l+"Page",y=u.createElement(o),r,f;y.src=config.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js";u.getElementsByTagName(o)[0].parentNode.appendChild(y);try{t.cookie=u.cookie}catch(p){}for(t.queue=[],t.version="1.0",r=["Event","Exception","Metric","PageView","Trace","Dependency"];r.length;)i("track"+r.pop());return i("set"+s),i("clear"+s),i(h+a),i(c+a),i(h+v),i(c+v),i("flush"),config.disableExceptionTracking||(r="onerror",i("_"+r),f=e[r],e[r]=function(config,i,u,e,o){var s=f&&f(config,i,u,e,o);return s!==!0&&t["_"+r](config,i,u,e,o),s}),t
-        }({
-            instrumentationKey:"c6f04809-22ec-4294-ac32-778938ddac7b",
-            disableAjaxTracking: true,
-            isPerfAnalyzerEnabled: false,
-        });
+    // var appInsights=window.appInsights||function(config){
+    //     function i(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s="AuthenticatedUserContext",h="start",c="stop",l="Track",a=l+"Event",v=l+"Page",y=u.createElement(o),r,f;y.src=config.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js";u.getElementsByTagName(o)[0].parentNode.appendChild(y);try{t.cookie=u.cookie}catch(p){}for(t.queue=[],t.version="1.0",r=["Event","Exception","Metric","PageView","Trace","Dependency"];r.length;)i("track"+r.pop());return i("set"+s),i("clear"+s),i(h+a),i(c+a),i(h+v),i(c+v),i("flush"),config.disableExceptionTracking||(r="onerror",i("_"+r),f=e[r],e[r]=function(config,i,u,e,o){var s=f&&f(config,i,u,e,o);return s!==!0&&t["_"+r](config,i,u,e,o),s}),t
+    //     }({
+    //         instrumentationKey:"c6f04809-22ec-4294-ac32-778938ddac7b",
+    //         disableAjaxTracking: true,
+    //         isPerfAnalyzerEnabled: false,
+    //     });
         
-        window.appInsights=appInsights;
-        window.start = performance.now();
-        window.extensionLocation = "queryEditor";
-    </script>
+    //     window.appInsights=appInsights;
+    //     window.start = performance.now();
+    //     window.extensionLocation = "queryEditor";
+    // </script>
     <link inline rel="stylesheet" type="text/css" href="wiqlEditor.css">
     <style>
         #wiql-box {
             width: 100%;
-            height: 100%;
+            height: 50%;
             position: absolute;
         }
     </style>
@@ -28,7 +28,6 @@
 <body class="wiql-search-wrapper">
     <div id="header-bar"></div>
     <div id="wiql-box"></div>
-    <div id="root"></div>
     <script type="text/javascript" src="queryEditor.js" charset="utf-8"></script>
     <!-- <script inline src="SDK.min.js"></script>
     <script type="text/javascript">

@@ -4,6 +4,7 @@ import {
     IHostPageLayoutService,
     IHostNavigationService,
     IDialogOptions,
+    getClient,
 } from "azure-devops-extension-api";
 
 
@@ -11,6 +12,7 @@ import { trackEvent } from "../events";
 import * as monaco from 'monaco-editor';
 import { get } from "jquery";
 import { getProject } from "../getProject";
+import { QueryHierarchyItem, WorkItemTrackingRestClient } from "azure-devops-extension-api/WorkItemTracking";
 async function toDocument(wiql: string) {
     const rootDoc = jQuery.parseXML(`<WorkItemQuery Version="1"/>`);
     const root = rootDoc.documentElement as HTMLElement;
@@ -92,4 +94,48 @@ export async function exportWiq(editor: monaco.editor.IStandaloneCodeEditor, que
         a.click();
         document.body.removeChild(a);
     // }
+}
+
+export async function saveQuery(editor, configuration): Promise<string | null> {
+    debugger;
+    const client = getClient(WorkItemTrackingRestClient);
+    //  const context = VSS.getWebContext();
+    const project = await getProject();
+    const queryItem = <QueryHierarchyItem>{
+        wiql: editor.getValue(),
+        path: configuration.query.path,
+        name: configuration.query.name,
+    };
+    console.log("Test", queryItem, project);
+    let result = null;
+    // trackEvent("SaveQuerys", { wiqlLength: "" + editor.getValue().length, isNew: "" + !configuration.query.id });
+    if (configuration.query.id && configuration.query.id !== "00000000-0000-0000-0000-000000000000") {
+        try {
+            const updated = await client.updateQuery(queryItem, project.name, configuration.query.id);
+            const html = updated._links ? updated._links.html : null;
+            result = html ? html.href : "";
+            await configuration.save(result);
+            return result;
+        } catch (err) {
+            console.error("Error updating query:", err);
+        }
+    } else {
+        const path = configuration.query.isPublic ? "Shared Queries" : "My Queries";
+        const name = prompt("Enter name for query");
+        if (name) {
+            try {
+                queryItem.name = name;
+                const created = await client.createQuery(queryItem, project.name, path);
+                const html = created._links ? created._links.html : null;
+                result = html ? html.href : "";
+                await configuration.save(result);
+                return result;
+            } catch (err) {
+                console.error("Error creating query:", err);
+            }
+        }
+    }
+    await configuration.save(result);
+    return null;
+
 }

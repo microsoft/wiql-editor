@@ -9,7 +9,7 @@ import { completionProvider } from "./completion/completion";
 import { ErrorChecker } from "./errorCheckers/ErrorChecker";
 import { format } from "./formatter";
 import { getHoverProvider } from "./hoverProvider";
-import { exportWiq, importWiq } from "./importExport";
+import { exportWiq, importWiq, saveQuery } from "./importExport";
 import * as Wiql from "./wiqlDefinition";
 import * as monaco from 'monaco-editor';
 import { getProject } from "../getProject";
@@ -24,6 +24,7 @@ function renderToolbar(callback: () => void) {
                     <input className="wiq-input" accept=".wiq" type="file"/>
                     <button onClick={() => $(".wiq-input").click()}>Import</button>
                     <button className="wiq-export">Export</button>
+                    <button  onClick={() => $("#save").click()} id="save" className="save">TestSave</button>
                     <button className="open-in-queries" hidden>Open in queries</button>
                 </span>
                 <span className="links">
@@ -34,7 +35,7 @@ function renderToolbar(callback: () => void) {
         , elem, callback);
 }
 
-export function setupEditor(target: HTMLElement, onChange?: (errorCount: number) => void, intialValue?: string, queryName?: string): monaco.editor.IStandaloneCodeEditor {
+export function setupEditor(target: HTMLElement, onChange?: (errorCount: number) => void, intialValue?: string, queryName?: string, configuration?: any): monaco.editor.IStandaloneCodeEditor {
     renderToolbar(async () => {
         if (queryName) {
             return;
@@ -89,6 +90,7 @@ ORDER BY [System.ChangedDate] DESC
     });
     $(".wiq-input").change(() => importWiq(editor));
     $(".wiq-export").click(() => exportWiq(editor, queryName));
+    $("#save").click(() => saveQuery(editor, configuration));
     monaco.languages.registerHoverProvider(Wiql.def.id, getHoverProvider());
     monaco.languages.registerCompletionItemProvider(Wiql.def.id, completionProvider);
 
@@ -106,6 +108,9 @@ ORDER BY [System.ChangedDate] DESC
     }
     checkErrors();
 
+    
+
+
     //TODO: Need to re-rewrite this part
     // const updateErrors = new DelayedFunction(null, 200, "CheckErrors", () => {
     //     checkErrors().then((errorCount) => {
@@ -121,3 +126,4 @@ ORDER BY [System.ChangedDate] DESC
     editor.focus();
     return editor;
 }
+
