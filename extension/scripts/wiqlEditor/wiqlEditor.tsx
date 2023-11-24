@@ -25,7 +25,7 @@ function renderToolbar(callback: () => void) {
     ReactDom.render(
             <div className="header">
                 <span className="bowtie">
-                    <input className="wiq-input" accept=".wiq" type="file" style={styles}/>
+                    <input className="wiq-input" accept=".wiq" type="file" />
                     <button onClick={() => $(".wiq-input").click()} style={styles}>Import</button>
                     <button className="wiq-export" style={styles}>Export</button>
                     <button  onClick={() => $("#save").click()} id="save" className="save" style={styles}>Save query</button>
