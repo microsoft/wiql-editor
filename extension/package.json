@@ -45,7 +45,8 @@
     "azure-devops-ui": "^2.167.83",
     "jquery": "^3.7.1",
     "react": "^15.6.2",
-    "react-dom": "^15.6.2"
+    "react-dom": "^15.6.2",
+    "webpack-shell-plugin-next": "^2.3.1"
   },
   "name": "wiql-editor",
   "private": true,

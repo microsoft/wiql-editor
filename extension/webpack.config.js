@@ -107,7 +107,6 @@ module.exports = {
         { from: "img/*.png", to: "./" },
         { from: "./azure-devops-extension.json", to: "./azure-devops-extension.json" },
         { from: "./node_modules/azure-devops-extension-sdk/esm/SDK.min.js", to: "./" },
-        // { from: "./node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js", to: "./" },
         { from: "./node_modules/monaco-editor/min/vs/loader.js", to: "./monaco-editor/min/vs" },
         { from: "./node_modules/monaco-editor/min/vs/editor/", to: "./monaco-editor/min/vs/editor", globOptions: { ignore: ["**/*.svg"] } },
         { from: "./node_modules/monaco-editor/min/vs/base/", to: "./monaco-editor/min/vs/base",  globOptions: { ignore: ["**/*.svg"] } },
