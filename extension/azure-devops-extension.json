@@ -85,8 +85,8 @@
                  "title": "Edit query wiql",
                 "text": "Edit query wiql",
                 "icon":{
-                    "light": "asset://img/smallDarkThemeLogo.png",
-                    "dark": "asset://img/smallLogo.png"
+                    "light": "img/smallDarkThemeLogo.png",
+                    "dark": "img/smallLogo.png"
                 },
                 "group": "actions",
                 "uri": "dist/queryContext.html",
@@ -106,8 +106,8 @@
                 "title": "Edit query wiql",
                 "text": "Edit query wiql",
                 "icon":{
-                    "light": "asset://img/smallDarkThemeLogo.png",
-                    "dark": "asset://img/smallLogo.pngg"
+                    "light": "img/smallDarkThemeLogo.png",
+                    "dark": "img/smallLogo.pngg"
                 },
                 "group": "actions",
                 "uri": "dist/queryContext.html",
