@@ -2,6 +2,7 @@ const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const WebpackShellPluginNext = require('webpack-shell-plugin-next');
 
 module.exports = {
   mode: "development",
@@ -95,6 +96,13 @@ module.exports = {
     //   reportFilename: "bundle-analysis.html",
     //   analyzerMode: "static"
     // }),
+     new WebpackShellPluginNext({
+      onBuildEnd:{
+        scripts: ['node ../buildTable/build/buildTable.js ./wiql.ebnf ./scripts/wiqlEditor/compiler/wiqlTable.ts'],
+        blocking: true,
+        parallel: false
+      }
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -115,3 +123,5 @@ module.exports = {
     })
   ]
 };
+
+
