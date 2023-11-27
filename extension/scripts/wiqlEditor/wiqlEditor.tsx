@@ -1,8 +1,7 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import * as VSS from "azure-devops-extension-sdk";
+import * as SDK from "azure-devops-extension-sdk";
 import { CommonServiceIds,IHostNavigationService } from "azure-devops-extension-api";
-import { trackEvent } from "../events";
 import { getCurrentTheme } from "../getCurrentTheme";
 import { parse } from "./compiler/parser";
 import { completionProvider } from "./completion/completion";
@@ -12,7 +11,7 @@ import { getHoverProvider } from "./hoverProvider";
 import { exportWiq, importWiq, saveQuery } from "./importExport";
 import * as Wiql from "./wiqlDefinition";
 import * as monaco from 'monaco-editor';
-import { getProject } from "../getProject";
+import { getHostUrl, getProject } from "../getProject";
 
 
 const styles = {backgroundColor: "#0078D7", color: "white", margin: "5px", outline: "none" , padding: "8px 12px", borderRadius: "5px" , border: "  none" }
@@ -45,13 +44,13 @@ export function setupEditor(target: HTMLElement, onChange?: (errorCount: number)
             return;
         }
         const project = await getProject();
-        const navigationService = await VSS.getService(CommonServiceIds.HostNavigationService) as IHostNavigationService;
+        const navigationService = await SDK.getService(CommonServiceIds.HostNavigationService) as IHostNavigationService;
         $(".open-in-queries").show().click(() => {
+            // Check if this is on prem or cloud and use the correct url
             const wiql = editor.getModel().getValue();
-            // trackEvent("openInQueries", {wiqlLength: String(wiql.length)});
-            const host = VSS.getHost(); // this is actually org name
-            //TODO: Url should not be static
-            const url = `https://dev.azure.com/${host.name}/${project.id}/_queries/query/?wiql=${encodeURIComponent(wiql)}`;
+            const host = getHostUrl();
+            let url = `${host}/${project.id}/_queries/query/?wiql=${encodeURIComponent(wiql)}`;
+
             navigationService.openNewWindow(url, "");
         });
     });
