@@ -354,7 +354,7 @@ export function getSymbolName(symbolClass: Function): string {
         if (match) {
         return match[1];
         }
-       return ""; 
+     
     } catch (e) {
       return ""; 
     }
