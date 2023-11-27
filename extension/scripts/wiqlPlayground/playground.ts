@@ -3,17 +3,10 @@ import "promise-polyfill/src/polyfill";
 import { getClient } from "azure-devops-extension-api";
 import { CoreRestClient } from "azure-devops-extension-api/Core";
 import { WorkItemQueryResult, WorkItemTrackingRestClient} from "azure-devops-extension-api/WorkItemTracking"
-// import { WorkItemQueryResult } from "TFS/WorkItemTracking/Contracts";
-// import { getClient as getWitClient } from "TFS/WorkItemTracking/RestClient";
-
-import { trackEvent } from "../events";
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
 import { renderResult, setError, setMessage } from "./queryResults";
 import * as monaco from 'monaco-editor';
 import { getProject } from "../getProject";
-
-// trackEvent("pageLoad");
-
 
 async function loadWorkItems(result: WorkItemQueryResult) {
     if (result.workItems.length === 0) {
@@ -53,17 +46,14 @@ async function loadWorkItemRelations(result: WorkItemQueryResult) {
         client.getWorkItems(ids, project.name, fieldRefNames, result.asOf).then(
         (workitems) => renderResult(result, workitems), (error) => {
             const message = typeof error === "string" ? error : (error.serverError || error).message;
-            // trackEvent("GetWorkItemFailure", { message });
             setError(error);
         });
 }
 async function search() {
     const wiqlText = editor.getValue();
     setMessage("Running query...");
-    // trackEvent("RunQuery", {wiqlLength: "" + wiqlText.length});
     const client = getClient(WorkItemTrackingRestClient) 
     const coreClient = getClient(CoreRestClient);
-    // const context = VSS.getWebContext();
     const project = await getProject();
     const projectData = await coreClient.getProject(project.name);
     // VSS.ready().then(() => {
@@ -78,7 +68,6 @@ async function search() {
                 }
             }, (error) => {
                 const message = typeof error === "string" ? error : (error.serverError || error).message;
-                // trackEvent("RunQueryFailure", { message });
                 setError(error);
             });
     // });
@@ -126,6 +115,5 @@ setMessage([
 ]);
 
 // Register context menu action provider
-// VSS.register(VSS.getContributionId(), {});
 VSS.register("wiql-playground-hub-menu", {});
 VSS.init();

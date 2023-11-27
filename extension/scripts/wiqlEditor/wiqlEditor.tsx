@@ -83,12 +83,9 @@ export function setupEditor(target: HTMLElement, onChange?: (errorCount: number)
             // trackEvent("openInQueries", {wiqlLength: String(wiql.length)});
             const host = VSS.getHost(); // this is actually org name
             //TODO: Url should not be static
-            const url = `${baseUrl}/${host.name}/${project.id}/_queries/query/?wiql=${encodeURIComponent(wiql)}`;
+            const url = `${baseUrl}${host.name}/${project.id}/_queries/query/?wiql=${encodeURIComponent(wiql)}`;
             navigationService.openNewWindow(url, "");
-
-      
-
-        });
+         });
     });
     monaco.languages.register(Wiql.def);
     monaco.languages.onLanguage(Wiql.def.id, () => {

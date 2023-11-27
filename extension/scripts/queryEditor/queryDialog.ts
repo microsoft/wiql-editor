@@ -7,6 +7,7 @@ import {
     IHostNavigationService,
     IDialogOptions,
     PanelSize,
+    IPanelOptions,
 } from "azure-devops-extension-api";
 import * as SDK from "azure-devops-extension-sdk";
 
@@ -36,12 +37,9 @@ export async function showDialog(query: IQuery) {
         throw new Error("could not find close dialog function");
     };
     function close() {
-        // trackEvent("keyboardExit");
         closeDialog();
     }
     async function save(result?: any) {
-
-        // okCallback().then(async (result) => {
             try {
             if (typeof result !== "string") {
                 return;
@@ -57,46 +55,19 @@ export async function showDialog(query: IQuery) {
             dialogService.openMessageDialog(message, {
                 title: "Error saving query",
             });
-            // trackEvent("SaveQueryFailure", {message});
-        // });
-        // throw Error("Exception to block dialog close");
         }
     }
-    // const context: IContextOptions = {
-    //     query,
-    //     save,
-    //     close,
-    //     loaded: async (callbacks) => {
-    //         okCallback = callbacks.okCallback;
-    //         //TODO: WHere to add ?
-    //         // dialog.updateOkButton(true);
-    //     },
-    // };
-    // const dialogOptions: IDialogOptions = {
-    //     title: query.name,
-    //     width: Number.MAX_VALUE,
-    //     height: Number.MAX_VALUE,
-    //     getDialogResult: save,
-    //     okText: "Save Query",
-    //     resizable: true,
-    // };
-  
-    const extInfo = SDK.getExtensionContext();
-    const contentContribution = `${extInfo.publisherId}.${extInfo.extensionId}.contextForm`;
-    // const contentContribution = `contextForm`;
-    // dialogService.setFullScreenMode(true);
-  
-    dialogService.openPanel(contentContribution, {
-    // dialogService.openCustomDialog<boolean | undefined>(contentContribution, {
-        title: query.name,
-        configuration: {
-            query: query,
-            initialValue: false,
-            save: save,
-            loaded: async (callbacks) => {
-                okCallback = callbacks.okCallback;
+    const context: IContextOptions = {
+        query: query,
+        initialValue: false,
+        save: save,
+        loaded: async (callbacks) => {
+            okCallback = callbacks.okCallback;
         }
-        },
+    }
+    const panelOptions: IPanelOptions<any> = {
+        title: query.name,
+        configuration: context,
         size: PanelSize.Large,
         onClose: (result) => {
             if (result !== undefined) {
@@ -104,10 +75,12 @@ export async function showDialog(query: IQuery) {
                 console.log("do somehting on close")
             }
         }
-    
-    });
-    // const dialog = dialogService.openCustomDialog(contentContribution, dialogOptions);
-    // closeDialog = () => dialog.close();
+    }
+  
+    const extInfo = SDK.getExtensionContext();
+    const contentContribution = `${extInfo.publisherId}.${extInfo.extensionId}.contextForm`;
+    console.log("name: "+ query.name + ", wiql: "+ query.wiql)
+    dialogService.openPanel(contentContribution, panelOptions);
 }
 
 namespace WellKnownQueries {

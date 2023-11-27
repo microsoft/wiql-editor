@@ -49,7 +49,6 @@ function getConditionalExpressions(logical: Symbols.LogicalExpression) {
             return str.substr(1, str.length - 2);
         } else if (c.value && c.value.value instanceof Symbols.Variable) {
             return project.name;
-            // return VSS.getWebContext().project.name;
         }
         throw new Error("Value is unexpected type reading projects");
     });

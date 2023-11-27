@@ -3,17 +3,10 @@ import "promise-polyfill/src/polyfill";
 import { getClient } from "azure-devops-extension-api";
 import { WorkItemTrackingRestClient } from "azure-devops-extension-api/WorkItemTracking";
 import { QueryHierarchyItem } from "azure-devops-extension-api/WorkItemTracking";
-import { trackEvent } from "../events";
-import { ICallbacks, IContextOptions } from "../queryContext/contextContracts";
+import { ICallbacks } from "../queryContext/contextContracts";
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
 import * as monaco from "monaco-editor"
-import { get } from "jquery";
 import { getProject } from "../getProject";
-import { conf } from "../wiqlEditor/wiqlDefinition";
-
-
-
-
 
 
 SDK.init().then(() => {
@@ -22,7 +15,6 @@ SDK.init().then(() => {
     if (!target) {
         throw new Error("Could not find wiql editor div");
     }
-
     
     const editor = setupEditor(target, undefined, configuration.query.wiql, configuration.query.name, configuration);
     editor.addAction({
@@ -50,7 +42,6 @@ SDK.init().then(() => {
     async  function saveQuery(): Promise<string | null> {
         
         const client = getClient(WorkItemTrackingRestClient);
-    
         const project = await getProject();
         const queryItem = <QueryHierarchyItem>{
             wiql: editor.getValue(),
@@ -59,7 +50,6 @@ SDK.init().then(() => {
         };
 
         let result = null;
-  
         if (configuration.query.id && configuration.query.id !== "00000000-0000-0000-0000-000000000000") {
             try {
                 const updated = await client.updateQuery(queryItem, project.name, configuration.query.id);

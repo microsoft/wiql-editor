@@ -2,17 +2,15 @@ import * as VSS from "azure-devops-extension-sdk";
 import {
     CommonServiceIds,
     IHostPageLayoutService,
-    IHostNavigationService,
-    IDialogOptions,
     getClient,
 } from "azure-devops-extension-api";
 
 
 import { trackEvent } from "../events";
 import * as monaco from 'monaco-editor';
-import { get } from "jquery";
 import { getProject } from "../getProject";
 import { QueryHierarchyItem, WorkItemTrackingRestClient } from "azure-devops-extension-api/WorkItemTracking";
+
 async function toDocument(wiql: string) {
     const rootDoc = jQuery.parseXML(`<WorkItemQuery Version="1"/>`);
     const root = rootDoc.documentElement as HTMLElement;
@@ -60,14 +58,12 @@ export async function importWiq(editor: monaco.editor.IStandaloneCodeEditor) {
                     forceMoveMarkers: true,
                 };
                 model.pushEditOperations(editor.getSelections(), [edit], () => [new monaco.Selection(1, 1, 1, 1)]);
-                // trackEvent("importWiq", {wiqlLength: String(wiql.length)});
             } catch (e) {
                 const dialogService = await VSS.getService<IHostPageLayoutService>(CommonServiceIds.HostPageLayoutService);
                 const message = e.message || e + "";
                 dialogService.openMessageDialog(message, {
                     title: "Error importing query",
                 });
-                // trackEvent("importError", {message});
             }
         };
         reader.readAsText(files[0]);
@@ -99,7 +95,6 @@ export async function exportWiq(editor: monaco.editor.IStandaloneCodeEditor, que
 export async function saveQuery(editor, configuration): Promise<string | null> {
     
     const client = getClient(WorkItemTrackingRestClient);
-    //  const context = VSS.getWebContext();
     const project = await getProject();
     const queryItem = <QueryHierarchyItem>{
         wiql: editor.getValue(),
@@ -108,7 +103,6 @@ export async function saveQuery(editor, configuration): Promise<string | null> {
     };
     console.log("Test", queryItem, project);
     let result = null;
-    // trackEvent("SaveQuerys", { wiqlLength: "" + editor.getValue().length, isNew: "" + !configuration.query.id });
     if (configuration.query.id && configuration.query.id !== "00000000-0000-0000-0000-000000000000") {
         try {
             const updated = await client.updateQuery(queryItem, project.name, configuration.query.id);

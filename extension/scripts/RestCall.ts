@@ -8,7 +8,6 @@ export function callApi<T>(
     failure: (error: any, errorThrown: string, status: number) => void,
 ) {
     VSS.getAccessToken().then((sessionToken) => {
-        // const authorizationHeaderValue = authTokenManager.getAuthorizationHeader(sessionToken);
         const authorizationHeaderValue = "Bearer " + sessionToken;
         $.ajax({
             url,
