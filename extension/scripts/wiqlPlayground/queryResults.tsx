@@ -3,6 +3,7 @@ import * as ReactDom from "react-dom";
 import * as VSS from "azure-devops-extension-sdk";
 import { IHostNavigationService, CommonServiceIds } from "azure-devops-extension-api";
 import { FieldType, WorkItem, WorkItemFieldReference, WorkItemQueryResult } from "azure-devops-extension-api/WorkItemTracking";
+import './wiqlEditor.scss';
 
 // import { localeFormat, parseDateString } from "azure-devops-extension-api/Util";
 // import { FieldType, WorkItem, WorkItemFieldReference, WorkItemQueryResult } from "TFS/WorkItemTracking/Contracts";
@@ -125,7 +126,7 @@ export function renderResult(result: WorkItemQueryResult, workItems: WorkItem[])
             table = <WorkItemRelationsTable {...props} />;
         }
         ReactDom.render(
-            <div>
+            <div >
                 {table}
                 <ResultCountDisclaimer count={(result.workItems || result.workItemRelations).length} />
             </div>
