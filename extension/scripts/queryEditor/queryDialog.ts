@@ -10,6 +10,11 @@ import {
 } from "azure-devops-extension-api";
 import * as SDK from "azure-devops-extension-sdk";
 
+
+
+
+
+
 function saveErrorMessage(error: any, query: IQuery) {
     if (!isSupportedQueryId(query.id)) {
         return "Only queries in saved in My Queries or Shared Queries can be updated with this extension";
@@ -80,7 +85,7 @@ export async function showDialog(query: IQuery) {
     const contentContribution = `${extInfo.publisherId}.${extInfo.extensionId}.contextForm`;
     // const contentContribution = `contextForm`;
     // dialogService.setFullScreenMode(true);
-    console.log("name: "+ query.name + ", wiql: "+ query.wiql)
+  
     dialogService.openPanel(contentContribution, {
     // dialogService.openCustomDialog<boolean | undefined>(contentContribution, {
         title: query.name,

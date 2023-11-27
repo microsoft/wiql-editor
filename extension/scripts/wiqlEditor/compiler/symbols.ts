@@ -356,7 +356,7 @@ export function getSymbolName(symbolClass: Function): string {
         }
      
     } catch (e) {
-      return ""; 
+ console.log(2)
     }
 }
 
