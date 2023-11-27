@@ -96,13 +96,7 @@ module.exports = {
     //   reportFilename: "bundle-analysis.html",
     //   analyzerMode: "static"
     // }),
-     new WebpackShellPluginNext({
-      onBuildEnd:{
-        scripts: ['node ../buildTable/build/buildTable.js ./wiql.ebnf ./scripts/wiqlEditor/compiler/wiqlTable.ts'],
-        blocking: true,
-        parallel: false
-      }
-    }),
+    
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
