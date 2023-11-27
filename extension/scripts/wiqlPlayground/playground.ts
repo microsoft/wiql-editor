@@ -116,4 +116,6 @@ setMessage([
 
 // Register context menu action provider
 VSS.register("wiql-playground-hub-menu", {});
+VSS.register("query-results-menu", {});
+VSS.register("query-menu", {});
 VSS.init();
