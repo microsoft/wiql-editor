@@ -13,6 +13,7 @@ import { exportWiq, importWiq, saveQuery } from "./importExport";
 import * as Wiql from "./wiqlDefinition";
 import * as monaco from 'monaco-editor';
 import { getProject } from "../getProject";
+import '../../../extension/styles/wiqlEditor.scss';
 
 
 
