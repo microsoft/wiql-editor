@@ -11,6 +11,11 @@ import {
 } from "azure-devops-extension-api";
 import * as SDK from "azure-devops-extension-sdk";
 
+
+
+
+
+
 function saveErrorMessage(error: any, query: IQuery) {
     if (!isSupportedQueryId(query.id)) {
         return "Only queries in saved in My Queries or Shared Queries can be updated with this extension";

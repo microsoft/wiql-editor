@@ -16,6 +16,25 @@ import { getHostUrl, getProject } from "../getProject";
 
 const styles = {backgroundColor: "#0078D7", color: "white", margin: "5px", outline: "none" , padding: "8px 12px", borderRadius: "5px" , border: "  none" }
 
+// const saveQueryBtn = async () => {
+//     const host = VSS.getHost(); 
+//     const project = await getProject();
+//     const currentUrl = window.location.href;
+//     const targetUrl = `https://dev.azure.com/${host.name}/${project.id}/_queries/query-edit/`;
+
+// if(targetUrl.includes("_queries/query-edit/")){
+//   return  <button  
+//         onClick={() => $("#save").click()} 
+//         id="save" 
+//         className="save" 
+//         style={styles}
+//     >
+//         Save query
+//     </button>
+//    }
+// }
+
+
 function renderToolbar(callback: () => void) {
     const elem = document.getElementById("header-bar");
     if (!elem) {
@@ -24,10 +43,11 @@ function renderToolbar(callback: () => void) {
     ReactDom.render(
             <div className="header">
                 <span className="bowtie">
-                    <input className="wiq-input" accept=".wiq" type="file" />
+                    <input className="wiq-input" accept=".wiq" type="file"  hidden />
                     <button onClick={() => $(".wiq-input").click()} style={styles}>Import</button>
                     <button className="wiq-export" style={styles}>Export</button>
-                    <button  onClick={() => $("#save").click()} id="save" className="save" style={styles}>Save query</button>
+          
+             <button  onClick={() => $("#save").click()} id="saveQueryBtn" className="saveQueryBtn" style={styles}>Save query</button> ,
                     <button className="open-in-queries" hidden style={styles}>Open in queries</button>
                 </span>
                 <span className="links">
@@ -52,6 +72,9 @@ export function setupEditor(target: HTMLElement, onChange?: (errorCount: number)
             let url = `${host}/${project.id}/_queries/query/?wiql=${encodeURIComponent(wiql)}`;
 
             navigationService.openNewWindow(url, "");
+
+      
+
         });
     });
     monaco.languages.register(Wiql.def);
@@ -93,7 +116,7 @@ ORDER BY [System.ChangedDate] DESC
     });
     $(".wiq-input").change(() => importWiq(editor));
     $(".wiq-export").click(() => exportWiq(editor, queryName));
-    $("#save").click(() => saveQuery(editor, configuration));
+    $("#saveQueryBtn").click(() => saveQuery(editor, configuration));
     monaco.languages.registerHoverProvider(Wiql.def.id, getHoverProvider());
     monaco.languages.registerCompletionItemProvider(Wiql.def.id, completionProvider);
 
