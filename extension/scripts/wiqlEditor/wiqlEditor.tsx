@@ -13,6 +13,7 @@ import { exportWiq, importWiq, saveQuery } from "./importExport";
 import * as Wiql from "./wiqlDefinition";
 import * as monaco from 'monaco-editor';
 import { getProject } from "../getProject";
+import "../../styles/wiqlEditor.scss";
 
 
 
@@ -28,23 +29,7 @@ export const getLocationUrl = async () => {
 
 const styles = {backgroundColor: "#0078D7", color: "white", margin: "5px", outline: "none" , padding: "8px 12px", borderRadius: "5px" , border: "  none" }
 
-// const saveQueryBtn = async () => {
-//     const host = VSS.getHost(); 
-//     const project = await getProject();
-//     const currentUrl = window.location.href;
-//     const targetUrl = `https://dev.azure.com/${host.name}/${project.id}/_queries/query-edit/`;
 
-// if(targetUrl.includes("_queries/query-edit/")){
-//   return  <button  
-//         onClick={() => $("#save").click()} 
-//         id="save" 
-//         className="save" 
-//         style={styles}
-//     >
-//         Save query
-//     </button>
-//    }
-// }
 
 
 function renderToolbar(callback: () => void) {
