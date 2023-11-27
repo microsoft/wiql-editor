@@ -350,20 +350,17 @@ export class RecursiveSelect extends SymbolTree {
 export function getSymbolName(symbolClass: Function): string {
     try {
         const str: string = symbolClass.toString();
-
         const match = str.match(/function (\S+)(?=\()/);
         if (match) {
         return match[1];
         }
        return ""; 
     } catch (e) {
-        console.log(e);
-        return ""; 
+      return ""; 
     }
-
-
-
 }
+
+
 export function isTokenClass(symbolClass: Function): boolean {
     return symbolClass.prototype.__proto__.constructor === Token;
 }
