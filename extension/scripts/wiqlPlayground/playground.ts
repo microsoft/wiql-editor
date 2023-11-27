@@ -7,6 +7,7 @@ import { setupEditor } from "../wiqlEditor/wiqlEditor";
 import { renderResult, setError, setMessage } from "./queryResults";
 import * as monaco from 'monaco-editor';
 import { getProject } from "../getProject";
+import "../../styles/wiqlEditor.scss"
 
 async function loadWorkItems(result: WorkItemQueryResult) {
     if (result.workItems.length === 0) {
@@ -116,6 +117,5 @@ setMessage([
 
 // Register context menu action provider
 VSS.register("wiql-playground-hub-menu", {});
-VSS.register("query-results-menu", {});
-VSS.register("query-menu", {});
+
 VSS.init();

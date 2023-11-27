@@ -7,6 +7,7 @@ import { ICallbacks } from "../queryContext/contextContracts";
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
 import * as monaco from "monaco-editor"
 import { getProject } from "../getProject";
+import "../../styles/wiqlEditor.scss"
 
 
 SDK.init().then(() => {
