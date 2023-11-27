@@ -14,11 +14,9 @@ import { conf } from "../wiqlEditor/wiqlDefinition";
 
 
 
-// trackEvent("pageLoad");
-//TODO: before configuration: IContextOptions
+
 
 SDK.init().then(() => {
-    console.log("SHOW THIS?!?!")
     const configuration: any = SDK.getConfiguration();
     const target = document.getElementById("wiql-box");
     if (!target) {
@@ -52,16 +50,16 @@ SDK.init().then(() => {
     async  function saveQuery(): Promise<string | null> {
         
         const client = getClient(WorkItemTrackingRestClient);
-        //  const context = VSS.getWebContext();
+    
         const project = await getProject();
         const queryItem = <QueryHierarchyItem>{
             wiql: editor.getValue(),
             path: configuration.query.path,
             name: configuration.query.name,
         };
-        console.log("Test", queryItem, project);
+
         let result = null;
-        // trackEvent("SaveQuerys", { wiqlLength: "" + editor.getValue().length, isNew: "" + !configuration.query.id });
+  
         if (configuration.query.id && configuration.query.id !== "00000000-0000-0000-0000-000000000000") {
             try {
                 const updated = await client.updateQuery(queryItem, project.name, configuration.query.id);
@@ -75,9 +73,8 @@ SDK.init().then(() => {
         } else {
             const path = configuration.query.isPublic ? "Shared Queries" : "My Queries";
             const name = prompt("Enter name for query");
-            console.log("test", 1,name)
+
             if (name) {
-                console.log("test", 2,name)
                 try {
                     queryItem.name = name;
                     const created = await client.createQuery(queryItem, project.name, path);
