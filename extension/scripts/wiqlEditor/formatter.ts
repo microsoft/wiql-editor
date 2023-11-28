@@ -250,6 +250,8 @@ function formatSync(editor: monaco.editor.IStandaloneCodeEditor, fieldLookup: Fi
     //workaround 
     const getOneIndent = (editor) => {
         const options = editor.getModel().getOptions()
+        console.log("options",options)
+        console.log("options", options.insertSpaces ? ' '.repeat(options.tabSize) : '\t')
         return options.insertSpaces ? ' '.repeat(options.tabSize) : '\t'
     }
     const tab = getOneIndent(editor);
