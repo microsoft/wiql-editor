@@ -127,8 +127,7 @@ ORDER BY [System.ChangedDate] DESC
             return errors.length;
         });
     }
-    checkErrors();
-
+    
     
 
 
@@ -142,6 +141,28 @@ ORDER BY [System.ChangedDate] DESC
     // });
     // editor.onDidChangeModelContent(() => {
     //     updateErrors.reset();
+    // });
+
+
+    editor.onDidChangeModelContent(() => {
+        checkErrors().then((errorCount) => {
+                if (onChange) {
+                    onChange(errorCount);
+                }
+            });
+    });
+
+
+    // const update =  setTimeout(() => {
+    //     checkErrors().then((errorCount) => {
+    //         if (onChange) {
+    //             onChange(errorCount);
+    //         }
+    //     });
+    // }, 1000);
+    
+    // editor.onDidChangeModelContent(() => {
+    //     checkErrors()
     // });
 
     editor.focus();

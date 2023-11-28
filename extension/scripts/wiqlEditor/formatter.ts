@@ -286,7 +286,7 @@ export async function format(editor: monaco.editor.IStandaloneCodeEditor) {
         formatSync(editor, fields);
     } else {
         formatSync(editor, new FieldLookup([]));
-        // Queue fields get now;
+        // Queue fields get now;  
         fieldsVal.getValue();
     }
 }
