@@ -3,7 +3,7 @@ import * as ReactDom from "react-dom";
 import * as VSS from "azure-devops-extension-sdk";
 import { IHostNavigationService, CommonServiceIds } from "azure-devops-extension-api";
 import { FieldType, WorkItem, WorkItemFieldReference, WorkItemQueryResult } from "azure-devops-extension-api/WorkItemTracking";
-import '../../../extension/styles/wiqlEditor.scss';
+
 
 // import { localeFormat, parseDateString } from "azure-devops-extension-api/Util";
 // import { FieldType, WorkItem, WorkItemFieldReference, WorkItemQueryResult } from "TFS/WorkItemTracking/Contracts";
