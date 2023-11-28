@@ -74,7 +74,8 @@ module.exports = {
         test: /\.tsx?$/, 
         loader: "ts-loader",
         options: {
-          transpileOnly: true
+          transpileOnly: true,
+          onlyCompileBundledFiles: true
         },
         //exclude scripts/wiqlEditor/compiler/wiqlTable.ts
         // exclude: /scripts\/wiqlEditor\/compiler\/wiqlTable.ts/,
