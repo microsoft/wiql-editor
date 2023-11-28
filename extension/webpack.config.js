@@ -46,7 +46,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
     alias: {
-      //'monaco-editor': path.resolve(__dirname, "node_modules/monaco-editor/esm/vs/editor/editor.api"),
+      'monaco-editor': path.resolve(__dirname, "node_modules/monaco-editor/esm/vs/editor/editor.api"),
       "azure-devops-extension-sdk": path.resolve("node_modules/azure-devops-extension-sdk"),
       "VSSUI": path.resolve(__dirname, "node_modules/azure-devops-ui"),
       'jquery': path.resolve(__dirname, 'node_modules/jquery/dist/jquery.min.js')
@@ -102,18 +102,18 @@ module.exports = {
         test: /\.(png|svg|jpg|gif|html)$/,
         use: "file-loader"
       },
-      {
-        test: /\.ttf$/,
-        type: 'asset/resource'
-      }
       // {
-      //   test: /\.(ttf)$/,
-      //   use: [
-      //     {
-      //       loader: 'file-loader',
-      //     }
-      //   ]
+      //   test: /\.ttf$/,
+      //   type: 'asset/resource'
       // }
+      {
+        test: /\.(ttf)$/,
+        use: [
+          {
+            loader: 'file-loader',
+          }
+        ]
+      }
     ]
   },
   plugins: [
@@ -122,7 +122,7 @@ module.exports = {
     //   reportFilename: "bundle-analysis.html",
     //   analyzerMode: "static"
     // }),
-    new MonacoWebpackPlugin(),
+    // new MonacoWebpackPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
