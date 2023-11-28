@@ -350,13 +350,14 @@ export class RecursiveSelect extends SymbolTree {
 export function getSymbolName(symbolClass: Function): string {
     try {
         const str: string = symbolClass.toString();
+        console.log(str);
         const match = str.match(/function (\S+)(?=\()/);
         if (match) {
-        return match[1];
+            return match[1];
         }
      
     } catch (e) {
-         return "";
+         console.log("Error matching the symbol function: ",e);
     }
 }
 

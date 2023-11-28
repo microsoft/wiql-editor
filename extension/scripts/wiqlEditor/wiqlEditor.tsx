@@ -12,25 +12,11 @@ import { getHoverProvider } from "./hoverProvider";
 import { exportWiq, importWiq, saveQuery } from "./importExport";
 import * as Wiql from "./wiqlDefinition";
 import * as monaco from 'monaco-editor';
-import { getProject } from "../getProject";
-
-
-
-
-export const getLocationUrl = async () => {
-    const locationService = await VSS.getService<ILocationService>(
-      CommonServiceIds.LocationService
-    );
-    return locationService.getServiceLocation();
-  };
-  
-
-
+import { getHostUrl, getProject } from "../getProject";
+//TODO: If needed switch over to azure-devops-ui
+//import "azure-devops-ui/Core/override.css";
 
 const styles = {backgroundColor: "#0078D7", color: "white", margin: "5px", outline: "none" , padding: "8px 12px", borderRadius: "5px" , border: "  none" }
-
-
-
 
 function renderToolbar(callback: () => void) {
     const elem = document.getElementById("header-bar");
@@ -44,7 +30,7 @@ function renderToolbar(callback: () => void) {
                     <button onClick={() => $(".wiq-input").click()} style={styles}>Import</button>
                     <button className="wiq-export" style={styles}>Export</button>
           
-             <button  onClick={() => $("#save").click()} id="saveQueryBtn" className="saveQueryBtn" style={styles}>Save query</button> ,
+             <button  onClick={() => $("#save").click()} id="saveQueryBtn" className="saveQueryBtn" style={styles}>Save query</button>
                     <button className="open-in-queries" hidden style={styles}>Open in queries</button>
                 </span>
                 <span className="links">
@@ -60,15 +46,12 @@ export function setupEditor(target: HTMLElement, onChange?: (errorCount: number)
         if (queryName) {
             return;
         }
-        const baseUrl = await getLocationUrl();
+        const baseUrl = await getHostUrl();
         const project = await getProject();
         const navigationService = await VSS.getService(CommonServiceIds.HostNavigationService) as IHostNavigationService;
         $(".open-in-queries").show().click(() => {
             const wiql = editor.getModel().getValue();
-            // trackEvent("openInQueries", {wiqlLength: String(wiql.length)});
-            const host = VSS.getHost(); // this is actually org name
-            //TODO: Url should not be static
-            const url = `${baseUrl}${host.name}/${project.id}/_queries/query/?wiql=${encodeURIComponent(wiql)}`;
+            const url = `${baseUrl}/${project.id}/_queries/query/?wiql=${encodeURIComponent(wiql)}`;
             navigationService.openNewWindow(url, "");
          });
     });
@@ -127,7 +110,16 @@ ORDER BY [System.ChangedDate] DESC
             return errors.length;
         });
     }
-    
+    checkErrors();
+
+    editor.onDidChangeModelContent(() => {
+        checkErrors().then((errorCount) => {
+                if (onChange) {
+                    onChange(errorCount);
+                }
+            });
+    });
+
     
 
 
@@ -141,28 +133,6 @@ ORDER BY [System.ChangedDate] DESC
     // });
     // editor.onDidChangeModelContent(() => {
     //     updateErrors.reset();
-    // });
-
-
-    editor.onDidChangeModelContent(() => {
-        checkErrors().then((errorCount) => {
-                if (onChange) {
-                    onChange(errorCount);
-                }
-            });
-    });
-
-
-    // const update =  setTimeout(() => {
-    //     checkErrors().then((errorCount) => {
-    //         if (onChange) {
-    //             onChange(errorCount);
-    //         }
-    //     });
-    // }, 1000);
-    
-    // editor.onDidChangeModelContent(() => {
-    //     checkErrors()
     // });
 
     editor.focus();

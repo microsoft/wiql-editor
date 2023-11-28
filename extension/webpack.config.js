@@ -55,8 +55,8 @@ module.exports = {
   },
   module: {
     rules: [
-      { 
-        test: /\.tsx?$/,
+      {
+        test: /\.tsx?$/, 
         loader: "ts-loader",
       },
       {
@@ -112,7 +112,7 @@ module.exports = {
         { from: "./node_modules/monaco-editor/min/vs/loader.js", to: "./monaco-editor/min/vs" },
         { from: "./node_modules/monaco-editor/min/vs/editor/", to: "./monaco-editor/min/vs/editor", globOptions: { ignore: ["**/*.svg"] } },
         { from: "./node_modules/monaco-editor/min/vs/base/", to: "./monaco-editor/min/vs/base",  globOptions: { ignore: ["**/*.svg"] } },
-        { from: "./node_modules/monaco-editor/min/vs/basic-languages/", to: "./monaco-editor/min/vs/basic-languages", globOptions: { ignore: ["**/*.svg"] } }
+        { from: "./node_modules/monaco-editor/min/vs/basic-languages/", to: "./monaco-editor/min/vs/basic-languages/src/[name].js", globOptions: { ignore: ["**/*.svg"] } }
       ]
     })
   ]
