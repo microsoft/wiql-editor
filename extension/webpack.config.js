@@ -55,32 +55,31 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /wiqlEditor\/compiler\/wiqlTable\.ts$/, // replace this with the exact path to your file
-        use: 'raw-loader',
-      },
-      {
-        test: /\.tsx?$/, 
-        use: [
-          {
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: true, // important for performance
-               allowTsInNodeModules: true
-            }
-          }
-        ]
-      },
+      // {
+      //   test: /wiqlEditor\/compiler\/wiqlTable\.ts$/, // replace this with the exact path to your file
+      //   use: 'raw-loader',
+      // },
       // {
       //   test: /\.tsx?$/, 
-      //   loader: "ts-loader",
-      //   options: {
-      //     allowTsInNodeModules: true
-      //   },
-      //   //exclude scripts/wiqlEditor/compiler/wiqlTable.ts
-      //   // exclude: /scripts\/wiqlEditor\/compiler\/wiqlTable.ts/,
-        
+      //   use: [
+      //     {
+      //       loader: 'ts-loader',
+      //       options: {
+      //         // transpileOnly: true, // important for performance
+      //       }
+      //     }
+      //   ]
       // },
+      {
+        test: /\.tsx?$/, 
+        loader: "ts-loader",
+        options: {
+          transpileOnly: true
+        },
+        //exclude scripts/wiqlEditor/compiler/wiqlTable.ts
+        // exclude: /scripts\/wiqlEditor\/compiler\/wiqlTable.ts/,
+        
+      },
       {
         test: /\.scss$/,
         use: [
