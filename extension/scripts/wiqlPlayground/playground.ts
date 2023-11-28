@@ -105,8 +105,13 @@ function getAction(id: string) {
       //old - > getActions().filter((a) => a.id.match(`:${id}$`))[0].run();
 }
 $(".run-button").click(getAction("run"));
-$(".format-button").click(getAction("#format"));
-console.log("Titi amin");
+
+
+
+$(document).ready(function() {
+    $(".format-button").click(getAction("format"));
+});
+
 setMessage([
     "Key bindings:",
     "Shift + Enter : Run",
