@@ -3,19 +3,6 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <script type="text/javascript">
-    // var appInsights=window.appInsights||function(config){
-    //     function i(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s="AuthenticatedUserContext",h="start",c="stop",l="Track",a=l+"Event",v=l+"Page",y=u.createElement(o),r,f;y.src=config.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js";u.getElementsByTagName(o)[0].parentNode.appendChild(y);try{t.cookie=u.cookie}catch(p){}for(t.queue=[],t.version="1.0",r=["Event","Exception","Metric","PageView","Trace","Dependency"];r.length;)i("track"+r.pop());return i("set"+s),i("clear"+s),i(h+a),i(c+a),i(h+v),i(c+v),i("flush"),config.disableExceptionTracking||(r="onerror",i("_"+r),f=e[r],e[r]=function(config,i,u,e,o){var s=f&&f(config,i,u,e,o);return s!==!0&&t["_"+r](config,i,u,e,o),s}),t
-    //     }({
-    //         instrumentationKey:"c6f04809-22ec-4294-ac32-778938ddac7b",
-    //         disableAjaxTracking: true,
-    //         isPerfAnalyzerEnabled: false,
-    //     });
-        
-    //     window.appInsights=appInsights;
-    //     window.start = performance.now();
-    //     window.extensionLocation = "playground";
-    // </script>
     <link inline rel="stylesheet" type="text/css" href="wiqlEditor.css">
     <style>
         #wiql-box {
@@ -39,39 +26,6 @@
     </div>
     <div id="query-results"></div>
     <script type="text/javascript" src="playground.js" charset="utf-8"></script>
-    </html>
-    <!-- <script src="SDK.min.js"></script>
-    <script type="text/javascript">
-        // Initialize framework 
-        SDK.init({
-            explicitNotifyLoaded: true,
-            usePlatformScripts: true,
-            configureModuleLoader: true,
-            moduleLoaderConfig: {waitSeconds: 15},
-            applyTheme: true,
-        });
-
-        var require = { paths: { 'vs': 'dist/monaco-editor/min/vs' } };
-        // Loader needs to be done async or it errors with vss sdk 
-        SDK.require(['dist/monaco-editor/min/vs/loader'], function () {
-            require(['vs/editor/editor.main'], function() {
-                // Load main entry point for extension
-                SDK.require([
-                    'react',
-                    'react-dom',
-                    // 'TFS/Core/Contracts',
-                    // 'TFS/Core/RestClient',
-                    // 'TFS/WorkItemTracking/Contracts',
-                    // 'TFS/WorkItemTracking/RestClient',
-                    // 'VSS/Operations/Contracts',
-                    'dist/playground',
-                ], function() {
-                    // Loading succeeded
-                    SDK.notifyLoadSucceeded();
-                });
-            });
-        });
-    </script
 </body>
 
 </html>
