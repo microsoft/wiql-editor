@@ -102,6 +102,7 @@ export async function saveQuery(editor, configuration): Promise<string | null> {
         name: configuration.query.name,
     };
 
+
     let result = null;
     if (configuration.query.id && configuration.query.id !== "00000000-0000-0000-0000-000000000000") {
         try {

@@ -18,6 +18,10 @@ import { getHostUrl, getProject } from "../getProject";
 
 const styles = {backgroundColor: "#0078D7", color: "white", margin: "5px", outline: "none" , padding: "8px 12px", borderRadius: "5px" , border: "  none" }
 
+
+console.log("test", window.location);
+
+
 function renderToolbar(callback: () => void) {
     const elem = document.getElementById("header-bar");
     if (!elem) {
@@ -46,6 +50,7 @@ export function setupEditor(target: HTMLElement, onChange?: (errorCount: number)
         if (queryName) {
             return;
         }
+
         const baseUrl = await getHostUrl();
         const project = await getProject();
         const navigationService = await VSS.getService(CommonServiceIds.HostNavigationService) as IHostNavigationService;
