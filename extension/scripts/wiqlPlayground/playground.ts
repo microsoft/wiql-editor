@@ -107,6 +107,7 @@ function getAction(id: string) {
 $(".run-button").click(getAction("run"));
 $(".format-button").click(getAction("format"));
 
+
 setMessage([
     "Key bindings:",
     "Shift + Enter : Run",
@@ -116,4 +117,5 @@ setMessage([
 
 // Register context menu action provider
 VSS.register("wiql-playground-hub-menu", {});
+
 VSS.init();

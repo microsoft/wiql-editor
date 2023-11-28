@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -15,7 +16,7 @@
     //     window.start = performance.now();
     //     window.extensionLocation = "playground";
     // </script>
-    <link inline rel="stylesheet" type="text/css" href="dist/wiqlEditor.css">
+    <link inline rel="stylesheet" type="text/css" href="wiqlEditor.css">
     <style>
         #wiql-box {
             width: 100%;
@@ -33,11 +34,12 @@
     <div id="header-bar"></div>
     <div id="wiql-box"></div>
     <div class="bowtie">
-        <button class="run-button cta">Run</button>
-        <button class="format-button">Format</button>
+        <button class="run-button cta" style="background-color: #0078D7; color: white; margin: 5px; outline: none; padding: 8px 12px; border-radius: 5px; border: none;">Run</button>
+        <button class="format-button" style="background-color: #0078D7; color: white; margin: 5px; outline: none; padding: 8px 12px; border-radius: 5px; border: none;">Format</button>
     </div>
     <div id="query-results"></div>
     <script type="text/javascript" src="playground.js" charset="utf-8"></script>
+    </html>
     <!-- <script src="SDK.min.js"></script>
     <script type="text/javascript">
         // Initialize framework 
@@ -69,7 +71,7 @@
                 });
             });
         });
-    </script> -->
+    </script
 </body>
 
 </html>

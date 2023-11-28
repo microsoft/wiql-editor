@@ -275,6 +275,7 @@ function formatSync(editor: monaco.editor.IStandaloneCodeEditor, fieldLookup: Fi
 }
 
 export async function format(editor: monaco.editor.IStandaloneCodeEditor) {
+
     // Don't wait for fields but use if available
     if (fieldsVal.isLoaded()) {
         const fields = await fieldsVal.getValue();

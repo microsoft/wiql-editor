@@ -1,7 +1,8 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import * as SDK from "azure-devops-extension-sdk";
-import { CommonServiceIds,IHostNavigationService } from "azure-devops-extension-api";
+import * as VSS from "azure-devops-extension-sdk";
+import { CommonServiceIds,IHostNavigationService, ILocationService } from "azure-devops-extension-api";
+import { trackEvent } from "../events";
 import { getCurrentTheme } from "../getCurrentTheme";
 import { parse } from "./compiler/parser";
 import { completionProvider } from "./completion/completion";
@@ -11,28 +12,24 @@ import { getHoverProvider } from "./hoverProvider";
 import { exportWiq, importWiq, saveQuery } from "./importExport";
 import * as Wiql from "./wiqlDefinition";
 import * as monaco from 'monaco-editor';
-import { getHostUrl, getProject } from "../getProject";
+import { getProject } from "../getProject";
+import "../../styles/wiqlEditor.scss";
+
+
+
+export const getLocationUrl = async () => {
+    const locationService = await VSS.getService<ILocationService>(
+      CommonServiceIds.LocationService
+    );
+    return locationService.getServiceLocation();
+  };
+  
+
 
 
 const styles = {backgroundColor: "#0078D7", color: "white", margin: "5px", outline: "none" , padding: "8px 12px", borderRadius: "5px" , border: "  none" }
 
-// const saveQueryBtn = async () => {
-//     const host = VSS.getHost(); 
-//     const project = await getProject();
-//     const currentUrl = window.location.href;
-//     const targetUrl = `https://dev.azure.com/${host.name}/${project.id}/_queries/query-edit/`;
 
-// if(targetUrl.includes("_queries/query-edit/")){
-//   return  <button  
-//         onClick={() => $("#save").click()} 
-//         id="save" 
-//         className="save" 
-//         style={styles}
-//     >
-//         Save query
-//     </button>
-//    }
-// }
 
 
 function renderToolbar(callback: () => void) {
@@ -63,19 +60,17 @@ export function setupEditor(target: HTMLElement, onChange?: (errorCount: number)
         if (queryName) {
             return;
         }
+        const baseUrl = await getLocationUrl();
         const project = await getProject();
-        const navigationService = await SDK.getService(CommonServiceIds.HostNavigationService) as IHostNavigationService;
+        const navigationService = await VSS.getService(CommonServiceIds.HostNavigationService) as IHostNavigationService;
         $(".open-in-queries").show().click(() => {
-            // Check if this is on prem or cloud and use the correct url
             const wiql = editor.getModel().getValue();
-            const host = getHostUrl();
-            let url = `${host}/${project.id}/_queries/query/?wiql=${encodeURIComponent(wiql)}`;
-
+            // trackEvent("openInQueries", {wiqlLength: String(wiql.length)});
+            const host = VSS.getHost(); // this is actually org name
+            //TODO: Url should not be static
+            const url = `${baseUrl}${host.name}/${project.id}/_queries/query/?wiql=${encodeURIComponent(wiql)}`;
             navigationService.openNewWindow(url, "");
-
-      
-
-        });
+         });
     });
     monaco.languages.register(Wiql.def);
     monaco.languages.onLanguage(Wiql.def.id, () => {
