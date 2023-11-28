@@ -56,9 +56,31 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/, 
-        loader: "ts-loader",
+        test: /wiqlEditor\/compiler\/wiqlTable\.ts$/, // replace this with the exact path to your file
+        use: 'raw-loader',
       },
+      {
+        test: /\.tsx?$/, 
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true, // important for performance
+               allowTsInNodeModules: true
+            }
+          }
+        ]
+      },
+      // {
+      //   test: /\.tsx?$/, 
+      //   loader: "ts-loader",
+      //   options: {
+      //     allowTsInNodeModules: true
+      //   },
+      //   //exclude scripts/wiqlEditor/compiler/wiqlTable.ts
+      //   // exclude: /scripts\/wiqlEditor\/compiler\/wiqlTable.ts/,
+        
+      // },
       {
         test: /\.scss$/,
         use: [

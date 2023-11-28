@@ -5,7 +5,7 @@ import { WorkItemTrackingRestClient } from "azure-devops-extension-api/WorkItemT
 import { QueryHierarchyItem } from "azure-devops-extension-api/WorkItemTracking";
 import { ICallbacks } from "../queryContext/contextContracts";
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
-import * as monaco from "monaco-editor"
+import * as monaco from "monaco-editor";
 import { getProject } from "../getProject";
 
 
