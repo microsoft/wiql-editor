@@ -260,6 +260,7 @@ function formatSync(editor: monaco.editor.IStandaloneCodeEditor, fieldLookup: Fi
         parseTree instanceof Symbols.OneHopSelect ||
         parseTree instanceof Symbols.RecursiveSelect) {
         lines = formatSelect(parseTree, tab, fieldLookup);
+        console.log("MAdison", lines)
     } else {
         // syntax error, not going to format
         return;

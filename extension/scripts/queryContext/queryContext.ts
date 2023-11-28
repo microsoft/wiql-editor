@@ -2,7 +2,7 @@ import * as SDK from "azure-devops-extension-sdk";
 import "promise-polyfill/src/polyfill";
 import { showDialog } from "../queryEditor/queryDialog";
 import { IQuery } from "./contextContracts";
-import '../../../extension/styles/wiqlEditor.scss';
+
 
 const menuAction =  {
     execute: (actionContext: { query: IQuery }) => {
