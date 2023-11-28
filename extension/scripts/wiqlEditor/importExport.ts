@@ -101,7 +101,7 @@ export async function saveQuery(editor, configuration): Promise<string | null> {
         path: configuration.query.path,
         name: configuration.query.name,
     };
-    console.log("Test", queryItem, project);
+
     let result = null;
     if (configuration.query.id && configuration.query.id !== "00000000-0000-0000-0000-000000000000") {
         try {
@@ -116,9 +116,9 @@ export async function saveQuery(editor, configuration): Promise<string | null> {
     } else {
         const path = configuration.query.isPublic ? "Shared Queries" : "My Queries";
         const name = prompt("Enter name for query");
-        console.log("test", 1,name)
+ 
         if (name) {
-            console.log("test", 2,name)
+       
             try {
                 queryItem.name = name;
                 const created = await client.createQuery(queryItem, project.name, path);

@@ -110,7 +110,7 @@ ORDER BY [System.ChangedDate] DESC
             return errors.length;
         });
     }
-    checkErrors();
+
 
     editor.onDidChangeModelContent(() => {
         checkErrors().then((errorCount) => {
