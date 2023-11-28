@@ -2,7 +2,7 @@ const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
-const WebpackShellPluginNext = require('webpack-shell-plugin-next');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = {
   mode: "development",
@@ -46,7 +46,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
     alias: {
-      'monaco-editor': path.resolve(__dirname, "node_modules/monaco-editor/esm/vs/editor/editor.api"),
+      // 'monaco-editor': path.resolve(__dirname, "node_modules/monaco-editor/esm/vs/editor/editor.api"),
       "azure-devops-extension-sdk": path.resolve("node_modules/azure-devops-extension-sdk"),
       "VSSUI": path.resolve(__dirname, "node_modules/azure-devops-ui"),
       'jquery': path.resolve(__dirname, 'node_modules/jquery/dist/jquery.min.js')
@@ -103,13 +103,17 @@ module.exports = {
         use: "file-loader"
       },
       {
-        test: /\.(ttf)$/,
-        use: [
-          {
-            loader: 'file-loader',
-          }
-        ]
+        test: /\.ttf$/,
+        type: 'asset/resource'
       }
+      // {
+      //   test: /\.(ttf)$/,
+      //   use: [
+      //     {
+      //       loader: 'file-loader',
+      //     }
+      //   ]
+      // }
     ]
   },
   plugins: [
@@ -118,7 +122,7 @@ module.exports = {
     //   reportFilename: "bundle-analysis.html",
     //   analyzerMode: "static"
     // }),
-    
+    new MonacoWebpackPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -131,10 +135,10 @@ module.exports = {
         { from: "img/*.png", to: "./" },
         { from: "./azure-devops-extension.json", to: "./azure-devops-extension.json" },
         { from: "./node_modules/azure-devops-extension-sdk/esm/SDK.min.js", to: "./" },
-        { from: "./node_modules/monaco-editor/min/vs/loader.js", to: "./monaco-editor/min/vs" },
-        { from: "./node_modules/monaco-editor/min/vs/editor/", to: "./monaco-editor/min/vs/editor", globOptions: { ignore: ["**/*.svg"] } },
-        { from: "./node_modules/monaco-editor/min/vs/base/", to: "./monaco-editor/min/vs/base",  globOptions: { ignore: ["**/*.svg"] } },
-        { from: "./node_modules/monaco-editor/min/vs/basic-languages/", to: "./monaco-editor/min/vs/basic-languages/src/[name].js", globOptions: { ignore: ["**/*.svg"] } }
+        // { from: "./node_modules/monaco-editor/min/vs/loader.js", to: "./monaco-editor/min/vs" },
+        // { from: "./node_modules/monaco-editor/min/vs/editor/", to: "./monaco-editor/min/vs/editor", globOptions: { ignore: ["**/*.svg"] } },
+        // { from: "./node_modules/monaco-editor/min/vs/base/", to: "./monaco-editor/min/vs/base",  globOptions: { ignore: ["**/*.svg"] } },
+        // { from: "./node_modules/monaco-editor/min/vs/basic-languages/", to: "./monaco-editor/min/vs/basic-languages/src/[name].js", globOptions: { ignore: ["**/*.svg"] } }
       ]
     })
   ]

@@ -22,7 +22,7 @@
     "del": "^3.0.0",
     "file-loader": "^6.2.0",
     "mini-css-extract-plugin": "^1.6.0",
-    "monaco-editor": "^0.21.0",
+      "monaco-editor": "^0.21.0",
     "path": "^0.12.7",
     "promise-polyfill": "^8.1.0",
     "raw-loader": "^4.0.2",
@@ -45,10 +45,9 @@
     "azure-devops-extension-sdk": "^4.0.2",
     "azure-devops-ui": "^2.167.83",
     "jquery": "^3.7.1",
+    "monaco-editor-webpack-plugin": "^2.1.0",
     "react": "^15.6.2",
-    "react-dom": "^15.6.2",
-    "webpack-shell-plugin-next": "^2.3.1",
-    "monaco-editor": "^0.21.0"
+    "react-dom": "^15.6.2"
   },
   "name": "wiql-editor",
   "private": true,
