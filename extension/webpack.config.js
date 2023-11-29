@@ -26,7 +26,6 @@ module.exports = {
     ]
   },
   output: {
-    // libraryTarget: "amd",
     path: path.resolve(__dirname, 'dist'),
     filename: "[name].js",
   },
@@ -44,12 +43,8 @@ module.exports = {
 
   externals: [{
     "q": true,
-    // "react": true,
-    // "react-dom": true,
     "monaco": true,
-    // "jquery": true,
   },
-    // /^VSS\/.*/, /^TFS\/.*/, /^q$/
   ],
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
@@ -63,31 +58,12 @@ module.exports = {
   },
   module: {
     rules: [
-      // {
-      //   test: /wiqlEditor\/compiler\/wiqlTable\.ts$/, // replace this with the exact path to your file
-      //   use: 'raw-loader',
-      // },
-      // {
-      //   test: /\.tsx?$/, 
-      //   use: [
-      //     {
-      //       loader: 'ts-loader',
-      //       options: {
-      //         // transpileOnly: true, // important for performance
-      //       }
-      //     }
-      //   ]
-      // },
       {
         test: /\.tsx?$/, 
         loader: "ts-loader",
         options: {
-          transpileOnly: true,
-          onlyCompileBundledFiles: true
+          // transpileOnly: true, - should help with HMR
         },
-        //exclude scripts/wiqlEditor/compiler/wiqlTable.ts
-        // exclude: /scripts\/wiqlEditor\/compiler\/wiqlTable.ts/,
-        
       },
       {
         test: /\.scss$/,
@@ -139,10 +115,6 @@ module.exports = {
         { from: "img/*.png", to: "./" },
         { from: "./azure-devops-extension.json", to: "./azure-devops-extension.json" },
         { from: "./node_modules/azure-devops-extension-sdk/esm/SDK.min.js", to: "./" },
-        // { from: "./node_modules/monaco-editor/min/vs/loader.js", to: "./monaco-editor/min/vs" },
-        // { from: "./node_modules/monaco-editor/min/vs/editor/", to: "./monaco-editor/min/vs/editor", globOptions: { ignore: ["**/*.svg"] } },
-        // { from: "./node_modules/monaco-editor/min/vs/base/", to: "./monaco-editor/min/vs/base",  globOptions: { ignore: ["**/*.svg"] } },
-        // { from: "./node_modules/monaco-editor/min/vs/basic-languages/", to: "./monaco-editor/min/vs/basic-languages/src/[name].js", globOptions: { ignore: ["**/*.svg"] } }
       ]
     })
   ]
