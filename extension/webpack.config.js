@@ -2,7 +2,8 @@ const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+
 
 module.exports = {
   mode: "development",
@@ -13,10 +14,17 @@ module.exports = {
     queryEditor: "./scripts/queryEditor/queryEditor.ts"
 
   },
-  // optimization: {
-  //   chunkIds: "deterministic",
-  //   concatenateModules: true
-  // },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          keep_classnames: true,
+          keep_fnames: true
+        }
+      })
+    ]
+  },
   output: {
     // libraryTarget: "amd",
     path: path.resolve(__dirname, 'dist'),
@@ -102,10 +110,7 @@ module.exports = {
         test: /\.(png|svg|jpg|gif|html)$/,
         use: "file-loader"
       },
-      // {
-      //   test: /\.ttf$/,
-      //   type: 'asset/resource'
-      // }
+     
       {
         test: /\.(ttf)$/,
         use: [
@@ -122,7 +127,6 @@ module.exports = {
     //   reportFilename: "bundle-analysis.html",
     //   analyzerMode: "static"
     // }),
-    // new MonacoWebpackPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
