@@ -34,7 +34,7 @@ class WorkItemRow extends React.Component<{
         const project  = this.state;
         const host = getHostUrl();
 
-        const wiUrl = `${host}/${project}/_workitems?id=${wi.id}&_a=edit&fullScreen=true`;
+        const wiUrl = `${host}${project}/_workitems?id=${wi.id}&_a=edit&fullScreen=true`;
 
         const tds: JSX.Element[] = [];
         if (rel) {

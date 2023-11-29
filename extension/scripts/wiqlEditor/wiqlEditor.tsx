@@ -56,7 +56,7 @@ export function setupEditor(target: HTMLElement, onChange?: (errorCount: number)
         const navigationService = await VSS.getService(CommonServiceIds.HostNavigationService) as IHostNavigationService;
         $(".open-in-queries").show().click(() => {
             const wiql = editor.getModel().getValue();
-            const url = `${baseUrl}/${project.id}/_queries/query/?wiql=${encodeURIComponent(wiql)}`;
+            const url = `${baseUrl}${project.id}/_queries/query/?wiql=${encodeURIComponent(wiql)}`;
             navigationService.openNewWindow(url, "");
          });
     });

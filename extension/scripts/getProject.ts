@@ -20,7 +20,7 @@ export async function getHostUrl() {
 
     const host = SDK.getHost();
     const location = await locationService.getServiceLocation()
-    const url = `${location}${host.name}`;
+    const url = `${location}`;
     return url;
 
 }
