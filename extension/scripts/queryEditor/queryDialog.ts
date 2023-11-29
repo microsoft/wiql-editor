@@ -72,14 +72,12 @@ export async function showDialog(query: IQuery) {
         onClose: (result) => {
             if (result !== undefined) {
                 // save();
-                console.log("do somehting on close")
             }
         }
     }
   
     const extInfo = SDK.getExtensionContext();
     const contentContribution = `${extInfo.publisherId}.${extInfo.extensionId}.contextForm`;
-    console.log("name: "+ query.name + ", wiql: "+ query.wiql)
     dialogService.openPanel(contentContribution, panelOptions);
 }
 

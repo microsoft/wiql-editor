@@ -250,24 +250,18 @@ function formatSync(editor: monaco.editor.IStandaloneCodeEditor, fieldLookup: Fi
     //workaround 
     const getOneIndent = (editor) => {
         const options = editor.getModel().getOptions()
-        console.log("options",options)
-        console.log("options", options.insertSpaces ? ' '.repeat(options.tabSize) : '\t')
         return options.insertSpaces ? ' '.repeat(options.tabSize) : '\t'
     }
     const tab = getOneIndent(editor);
 
     const parseTree = parse(model.getLinesContent());
-    console.log("parseTree", parseTree)
     let lines: string[];
     if (parseTree instanceof Symbols.FlatSelect ||
         parseTree instanceof Symbols.OneHopSelect ||
         parseTree instanceof Symbols.RecursiveSelect) {
         lines = formatSelect(parseTree, tab, fieldLookup);
-
-        console.log("parseTree", parseTree)
     } else {
         // syntax error, not going to format
-        console.log("test ==> fails >"  )
         return;
     }
     const edit = <monaco.editor.IIdentifiedSingleEditOperation> {
