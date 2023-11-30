@@ -16,10 +16,20 @@ import { getHostUrl, getProject } from "../getProject";
 //TODO: If needed switch over to azure-devops-ui
 //import "azure-devops-ui/Core/override.css";
 
-const styles = {backgroundColor: "#0078D7", color: "white", margin: "5px", outline: "none" , padding: "8px 12px", borderRadius: "5px" , border: "  none" }
-
-
-console.log("test", window.location);
+export const styles = {
+    backgroundColor: "#0078d4",
+    color: "white",
+    border: "none",
+    padding: "10px 20px",
+    borderRadius: "2px",
+    fontSize: "14px",
+    cursor: "pointer",
+    textAlign: "center",
+    display: "inline-block",
+    boxShadow: "0 1px 4px rgba(0, 0, 0, 0.2)",
+    transition: "background-color 0.2s ease",
+    margin: "12px 10px",
+};
 
 
 function renderToolbar(callback: () => void) {

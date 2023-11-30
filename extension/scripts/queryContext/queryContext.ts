@@ -12,7 +12,7 @@ const menuAction =  {
         }
         return {
             action: (actionContext) => {
-                console.log("actionContext", actionContext);
+               
                 showDialog(actionContext.query);
             },
         };

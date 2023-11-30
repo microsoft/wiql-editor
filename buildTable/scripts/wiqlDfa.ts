@@ -193,14 +193,3 @@ export function calcDfa(productions: Productions): [State[], Transition[], Resol
     }
     return [states, transitions, resolutions];
 }
-
-// //Debug info
-// function replacer(k, v) {
-// 	if (typeof v === 'function') {
-// 		return Symbols.getSymbolName(v);
-// 	}
-// 	return v;
-// }
-// console.log(JSON.stringify(states, replacer));
-// console.log(JSON.stringify(transitions, replacer));
-// console.log(JSON.stringify(resolutions, replacer));
