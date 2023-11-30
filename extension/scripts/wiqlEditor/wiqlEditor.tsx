@@ -32,7 +32,7 @@ export const styles = {
 };
 
 
-function renderToolbar(callback: () => void) {
+function renderToolbar(isPanel: boolean,callback: () => void) {
     const elem = document.getElementById("header-bar");
     if (!elem) {
         return;
@@ -43,9 +43,12 @@ function renderToolbar(callback: () => void) {
                     <input className="wiq-input" accept=".wiq" type="file"  hidden />
                     <button onClick={() => $(".wiq-input").click()} style={styles}>Import</button>
                     <button className="wiq-export" style={styles}>Export</button>
-          
-             <button  onClick={() => $("#save").click()} id="saveQueryBtn" className="saveQueryBtn" style={styles}>Save query</button>
-                    <button className="open-in-queries" hidden style={styles}>Open in queries</button>
+
+            {isPanel && (
+                    <button onClick={ () => $("#save").click() } id="saveQueryBtn" className="saveQueryBtn" style={ styles }>Save query</button>
+                    
+            )}
+                <button className="open-in-queries" hidden style={ styles }> Open in queries </button>
                 </span>
                 <span className="links">
                     <a href="https://marketplace.visualstudio.com/items?itemName=ms-devlabs.wiql-editor" target="_blank">Review</a>{" | "}
@@ -55,8 +58,9 @@ function renderToolbar(callback: () => void) {
         , elem, callback);
 }
 
-export function setupEditor(target: HTMLElement, onChange?: (errorCount: number) => void, intialValue?: string, queryName?: string, configuration?: any): monaco.editor.IStandaloneCodeEditor {
-    renderToolbar(async () => {
+export function setupEditor(target: HTMLElement, onChange?: (errorCount: number) => void, intialValue?: string, queryName?: string, configuration?: any, isPanel?: boolean): monaco.editor.IStandaloneCodeEditor {
+    //set isPanel default value to false if not provided
+    renderToolbar(isPanel,async () => {
         if (queryName) {
             return;
         }
