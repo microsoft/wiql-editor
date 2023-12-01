@@ -5,11 +5,6 @@ import { IHostNavigationService, CommonServiceIds } from "azure-devops-extension
 import { FieldType, WorkItem, WorkItemFieldReference, WorkItemQueryResult } from "azure-devops-extension-api/WorkItemTracking";
 
 
-// import { localeFormat, parseDateString } from "azure-devops-extension-api/Util";
-// import { FieldType, WorkItem, WorkItemFieldReference, WorkItemQueryResult } from "TFS/WorkItemTracking/Contracts";
-// import { HostNavigationService } from "VSS/SDK/Services/Navigation";
-// import { localeFormat, parseDateString } from "VSS/Utils/Date";
-
 import { FieldLookup, fieldsVal } from "../cachedData/fields";
 import { getHostUrl, getProject } from "../getProject";
 
