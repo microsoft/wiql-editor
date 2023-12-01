@@ -107,7 +107,7 @@
                 "text": "Edit query wiql",
                 "icon":{
                     "light": "img/smallDarkThemeLogo.png",
-                    "dark": "img/smallLogo.pngg"
+                    "dark": "img/smallLogo.png"
                 },
                 "group": "actions",
                 "uri": "dist/queryContext.html",
