@@ -72,8 +72,16 @@ export async function importWiq(editor: monaco.editor.IStandaloneCodeEditor) {
 export async function exportWiq(editor: monaco.editor.IStandaloneCodeEditor, queryName?: string) {
     const documentStr = await toDocument(editor.getModel().getValue());
     const blob = new Blob([documentStr], {type: "text/plain;charset=utf-8;"});
-    let name = queryName || prompt("Enter file name") || "query";
-    if (name.toLocaleLowerCase().indexOf(".wiq", name.length - 4) < 0) {
+    const check =  prompt("Enter file name") 
+    let name = queryName ||check|| "query";
+
+    if (check === null) {
+        console.log("Export cancelled");
+        return; // This will exit the function early
+    
+    }
+  
+    if ( name.toLocaleLowerCase().indexOf(".wiq", name.length - 4) < 0) {
         name += ".wiq";
     }
     trackEvent("exportWiq", {wiqlLength: String(documentStr.length)});
@@ -90,6 +98,7 @@ export async function exportWiq(editor: monaco.editor.IStandaloneCodeEditor, que
         a.click();
         document.body.removeChild(a);
     // }
+    
 }
 
 export async function saveQuery(editor, configuration): Promise<string | null> {
