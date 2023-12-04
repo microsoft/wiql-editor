@@ -62,7 +62,7 @@ module.exports = {
         test: /\.tsx?$/, 
         loader: "ts-loader",
         options: {
-          // transpileOnly: true, - should help with HMR
+           //transpileOnly: true,// - should help with HMR
         },
       },
       {
@@ -114,7 +114,7 @@ module.exports = {
         { from: "./*.html", to: "./", },
         { from: "img/*.png", to: "./" },
         { from: "./azure-devops-extension.json", to: "./azure-devops-extension.json" },
-        { from: "./node_modules/azure-devops-extension-sdk/esm/SDK.min.js", to: "./" },
+        { from: "./node_modules/azure-devops-extension-sdk/SDK.min.js", to: "./" },
       ]
     })
   ]
