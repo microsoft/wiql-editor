@@ -18,7 +18,6 @@ import { getHostUrl, getProject } from "../getProject";
 
 export const styles = {
     backgroundColor: "rgba(var(--palette-neutral-4,244, 244, 244),1)",
-    color: "white",
     border: "none",
     padding: "10px 20px",
     borderRadius: "2px",
@@ -29,6 +28,7 @@ export const styles = {
     boxShadow: "0 1px 4px rgba(0, 0, 0, 0.2)",
     transition: "background-color 0.2s ease",
     margin: "12px 10px",
+
 };
 
 export const saveQueryBtmstyles = {

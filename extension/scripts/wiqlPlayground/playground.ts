@@ -1,12 +1,15 @@
-import * as VSS from "azure-devops-extension-sdk";
+import * as SDK from "azure-devops-extension-sdk";
 import "promise-polyfill/src/polyfill";
 import { getClient } from "azure-devops-extension-api";
-import { CoreRestClient } from "azure-devops-extension-api/Core";
+// import { CoreRestClient } from "azure-devops-extension-api/Core";
 import { WorkItemQueryResult, WorkItemTrackingRestClient} from "azure-devops-extension-api/WorkItemTracking"
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
 import { renderResult, setError, setMessage } from "./queryResults";
 import * as monaco from 'monaco-editor';
-import { getProject } from "../getProject";
+import { getHostUrl, getProject } from "../getProject";
+
+
+let currentContext: any;
 
 async function loadWorkItems(result: WorkItemQueryResult) {
     if (result.workItems.length === 0) {
@@ -53,11 +56,26 @@ async function search() {
     const wiqlText = editor.getValue();
     setMessage("Running query...");
     const client = getClient(WorkItemTrackingRestClient) 
-    const coreClient = getClient(CoreRestClient);
+    // const coreClient = getClient(CoreRestClient);
     const project = await getProject();
-    const projectData = await coreClient.getProject(project.name);
-    // VSS.ready().then(() => {
-        client.queryByWiql({ query: wiqlText }, project.name, projectData.defaultTeam.name, true, 50).then(
+    const token = await SDK.getAccessToken();
+    const baseUrl = await getHostUrl();
+    const url = `${baseUrl}/_apis/projects/${project.name}/teams?api-version=5.1`;
+    const team = await fetch(url, {
+        headers: {
+            'Authorization': 'Bearer ' + token, 
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            const defaultTeamName = data.value[0].name;
+            return defaultTeamName;
+        })
+        .catch(error => console.error('Error:', error));
+
+    
+    await SDK.ready().then( async() => {
+        client.queryByWiql({ query: wiqlText }, project.name, team, true, 50).then(
             (result) => {
                 result.workItems = result.workItems && result.workItems.splice(0, 50);
                 result.workItemRelations = result.workItemRelations && result.workItemRelations.splice(0, 50);
@@ -70,7 +88,7 @@ async function search() {
                 const message = typeof error === "string" ? error : (error.serverError || error).message;
                 setError(error);
             });
-    // });
+    });
 }
 
 const target = document.getElementById("wiql-box");
@@ -116,6 +134,6 @@ setMessage([
 ]);
 
 // Register context menu action provider
-VSS.register("wiql-playground-hub-menu", {});
+SDK.register("wiql-playground-hub-menu", {});
 
-VSS.init();
+SDK.init();
