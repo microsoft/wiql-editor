@@ -31,6 +31,21 @@ export const styles = {
     margin: "12px 10px",
 };
 
+export const saveQueryBtmstyles = {
+ 
+    backgroundColor: "rgba(var(--palette-neutral-4,244, 244, 244),1)",
+    color: "white",
+    border: "none",
+    padding: "10px 20px",
+    borderRadius: "2px",
+    fontSize: "14px",
+    cursor: "pointer",
+    textAlign: "center",
+    display: "inline-block",
+    boxShadow: "0 1px 4px rgba(0, 0, 0, 0.2)",
+    transition: "background-color 0.2s ease",
+    margin: "12px 10px",
+};
 
 function renderToolbar(isPanel: boolean,callback: () => void) {
     const elem = document.getElementById("header-bar");
@@ -44,10 +59,10 @@ function renderToolbar(isPanel: boolean,callback: () => void) {
                     <button onClick={() => $(".wiq-input").click()} style={styles}>Import</button>
                     <button className="wiq-export" style={styles}>Export</button>
 
-            {isPanel && (
-                    <button onClick={ () => $("#save").click() } id="saveQueryBtn" className="saveQueryBtn" style={ styles }>Save query</button>
+            {!isPanel ? (
+                    <button onClick={ () => $("#save").click() } id="saveQueryBtn" className="saveQueryBtn" style={ saveQueryBtmstyles }>Save query</button> 
                     
-            )}
+            ) : null}
                 <button className="open-in-queries" hidden style={ styles }> Open in queries </button>
                 </span>
                 <span className="links">
