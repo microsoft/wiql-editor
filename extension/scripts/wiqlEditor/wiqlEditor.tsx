@@ -48,7 +48,10 @@ function renderToolbar(isPanel: boolean,callback: () => void) {
                     <button onClick={ () => $("#save").click() } id="saveQueryBtn" className="saveQueryBtn" style={ styles }>Save query</button>
                     
             )}
+            {!isPanel && (
                 <button className="open-in-queries" hidden style={ styles }> Open in queries </button>
+                )
+}
                 </span>
                 <span className="links">
                     <a href="https://marketplace.visualstudio.com/items?itemName=ms-devlabs.wiql-editor" target="_blank">Review</a>{" | "}
