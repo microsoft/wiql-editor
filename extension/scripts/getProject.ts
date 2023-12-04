@@ -18,7 +18,6 @@ export async function getHostUrl() {
         CommonServiceIds.LocationService
     );
 
-    const host = SDK.getHost();
     const location = await locationService.getServiceLocation()
     const url = `${location}`;
     return url;
