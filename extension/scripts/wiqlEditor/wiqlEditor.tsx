@@ -17,7 +17,7 @@ import { getHostUrl, getProject } from "../getProject";
 //import "azure-devops-ui/Core/override.css";
 
 export const styles = {
-    backgroundColor: "#0078d4",
+    backgroundColor: "rgba(var(--palette-neutral-4,244, 244, 244),1)",
     color: "white",
     border: "none",
     padding: "10px 20px",
@@ -33,7 +33,7 @@ export const styles = {
 
 export const saveQueryBtmstyles = {
  
-    backgroundColor: "rgba(var(--palette-neutral-4,244, 244, 244),1)",
+    backgroundColor:  "#0078d4",
     color: "white",
     border: "none",
     padding: "10px 20px",
@@ -59,11 +59,16 @@ function renderToolbar(isPanel: boolean,callback: () => void) {
                     <button onClick={() => $(".wiq-input").click()} style={styles}>Import</button>
                     <button className="wiq-export" style={styles}>Export</button>
 
-            {!isPanel ? (
+            {isPanel && (
                     <button onClick={ () => $("#save").click() } id="saveQueryBtn" className="saveQueryBtn" style={ saveQueryBtmstyles }>Save query</button> 
-                    
-            ) : null}
-                <button className="open-in-queries" hidden style={ styles }> Open in queries </button>
+
+            ) }
+
+         {!isPanel ?(
+               <button className="open-in-queries" hidden style={ styles }> Open in queries </button>   
+
+            ) : null }
+              
                 </span>
                 <span className="links">
                     <a href="https://marketplace.visualstudio.com/items?itemName=ms-devlabs.wiql-editor" target="_blank">Review</a>{" | "}
