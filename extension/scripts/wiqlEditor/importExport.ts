@@ -119,7 +119,7 @@ export async function saveQuery(editor, configuration): Promise<string | null> {
             const updated = await client.updateQuery(queryItem, project.name, configuration.query.id);
             const html = updated._links ? updated._links.html : null;
             result = html ? html.href : "";
-            await save(result, configuration.query);
+            await save(result, configuration.que);
             return result;
         } catch (err) {
             console.error("Error updating query:", err);

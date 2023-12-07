@@ -32,7 +32,7 @@ export async function save(result?: any, query?: IQuery) {
     dialogService.openMessageDialog(message, {
         title: "Error saving query",
     });
-    console.log("Test", error)
+   
 }
 }
 
@@ -44,7 +44,7 @@ function saveErrorMessage(error: any, query: IQuery) {
         return "Only queries in saved in My Queries or Shared Queries can be updated with this extension";
     }
     const exception = (error.serverError || error) as any;
-    // tslint:disable-next-line:no-string-literal
+  
     const message = (exception["message"] || exception["value"]["Message"]) as string;
     return message;
 }
@@ -62,25 +62,7 @@ export async function showDialog(query: IQuery) {
     function close() {
         closeDialog();
     }
-    async function save(result?: any) {
-            try {
-            if (typeof result !== "string") {
-                return;
-            }
-            const navigationService = await SDK.getService(CommonServiceIds.HostNavigationService) as IHostNavigationService;
-            if (result === "") {
-                navigationService.reload();
-            } else {
-                navigationService.navigate(result);
-            }
-        } catch (error) {
-            const message = saveErrorMessage(error, query);
-            dialogService.openMessageDialog(message, {
-                title: "Error saving query",
-            });
-        }
-    }
-
+    
     
     
 

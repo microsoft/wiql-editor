@@ -1,4 +1,4 @@
-// import { DelayedFunction } from "VSS/Utils/Core";
+
 import ApplicationInsights from "applicationinsights-js";
 import * as VSS from "azure-devops-extension-sdk";
 

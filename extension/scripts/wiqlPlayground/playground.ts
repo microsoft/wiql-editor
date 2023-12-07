@@ -1,7 +1,6 @@
 import * as SDK from "azure-devops-extension-sdk";
 import "promise-polyfill/src/polyfill";
 import { getClient } from "azure-devops-extension-api";
-// import { CoreRestClient } from "azure-devops-extension-api/Core";
 import { WorkItemQueryResult, WorkItemTrackingRestClient} from "azure-devops-extension-api/WorkItemTracking"
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
 import { renderResult, setError, setMessage } from "./queryResults";

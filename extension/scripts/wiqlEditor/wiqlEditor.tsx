@@ -2,7 +2,6 @@ import * as React from "react";
 import * as ReactDom from "react-dom";
 import * as VSS from "azure-devops-extension-sdk";
 import { CommonServiceIds,IHostNavigationService, ILocationService } from "azure-devops-extension-api";
-import { trackEvent } from "../events";
 import { getCurrentTheme } from "../getCurrentTheme";
 import { parse } from "./compiler/parser";
 import { completionProvider } from "./completion/completion";
@@ -13,8 +12,7 @@ import { exportWiq, importWiq, saveQuery } from "./importExport";
 import * as Wiql from "./wiqlDefinition";
 import * as monaco from 'monaco-editor';
 import { getHostUrl, getProject } from "../getProject";
-//TODO: If needed switch over to azure-devops-ui
-//import "azure-devops-ui/Core/override.css";
+
 
  const styles:  React.CSSProperties = {
     backgroundColor: "rgba(var(--palette-neutral-4,244, 244, 244),1)",
