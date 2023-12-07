@@ -9,7 +9,6 @@ import * as monaco from 'monaco-editor';
 import { getHostUrl, getProject } from "../getProject";
 
 
-let currentContext: any;
 
 async function loadWorkItems(result: WorkItemQueryResult) {
     if (result.workItems.length === 0) {
@@ -56,8 +55,7 @@ async function search() {
     const wiqlText = editor.getValue();
     setMessage("Running query...");
     const client = getClient(WorkItemTrackingRestClient) 
-    // const coreClient = getClient(CoreRestClient);
-    const project = await getProject();
+     const project = await getProject();
     const token = await SDK.getAccessToken();
     const baseUrl = await getHostUrl();
     const url = `${baseUrl}/_apis/projects/${project.name}/teams?api-version=5.1`;
@@ -120,7 +118,7 @@ editor.addAction({
 });
 function getAction(id: string) {
     return () => editor.getAction(id).run();
-      //old - > getActions().filter((a) => a.id.match(`:${id}$`))[0].run();
+    
 }
 $(".run-button").click(getAction("run"));
 $(".format-button").click(getAction("format"));
