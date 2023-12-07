@@ -27,6 +27,7 @@ import { getHostUrl, getProject } from "../getProject";
     transition: "background-color 0.2s ease",
     margin: "12px 10px",
     fontWeight: "bold",
+    fontFamily: "sans-serif",
    };
 
  const saveQueryBtmstyles : React.CSSProperties = {
@@ -41,7 +42,8 @@ import { getHostUrl, getProject } from "../getProject";
     display: "inline-block",
     boxShadow: "0 1px 4px rgba(0, 0, 0, 0.2)",
     transition: "background-color 0.2s ease",
-    fontWeight: "bold",
+    fontWeight: "bold", 
+    fontFamily: "sans-serif",
    
 };
 
@@ -56,7 +58,7 @@ function renderToolbar(isPanel: boolean,callback: () => void) {
             <div className="header">
                 <span className="bowtie">
                     <input className="wiq-input" accept=".wiq" type="file"  hidden />
-                    <button onClick={() => $(".wiq-input").click()} style={styles}>Import</button>
+                    <button onClick={() => $(".wiq-input").click()} style={styles}>Run</button>
                     <button className="wiq-export" style={styles}>Export</button>
 
             {isPanel && (
@@ -118,6 +120,13 @@ ORDER BY [System.ChangedDate] DESC
         automaticLayout: true,
         wordWrap: "on",
         theme: getCurrentTheme() === "dark" ? "vs-dark" : "vs",
+        fontSize: 14, // Set the font size to 14
+        lineHeight: 20, // Set the line height to 20
+        minimap: { enabled: false }, // Disable the minimap
+     
+
+
+
     });
 
     format(editor);
