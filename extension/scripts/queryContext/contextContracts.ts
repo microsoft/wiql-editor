@@ -9,7 +9,6 @@ export interface IQuery {
 export interface IContextOptions {
     query: IQuery;
     initialValue: boolean;
-    save: () => void;
     loaded: (callbacks: ICallbacks) => Promise<void>;
 }
 

@@ -15,6 +15,29 @@ import * as SDK from "azure-devops-extension-sdk";
 
 
 
+export async function save(result?: any, query?: IQuery) {
+    const dialogService = await SDK.getService<IHostPageLayoutService>(CommonServiceIds.HostPageLayoutService);
+    try {
+    if (typeof result !== "string") {
+        return;
+    }
+    const navigationService = await SDK.getService(CommonServiceIds.HostNavigationService) as IHostNavigationService;
+    if (result === "") {
+        navigationService.reload();
+    } else {
+        navigationService.navigate(result);
+    }
+} catch (error) {
+    const message = saveErrorMessage(error, query);
+    dialogService.openMessageDialog(message, {
+        title: "Error saving query",
+    });
+    console.log("Test", error)
+}
+}
+
+
+
 
 function saveErrorMessage(error: any, query: IQuery) {
     if (!isSupportedQueryId(query.id)) {
@@ -57,14 +80,19 @@ export async function showDialog(query: IQuery) {
             });
         }
     }
+
+    
+    
+
+
     const context: IContextOptions = {
         query: query,
         initialValue: false,
-        save: save,
-        loaded: async (callbacks) => {
+         loaded: async (callbacks) => {
             okCallback = callbacks.okCallback;
         }
     }
+
     const panelOptions: IPanelOptions<any> = {
         title: query.name,
         configuration: context,

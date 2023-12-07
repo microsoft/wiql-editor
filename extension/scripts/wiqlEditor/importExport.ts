@@ -10,6 +10,7 @@ import { trackEvent } from "../events";
 import * as monaco from 'monaco-editor';
 import { getProject } from "../getProject";
 import { QueryHierarchyItem, WorkItemTrackingRestClient } from "azure-devops-extension-api/WorkItemTracking";
+import { save } from "../queryEditor/queryDialog";
 
 async function toDocument(wiql: string) {
     const rootDoc = jQuery.parseXML(`<WorkItemQuery Version="1"/>`);
@@ -118,7 +119,7 @@ export async function saveQuery(editor, configuration): Promise<string | null> {
             const updated = await client.updateQuery(queryItem, project.name, configuration.query.id);
             const html = updated._links ? updated._links.html : null;
             result = html ? html.href : "";
-            await configuration.save(result);
+            await save(result, configuration.query);
             return result;
         } catch (err) {
             console.error("Error updating query:", err);

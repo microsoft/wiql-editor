@@ -162,17 +162,6 @@ ORDER BY [System.ChangedDate] DESC
     
 
 
-    //TODO: Need to re-rewrite this part
-    // const updateErrors = new DelayedFunction(null, 200, "CheckErrors", () => {
-    //     checkErrors().then((errorCount) => {
-    //         if (onChange) {
-    //             onChange(errorCount);
-    //         }
-    //     });
-    // });
-    // editor.onDidChangeModelContent(() => {
-    //     updateErrors.reset();
-    // });
 
     editor.focus();
     return editor;

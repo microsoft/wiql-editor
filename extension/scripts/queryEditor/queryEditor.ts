@@ -1,12 +1,8 @@
 import * as SDK from "azure-devops-extension-sdk";
 import "promise-polyfill/src/polyfill";
-import { getClient } from "azure-devops-extension-api";
-import { WorkItemTrackingRestClient } from "azure-devops-extension-api/WorkItemTracking";
-import { QueryHierarchyItem } from "azure-devops-extension-api/WorkItemTracking";
-import { ICallbacks } from "../queryContext/contextContracts";
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
 import * as monaco from "monaco-editor";
-import { getProject } from "../getProject";
+
 
 
 SDK.init().then(() => {
