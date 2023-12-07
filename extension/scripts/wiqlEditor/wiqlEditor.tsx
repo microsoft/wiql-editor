@@ -48,7 +48,6 @@ import { getHostUrl, getProject } from "../getProject";
 };
 
 
-const stylesr ="background-color:rgba(var(--palette-neutral-4,244, 244, 244),1); border: none; padding: 10px 20px; border-radius: 2px; font-size: 14px; cursor: pointer; text-align: center; display: inline-block; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2); transition: background-color 0.2s ease; margin: 0 10px; font-weight: bold;"
 
 function renderToolbar(isPanel: boolean,callback: () => void) {
     const elem = document.getElementById("header-bar");
