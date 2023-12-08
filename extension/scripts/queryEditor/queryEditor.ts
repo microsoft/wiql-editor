@@ -2,6 +2,7 @@ import * as SDK from "azure-devops-extension-sdk";
 import "promise-polyfill/src/polyfill";
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
 import * as monaco from "monaco-editor";
+import {save} from "../queryEditor/queryDialog";
 
 
 
@@ -19,7 +20,7 @@ SDK.init().then(() => {
         label: "Save",
         keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S],
         run: () => {
-            configuration.save();
+            save();
             return null as any;
         },
     });

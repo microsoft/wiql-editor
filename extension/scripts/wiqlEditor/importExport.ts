@@ -135,7 +135,7 @@ export async function saveQuery(editor, configuration): Promise<string | null> {
                 const created = await client.createQuery(queryItem, project.name, path);
                 const html = created._links ? created._links.html : null;
                 result = html ? html.href : "";
-                await configuration.save(result);
+                await save(result);
                 return result;
             } catch (err) {
                 console.error("Error creating query:", err);
