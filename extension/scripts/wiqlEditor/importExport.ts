@@ -10,7 +10,7 @@ import { trackEvent } from "../events";
 import * as monaco from 'monaco-editor';
 import { getProject } from "../getProject";
 import { QueryHierarchyItem, WorkItemTrackingRestClient } from "azure-devops-extension-api/WorkItemTracking";
-import { save } from "../queryEditor/queryDialog";
+import { handleSaveResult } from "../queryEditor/queryDialog";
 
 async function toDocument(wiql: string) {
     const rootDoc = jQuery.parseXML(`<WorkItemQuery Version="1"/>`);
@@ -102,7 +102,7 @@ export async function exportWiq(editor: monaco.editor.IStandaloneCodeEditor, que
     
 }
 
-export async function saveQuery(editor, configuration): Promise<string | null> {
+export async function saveQuery(editor, configuration): Promise<void> {
     
     const client = getClient(WorkItemTrackingRestClient);
     const project = await getProject();
@@ -112,17 +112,16 @@ export async function saveQuery(editor, configuration): Promise<string | null> {
         name: configuration.query.name,
     };
 
-
     let result = null;
     if (configuration.query.id && configuration.query.id !== "00000000-0000-0000-0000-000000000000") {
         try {
             const updated = await client.updateQuery(queryItem, project.name, configuration.query.id);
             const html = updated._links ? updated._links.html : null;
             result = html ? html.href : "";
-            await save(result, configuration.que);
-            return result;
+            await handleSaveResult(result, configuration.que);
         } catch (err) {
-            console.error("Error updating query:", err);
+            await handleSaveResult(null, configuration.query, err);
+            
         }
     } else {
         const path = configuration.query.isPublic ? "Shared Queries" : "My Queries";
@@ -135,14 +134,11 @@ export async function saveQuery(editor, configuration): Promise<string | null> {
                 const created = await client.createQuery(queryItem, project.name, path);
                 const html = created._links ? created._links.html : null;
                 result = html ? html.href : "";
-                await save(result);
-                return result;
+                await handleSaveResult(result);
             } catch (err) {
                 console.error("Error creating query:", err);
+                await handleSaveResult(null, configuration.query, err);
             }
         }
     }
-    await save(result);
-    return null;
-
 }
