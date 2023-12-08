@@ -15,9 +15,14 @@ import * as SDK from "azure-devops-extension-sdk";
 
 
 
-export async function save(result?: any, query?: IQuery) {
+export async function handleSaveResult(result?: any, query?: IQuery, errMsg?: string) {
     const dialogService = await SDK.getService<IHostPageLayoutService>(CommonServiceIds.HostPageLayoutService);
     try {
+        //check if result is null or undefined and throw error
+    if (result === null || result === undefined) {
+        throw new Error("Failed to save query");
+    }
+       
     if (typeof result !== "string") {
         return;
     }
@@ -27,13 +32,13 @@ export async function save(result?: any, query?: IQuery) {
     } else {
         navigationService.navigate(result);
     }
-} catch (error) {
-    const message = saveErrorMessage(error, query);
-    dialogService.openMessageDialog(message, {
-        title: "Error saving query",
-    });
-   
-}
+    } catch (error) {
+        // if errMsg is not null or undefined use errMsg in saveErrorMessage function otherwise use error as parameter
+        const message = saveErrorMessage(errMsg || error, query);
+        dialogService.openMessageDialog(message, {
+            title: "Error saving query",
+        });
+    }
 }
 
 
