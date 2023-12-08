@@ -142,7 +142,7 @@ export async function saveQuery(editor, configuration): Promise<string | null> {
             }
         }
     }
-    await configuration.save(result);
+    await save(result);
     return null;
 
 }
