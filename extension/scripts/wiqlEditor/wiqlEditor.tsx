@@ -58,7 +58,7 @@ function renderToolbar(isPanel: boolean,callback: () => void) {
             <div className="header">
                 <span className="bowtie">
                     <input className="wiq-input" accept=".wiq" type="file"  hidden />
-                    <button onClick={() => $(".wiq-input").click()} style={styles}>Run</button>
+                    <button onClick={() => $(".wiq-input").click()} style={styles}>Import</button>
                     <button className="wiq-export" style={styles}>Export</button>
 
             {isPanel && (
