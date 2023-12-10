@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
 import * as VSS from "azure-devops-extension-sdk";
-import { CommonServiceIds,IHostNavigationService, ILocationService } from "azure-devops-extension-api";
+import { CommonServiceIds, IHostNavigationService, ILocationService } from "azure-devops-extension-api";
 import { getCurrentTheme } from "../getCurrentTheme";
 import { parse } from "./compiler/parser";
 import { completionProvider } from "./completion/completion";
@@ -13,8 +13,7 @@ import * as Wiql from "./wiqlDefinition";
 import * as monaco from 'monaco-editor';
 import { getHostUrl, getProject } from "../getProject";
 
-
- const styles:  React.CSSProperties = {
+const styles: React.CSSProperties = {
     backgroundColor: "rgba(var(--palette-neutral-4,244, 244, 244),1)",
     border: "none",
     padding: "10px 20px",
@@ -28,10 +27,10 @@ import { getHostUrl, getProject } from "../getProject";
     margin: "12px 10px",
     fontWeight: "bold",
     fontFamily: "sans-serif",
-   };
+};
 
- const saveQueryBtmstyles : React.CSSProperties = {
-    backgroundColor:  "#0078d4",
+const saveQueryBtmstyles: React.CSSProperties = {
+    backgroundColor: "#0078d4",
     color: "white",
     border: "none",
     padding: "10px 20px",
@@ -42,47 +41,41 @@ import { getHostUrl, getProject } from "../getProject";
     display: "inline-block",
     boxShadow: "0 1px 4px rgba(0, 0, 0, 0.2)",
     transition: "background-color 0.2s ease",
-    fontWeight: "bold", 
+    fontWeight: "bold",
     fontFamily: "sans-serif",
-   
 };
 
-
-
-function renderToolbar(isPanel: boolean,callback: () => void) {
+function renderToolbar(isPanel: boolean, callback: () => void) {
     const elem = document.getElementById("header-bar");
     if (!elem) {
         return;
     }
     ReactDom.render(
-            <div className="header">
-                <span className="bowtie">
-                    <input className="wiq-input" accept=".wiq" type="file"  hidden />
-                    <button onClick={() => $(".wiq-input").click()} style={styles}>Import</button>
-                    <button className="wiq-export" style={styles}>Export</button>
+        <div className="header">
+            <span className="bowtie">
+                <input className="wiq-input" accept=".wiq" type="file" hidden />
+                <button onClick={() => $(".wiq-input").click()} style={styles}>Import</button>
+                <button className="wiq-export" style={styles}>Export</button>
+                {isPanel && (
+                    <button onClick={() => $("#save").click()} id="saveQueryBtn" className="saveQueryBtn" style={saveQueryBtmstyles}>Save query</button>
 
-            {isPanel && (
-                    <button onClick={ () => $("#save").click() } id="saveQueryBtn" className="saveQueryBtn" style={ saveQueryBtmstyles }>Save query</button> 
+                )}
+                {!isPanel ? (
+                    <button className="open-in-queries" hidden style={styles}> Open in queries </button>
 
-            ) }
-
-         {!isPanel ?(
-               <button className="open-in-queries" hidden style={ styles }> Open in queries </button>   
-
-            ) : null }
-              
-                </span>
-                <span className="links">
-                    <a href="https://marketplace.visualstudio.com/items?itemName=ms-devlabs.wiql-editor" target="_blank">Review</a>{" | "}
-                    <a href="https://github.com/microsoft/wiql-editor/issues" target="_blank">Report an issue</a>
-                </span>
-            </div>
+                ) : null}
+            </span>
+            <span className="links">
+                <a href="https://marketplace.visualstudio.com/items?itemName=ms-devlabs.wiql-editor" target="_blank">Review</a>{" | "}
+                <a href="https://github.com/microsoft/wiql-editor/issues" target="_blank">Report an issue</a>
+            </span>
+        </div>
         , elem, callback);
 }
 
 export function setupEditor(target: HTMLElement, onChange?: (errorCount: number) => void, intialValue?: string, queryName?: string, configuration?: any, isPanel?: boolean): monaco.editor.IStandaloneCodeEditor {
     //set isPanel default value to false if not provided
-    renderToolbar(isPanel,async () => {
+    renderToolbar(isPanel, async () => {
         if (queryName) {
             return;
         }
@@ -94,7 +87,7 @@ export function setupEditor(target: HTMLElement, onChange?: (errorCount: number)
             const wiql = editor.getModel().getValue();
             const url = `${baseUrl}${project.id}/_queries/query/?wiql=${encodeURIComponent(wiql)}`;
             navigationService.openNewWindow(url, "");
-         });
+        });
     });
     monaco.languages.register(Wiql.def);
     monaco.languages.onLanguage(Wiql.def.id, () => {
@@ -123,10 +116,6 @@ ORDER BY [System.ChangedDate] DESC
         fontSize: 14, // Set the font size to 14
         lineHeight: 20, // Set the line height to 20
         minimap: { enabled: false }, // Disable the minimap
-     
-
-
-
     });
 
     format(editor);
@@ -159,18 +148,13 @@ ORDER BY [System.ChangedDate] DESC
         });
     }
 
-
     editor.onDidChangeModelContent(() => {
         checkErrors().then((errorCount) => {
-                if (onChange) {
-                    onChange(errorCount);
-                }
-            });
+            if (onChange) {
+                onChange(errorCount);
+            }
+        });
     });
-
-    
-
-
 
     editor.focus();
     return editor;

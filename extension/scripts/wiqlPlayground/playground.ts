@@ -7,8 +7,6 @@ import { renderResult, setError, setMessage } from "./queryResults";
 import * as monaco from 'monaco-editor';
 import { getHostUrl, getProject } from "../getProject";
 
-
-
 async function loadWorkItems(result: WorkItemQueryResult) {
     if (result.workItems.length === 0) {
         setMessage("No work items found");
@@ -121,7 +119,6 @@ function getAction(id: string) {
 }
 $(".run-button").click(getAction("run"));
 $(".format-button").click(getAction("format"));
-
 
 setMessage([
     "Key bindings:",
