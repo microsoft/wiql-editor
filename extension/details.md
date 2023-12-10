@@ -8,7 +8,7 @@ Search work items with the expressiveness of the work item query language.
 
 ## Use the wiql editor to modify existing queries
 
-![context menu](img/contextMenu.png) ![Results menu bar](img/resultsBar.png)
+![context menu](img/contextMenu.png)
 
 ## Save changes to the query when finished.  
 
@@ -16,7 +16,7 @@ Search work items with the expressiveness of the work item query language.
 
 # Why?
 
-The wiql editor provides access 
+The wiql editor provides additional features to manage work item queries, including
 
 - Access hidden wiql features
   - asof queries
