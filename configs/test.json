@@ -1,6 +1,6 @@
 {
     "id": "wiql-editor-test",
     "name": "Wiql Editor (test)",
-    "publisher": "solidify-labs",
+    "publisher":  "ms-devlabs",
     "public": false
 }
