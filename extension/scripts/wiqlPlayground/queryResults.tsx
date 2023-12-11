@@ -3,7 +3,7 @@ import * as ReactDom from "react-dom";
 import * as VSS from "azure-devops-extension-sdk";
 import { IHostNavigationService, CommonServiceIds } from "azure-devops-extension-api";
 import { FieldType, WorkItem, WorkItemFieldReference, WorkItemQueryResult } from "azure-devops-extension-api/WorkItemTracking";
-
+import { dateToString } from "azure-devops-ui/Core/Util/String";
 
 import { FieldLookup, fieldsVal } from "../cachedData/fields";
 import { getHostUrl, getProject } from "../getProject";
@@ -40,10 +40,9 @@ class WorkItemRow extends React.Component<{
             const field = fields.getField(fieldRef.referenceName);
             if (field && field.type === FieldType.DateTime) {
                 const date = parseDateString(value);
-                //TODO: Need to fix this ? 
-                // value = localeFormat(date);
+                value = dateToString(date, true);
             }
-            tds.push(<div className={"cell"} title={fieldRef.name}>{value}</div>);
+            tds.push(<div key={ fieldRef.referenceName } className={"cell"} title={fieldRef.name}>{value}</div>);
         }
         return (
             <a
@@ -78,7 +77,7 @@ class WorkItemTable extends React.Component<{ workItems: WorkItem[], result: Wor
         const workItems = this.props.result.workItems
             .filter((wi) => wi.id in wiMap)
             .map((wi) => wiMap[wi.id]);
-        const rows = workItems.map((wi) => <WorkItemRow wi={wi} columns={this.props.result.columns} fields={this.props.fields} />);
+        const rows = workItems.map((wi) => <WorkItemRow key={wi.id} wi={wi} columns={this.props.result.columns} fields={this.props.fields} />);
         return <div className={"table"}>{rows}</div>;
     }
 }
@@ -139,7 +138,7 @@ export function setMessage(message: string | string[]) {
     if (typeof message === "string") {
         message = [message];
     }
-    const messageElems = message.map((m) => <div>{m}</div>);
+    const messageElems = message.map((m, index) => <div key={ index } >{m}</div>);
     ReactDom.render(<div>{messageElems}</div>, document.getElementById("query-results") as HTMLElement);
 }
 

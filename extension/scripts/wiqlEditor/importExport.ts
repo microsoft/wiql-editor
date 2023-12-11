@@ -8,18 +8,17 @@ import {
 
 import { trackEvent } from "../events";
 import * as monaco from 'monaco-editor';
-import { getProject } from "../getProject";
+import { getHostUrl, getProject } from "../getProject";
 import { QueryHierarchyItem, WorkItemTrackingRestClient } from "azure-devops-extension-api/WorkItemTracking";
 import { handleSaveResult } from "../queryEditor/queryDialog";
 
 async function toDocument(wiql: string) {
     const rootDoc = jQuery.parseXML(`<WorkItemQuery Version="1"/>`);
     const root = rootDoc.documentElement as HTMLElement;
-
+    
+    const host = await getHostUrl()
     const server = rootDoc.createElement("TeamFoundationServer");
-
-    //TODO: Check if this is correct
-    // server.appendChild(rootDoc.createTextNode(VSS.getWebContext().collection.uri));
+    server.appendChild(rootDoc.createTextNode(host));
     root.appendChild(server);
 
     const project = rootDoc.createElement("TeamProject");
