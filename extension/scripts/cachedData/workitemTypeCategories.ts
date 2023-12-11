@@ -1,6 +1,6 @@
-import { WorkItemTypeCategory } from "TFS/WorkItemTracking/Contracts";
-import { getClient as getWitClient } from "TFS/WorkItemTracking/RestClient";
-
+import { WorkItemTypeCategory } from "azure-devops-extension-api/WorkItemTracking";
+import { getClient } from "azure-devops-extension-api";
+import { WorkItemTrackingRestClient } from "azure-devops-extension-api/WorkItemTracking";
 import { CachedValue } from "./CachedValue";
 import { projectsVal } from "./projects";
 
@@ -8,7 +8,8 @@ const categoryMap: {[project: string]: CachedValue<WorkItemTypeCategory[]>} = {}
 
 async function getCategoriesForProject(project: string): Promise<WorkItemTypeCategory[]> {
     if (!(project in categoryMap)) {
-        categoryMap[project] = new CachedValue(() => getWitClient().getWorkItemTypeCategories(project));
+        categoryMap[project] = new CachedValue(() => 
+        getClient(WorkItemTrackingRestClient).getWorkItemTypeCategories(project));
     }
     return categoryMap[project].getValue();
 }

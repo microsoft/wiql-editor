@@ -5,10 +5,10 @@ export interface IQuery {
     wiql: string;
     path: string;
 }
+
 export interface IContextOptions {
     query: IQuery;
-    save: () => void;
-    close: () => void;
+    initialValue: boolean;
     loaded: (callbacks: ICallbacks) => Promise<void>;
 }
 

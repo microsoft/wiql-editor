@@ -1,10 +1,16 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import { FieldType, WorkItem, WorkItemFieldReference, WorkItemQueryResult } from "TFS/WorkItemTracking/Contracts";
-import { HostNavigationService } from "VSS/SDK/Services/Navigation";
-import { localeFormat, parseDateString } from "VSS/Utils/Date";
+import * as VSS from "azure-devops-extension-sdk";
+import { IHostNavigationService, CommonServiceIds } from "azure-devops-extension-api";
+import { FieldType, WorkItem, WorkItemFieldReference, WorkItemQueryResult } from "azure-devops-extension-api/WorkItemTracking";
+import { dateToString } from "azure-devops-ui/Core/Util/String";
 
 import { FieldLookup, fieldsVal } from "../cachedData/fields";
+import { getHostUrl, getProject } from "../getProject";
+
+function parseDateString(dateString: string): Date {
+    return new Date(dateString);
+}
 
 class WorkItemRow extends React.Component<{
     wi: WorkItem,
@@ -12,12 +18,18 @@ class WorkItemRow extends React.Component<{
     rel?: string,
     fields: FieldLookup,
 }, {}> {
+
+    public async componentDidMount() {
+        const project = await getProject();
+        this.setState({ project: project.name });
+    }
+
     public render() {
         const { fields, columns, wi, rel} = this.props;
+        const project  = this.state;
+        const host = getHostUrl();
 
-        const uri = VSS.getWebContext().host.uri;
-        const project = VSS.getWebContext().project.name;
-        const wiUrl = `${uri}${project}/_workitems?id=${wi.id}&_a=edit&fullScreen=true`;
+        const wiUrl = `${host}${project}/_workitems?id=${wi.id}&_a=edit&fullScreen=true`;
 
         const tds: JSX.Element[] = [];
         if (rel) {
@@ -28,9 +40,9 @@ class WorkItemRow extends React.Component<{
             const field = fields.getField(fieldRef.referenceName);
             if (field && field.type === FieldType.DateTime) {
                 const date = parseDateString(value);
-                value = localeFormat(date);
+                value = dateToString(date, true);
             }
-            tds.push(<div className={"cell"} title={fieldRef.name}>{value}</div>);
+            tds.push(<div key={ fieldRef.referenceName } className={"cell"} title={fieldRef.name}>{value}</div>);
         }
         return (
             <a
@@ -65,7 +77,7 @@ class WorkItemTable extends React.Component<{ workItems: WorkItem[], result: Wor
         const workItems = this.props.result.workItems
             .filter((wi) => wi.id in wiMap)
             .map((wi) => wiMap[wi.id]);
-        const rows = workItems.map((wi) => <WorkItemRow wi={wi} columns={this.props.result.columns} fields={this.props.fields} />);
+        const rows = workItems.map((wi) => <WorkItemRow key={wi.id} wi={wi} columns={this.props.result.columns} fields={this.props.fields} />);
         return <div className={"table"}>{rows}</div>;
     }
 }
@@ -108,7 +120,7 @@ export function renderResult(result: WorkItemQueryResult, workItems: WorkItem[])
             table = <WorkItemRelationsTable {...props} />;
         }
         ReactDom.render(
-            <div>
+            <div >
                 {table}
                 <ResultCountDisclaimer count={(result.workItems || result.workItemRelations).length} />
             </div>
@@ -117,7 +129,7 @@ export function renderResult(result: WorkItemQueryResult, workItems: WorkItem[])
     });
 }
 
-export function setError(error: TfsError | string) {
+export function setError(error: any | string) {
     const message = typeof error === "string" ? error : ((error.serverError || error) as any).message as string;
     ReactDom.render(<div className={"error-message"}>{message}</div>, document.getElementById("query-results") as HTMLElement);
 }
@@ -126,7 +138,7 @@ export function setMessage(message: string | string[]) {
     if (typeof message === "string") {
         message = [message];
     }
-    const messageElems = message.map((m) => <div>{m}</div>);
+    const messageElems = message.map((m, index) => <div key={ index } >{m}</div>);
     ReactDom.render(<div>{messageElems}</div>, document.getElementById("query-results") as HTMLElement);
 }
 
@@ -143,15 +155,15 @@ export function setVersion() {
                     <button className="wiq-export">Export</button>
                 </span>
                 <span className="links">
-                    <a href="https://marketplace.visualstudio.com/items?itemName=ottostreifel.wiql-editor#review-details" target="_blank">Review</a>{" | "}
-                    <a href="https://github.com/ostreifel/wiql-editor/issues" target="_blank">Report an issue</a>{" | "}
+                    <a href="https://marketplace.visualstudio.com/items?itemName=ms-devlabs.wiql-editor#review-details" target="_blank">Review</a>{" | "}
+                    <a href="https://github.com/microsoft/wiql-editor/issues" target="_blank">Report an issue</a>{" | "}
                     <a href="mailto:wiqleditor@microsoft.com" target="_blank">Feedback and questions</a>
                 </span>
             </div>
         , elem);
 }
 
-VSS.getService(VSS.ServiceIds.Navigation).then((navigationService: HostNavigationService) => {
+VSS.getService(CommonServiceIds.HostNavigationService).then((navigationService: IHostNavigationService) => {
     $("body").on("click", "a[href]", (e) => {
         if (!e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
             const link = $(e.target).closest("a[href]");

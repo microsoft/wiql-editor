@@ -1,5 +1,5 @@
 import * as Symbols from "../compiler/symbols";
-
+import * as monaco from 'monaco-editor';
 export function rangeFromSymbol(symbol: Symbols.Symbol | Symbols.Symbol[]) {
     let startToken: Symbols.Token | null = null;
     let endToken: Symbols.Token | null = null;
@@ -33,7 +33,7 @@ export interface IWiqlDecoration extends monaco.editor.IModelDeltaDecoration {
 }
 
 function decorationFromRange(
-    hoverMessage: string,
+    hoverMessage: monaco.IMarkdownString,
     range: monaco.Range,
     type: "error" | "warn",
 ): IWiqlDecoration {
@@ -55,7 +55,7 @@ export function decorationFromString(
     type: "error" | "warn" = "error",
 ): IWiqlDecoration {
     return decorationFromRange(
-        message,
+        {value: message} as monaco.IMarkdownString,
         new monaco.Range(
             str.line + 1,
             str.startColumn + 1 + offset,
@@ -71,5 +71,5 @@ export function decorationFromSym(
     symbol: Symbols.Symbol | Symbols.Symbol[],
     type: "error" | "warn" = "error",
 ): IWiqlDecoration {
-    return decorationFromRange(message, rangeFromSymbol(symbol), type);
+    return decorationFromRange({ value: message } as monaco.IMarkdownString,  rangeFromSymbol(symbol), type);
 }

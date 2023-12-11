@@ -1,0 +1,7 @@
+{
+    "id": "wiql-editor-dev",
+    "name": "Wiql Editor (dev)",
+    "publisher": "ms-devlabs",
+    "public": false,
+    "baseUri": "https://localhost:3000"    
+}

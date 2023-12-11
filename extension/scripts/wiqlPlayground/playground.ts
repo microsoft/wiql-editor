@@ -1,14 +1,13 @@
+import * as SDK from "azure-devops-extension-sdk";
 import "promise-polyfill/src/polyfill";
-import { WorkItemQueryResult } from "TFS/WorkItemTracking/Contracts";
-import { getClient as getWitClient } from "TFS/WorkItemTracking/RestClient";
-
-import { trackEvent } from "../events";
+import { getClient } from "azure-devops-extension-api";
+import { WorkItemQueryResult, WorkItemTrackingRestClient} from "azure-devops-extension-api/WorkItemTracking"
 import { setupEditor } from "../wiqlEditor/wiqlEditor";
 import { renderResult, setError, setMessage } from "./queryResults";
+import * as monaco from 'monaco-editor';
+import { getHostUrl, getProject } from "../getProject";
 
-trackEvent("pageLoad");
-
-function loadWorkItems(result: WorkItemQueryResult) {
+async function loadWorkItems(result: WorkItemQueryResult) {
     if (result.workItems.length === 0) {
         setMessage("No work items found");
         return;
@@ -16,11 +15,13 @@ function loadWorkItems(result: WorkItemQueryResult) {
     setMessage("Loading workitems...");
 
     const wiIds = result.workItems.map((wi) => wi.id);
+    const project =  await getProject()
     const fieldRefNames = result.columns.map((col) => col.referenceName);
-    getWitClient().getWorkItems(wiIds, fieldRefNames, result.asOf).then(
+    const getWitClient = getClient(WorkItemTrackingRestClient);
+    getWitClient.getWorkItems(wiIds, project.name,fieldRefNames, result.asOf).then(
         (workItems) => renderResult(result, workItems), setError);
 }
-function loadWorkItemRelations(result: WorkItemQueryResult) {
+async function loadWorkItemRelations(result: WorkItemQueryResult) {
     if (result.workItemRelations.length === 0) {
         setMessage("No work item relations found");
         return;
@@ -39,32 +40,50 @@ function loadWorkItemRelations(result: WorkItemQueryResult) {
     const fieldRefNames = result.columns.length < 10 ?
         result.columns.map((col) => col.referenceName)
         : undefined;
-    getWitClient().getWorkItems(ids, fieldRefNames, result.asOf).then(
+        const project = await getProject();
+        const client = getClient(WorkItemTrackingRestClient) 
+        client.getWorkItems(ids, project.name, fieldRefNames, result.asOf).then(
         (workitems) => renderResult(result, workitems), (error) => {
             const message = typeof error === "string" ? error : (error.serverError || error).message;
-            trackEvent("GetWorkItemFailure", { message });
             setError(error);
         });
 }
-function search() {
+async function search() {
     const wiqlText = editor.getValue();
     setMessage("Running query...");
-    trackEvent("RunQuery", {wiqlLength: "" + wiqlText.length});
-    const context = VSS.getWebContext();
-    getWitClient().queryByWiql({ query: wiqlText }, context.project.name, context.team.name, true, 50).then(
-        (result) => {
-            result.workItems = result.workItems && result.workItems.splice(0, 50);
-            result.workItemRelations = result.workItemRelations && result.workItemRelations.splice(0, 50);
-            if (result.workItems) {
-                loadWorkItems(result);
-            } else {
-                loadWorkItemRelations(result);
-            }
-        }, (error) => {
-            const message = typeof error === "string" ? error : (error.serverError || error).message;
-            trackEvent("RunQueryFailure", { message });
-            setError(error);
-        });
+    const client = getClient(WorkItemTrackingRestClient) 
+     const project = await getProject();
+    const token = await SDK.getAccessToken();
+    const baseUrl = await getHostUrl();
+    const url = `${baseUrl}/_apis/projects/${project.name}/teams?api-version=5.1`;
+    const team = await fetch(url, {
+        headers: {
+            'Authorization': 'Bearer ' + token, 
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            const defaultTeamName = data.value[0].name;
+            return defaultTeamName;
+        })
+        .catch(error => console.error('Error:', error));
+
+    
+    await SDK.ready().then( async() => {
+        client.queryByWiql({ query: wiqlText }, project.name, team, true, 50).then(
+            (result) => {
+                result.workItems = result.workItems && result.workItems.splice(0, 50);
+                result.workItemRelations = result.workItemRelations && result.workItemRelations.splice(0, 50);
+                if (result.workItems) {
+                    loadWorkItems(result);
+                } else {
+                    loadWorkItemRelations(result);
+                }
+            }, (error) => {
+                const message = typeof error === "string" ? error : (error.serverError || error).message;
+                setError(error);
+            });
+    });
 }
 
 const target = document.getElementById("wiql-box");
@@ -95,7 +114,8 @@ editor.addAction({
     },
 });
 function getAction(id: string) {
-    return () => editor.getActions().filter((a) => a.id.match(`:${id}$`))[0].run();
+    return () => editor.getAction(id).run();
+    
 }
 $(".run-button").click(getAction("run"));
 $(".format-button").click(getAction("format"));
@@ -108,4 +128,6 @@ setMessage([
 ]);
 
 // Register context menu action provider
-VSS.register(VSS.getContribution().id, {});
+SDK.register("wiql-playground-hub-menu", {});
+
+SDK.init();

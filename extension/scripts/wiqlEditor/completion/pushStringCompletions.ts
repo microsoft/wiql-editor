@@ -1,6 +1,7 @@
 import * as Symbols from "../compiler/symbols";
 import { ICompletionContext } from "./completionContext";
 import { isInsideString } from "./isIn";
+import * as monaco from 'monaco-editor';
 
 export function pushStringCompletions(
     ctx: ICompletionContext,
@@ -22,12 +23,12 @@ export function pushStringCompletions(
         }
         if (charIdx >= 0) {
             const prefix = currentStr.substr(0, charIdx).toLocaleLowerCase();
-            return completions.filter((s) => s.label.toLocaleLowerCase().indexOf(prefix) === 0).map((s) =>
-                ({
-                    label: s.label,
-                    kind: monaco.languages.CompletionItemKind.Text,
-                    insertText: s.label.substr(charIdx + 1),
-                } as monaco.languages.CompletionItem),
+            return completions.filter((s) => s.label.toString().toLocaleLowerCase().indexOf(prefix) === 0).map((s) =>
+            ({
+                label: s.label,
+                kind: monaco.languages.CompletionItemKind.Text,
+                insertText: s.label.toString().substr(charIdx + 1),
+            } as monaco.languages.CompletionItem),
             );
         }
     }

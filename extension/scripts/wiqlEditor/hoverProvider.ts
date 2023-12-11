@@ -1,4 +1,4 @@
-import { FieldType } from "TFS/WorkItemTracking/Contracts";
+import { FieldType } from "azure-devops-extension-api/WorkItemTracking/WorkItemTracking";
 
 import { fieldsVal } from "../cachedData/fields";
 import { getWitsByProjects } from "../cachedData/workItemTypes";
@@ -7,7 +7,7 @@ import * as Symbols from "./compiler/symbols";
 import { symbolsAtPosition } from "./parseAnalysis/findSymbol";
 import { getFilters } from "./parseAnalysis/whereClauses";
 import { lowerDefinedVariables } from "./wiqlDefinition";
-
+import * as monaco from 'monaco-editor';
 function toRange(token: Symbols.Token) {
     return new monaco.Range(token.line + 1, token.startColumn + 1, token.line + 1, token.endColumn + 1);
 }
@@ -18,7 +18,8 @@ async function getFieldHover(hoverSymbols: Symbols.Symbol[], parseResult: IParse
         const [fields, filters] = await Promise.all([fieldsVal.getValue(), getFilters(parseResult)]);
         const matchedField = fields.getField(id.text);
         if (matchedField) {
-            const hovers: monaco.MarkedString[] = [FieldType[matchedField.type]];
+            const hovers: monaco.IMarkdownString[] = [];
+            hovers.push({ value: `${matchedField.type}` });
             const range = toRange(id);
             // Also include description -- extensions can only get this from the work item types
             const workItemTypes = await getWitsByProjects(filters.projects, filters.workItemTypes);
@@ -35,7 +36,7 @@ async function getFieldHover(hoverSymbols: Symbols.Symbol[], parseResult: IParse
             const descriptionArr = Object.keys(descriptionSet);
             // Don't show the description if it differs by wit
             if (descriptionArr.length === 1) {
-                hovers.push(descriptionArr[0]);
+                hovers.push({ value: descriptionArr[0] });
             }
             return { contents: hovers, range };
         }
@@ -48,8 +49,8 @@ function getVariableHover(hoverSymbols: Symbols.Symbol[]): monaco.languages.Hove
     if (variable) {
         const matchedVariable = variable.name.text.toLocaleLowerCase() in lowerDefinedVariables;
         if (matchedVariable) {
-            const hovers: monaco.MarkedString[] = [];
-            hovers.push(FieldType[lowerDefinedVariables[variable.name.text.toLocaleLowerCase()]]);
+            const hovers: monaco.IMarkdownString[] = [];
+            hovers.push({ value: FieldType[lowerDefinedVariables[variable.name.text.toLocaleLowerCase()]] });
             const range = toRange(variable.name);
             return { contents: hovers, range };
         }
@@ -79,7 +80,9 @@ async function getWitHover(hoverSymbols: Symbols.Symbol[], parseResult: IParseRe
         if (matchingWits.length !== 1) {
             return null;
         }
-        return { contents: [matchingWits[0].description], range: toRange(firstSymbol) };
+        const hovers: monaco.IMarkdownString[] = [];
+        hovers.push({ value: `${matchingWits[0].description}` });
+        return { contents: hovers, range: toRange(firstSymbol) };
     }
     return null;
 }

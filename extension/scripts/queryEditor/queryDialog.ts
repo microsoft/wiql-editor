@@ -1,70 +1,99 @@
+
 import { trackEvent } from "../events";
 import { IContextOptions, IQuery } from "../queryContext/contextContracts";
+import {
+    CommonServiceIds,
+    IHostPageLayoutService,
+    IHostNavigationService,
+    IDialogOptions,
+    PanelSize,
+    IPanelOptions,
+} from "azure-devops-extension-api";
+import * as SDK from "azure-devops-extension-sdk";
 
-function saveErrorMessage(error: TfsError, query: IQuery) {
+
+
+
+
+export async function handleSaveResult(result?: any, query?: IQuery, errMsg?: string) {
+    const dialogService = await SDK.getService<IHostPageLayoutService>(CommonServiceIds.HostPageLayoutService);
+    try {
+        //check if result is null or undefined and throw error
+    if (result === null || result === undefined) {
+        throw new Error("Failed to save query");
+    }
+       
+    if (typeof result !== "string") {
+        return;
+    }
+    const navigationService = await SDK.getService(CommonServiceIds.HostNavigationService) as IHostNavigationService;
+    if (result === "") {
+        navigationService.reload();
+    } else {
+        navigationService.navigate(result);
+    }
+    } catch (error) {
+        // if errMsg is not null or undefined use errMsg in saveErrorMessage function otherwise use error as parameter
+        const message = saveErrorMessage(errMsg || error, query);
+        dialogService.openMessageDialog(message, {
+            title: "Error saving query",
+        });
+    }
+}
+
+
+
+
+function saveErrorMessage(error: any, query: IQuery) {
     if (!isSupportedQueryId(query.id)) {
         return "Only queries in saved in My Queries or Shared Queries can be updated with this extension";
     }
     const exception = (error.serverError || error) as any;
-    // tslint:disable-next-line:no-string-literal
+  
     const message = (exception["message"] || exception["value"]["Message"]) as string;
     return message;
 }
 
 export async function showDialog(query: IQuery) {
-    const dialogService = await VSS.getService<IHostDialogService>(VSS.ServiceIds.Dialog);
+  
+    const dialogService = await SDK.getService<IHostPageLayoutService>(CommonServiceIds.HostPageLayoutService);
     let okCallback: () => Promise<any> = async () => {
+   
         throw new Error("ok callback not set");
     };
     let closeDialog = (): void => {
         throw new Error("could not find close dialog function");
     };
     function close() {
-        trackEvent("keyboardExit");
         closeDialog();
     }
-    function save() {
-        okCallback().then(async (result) => {
-            if (typeof result !== "string") {
-                return;
-            }
-            const navigationService = await VSS.getService(VSS.ServiceIds.Navigation) as IHostNavigationService;
-            if (result === "") {
-                navigationService.reload();
-            } else {
-                navigationService.navigate(result);
-            }
-        }, (error: TfsError) => {
-            const message = saveErrorMessage(error, query);
-            dialogService.openMessageDialog(message, {
-                title: "Error saving query",
-            });
-            trackEvent("SaveQueryFailure", {message});
-        });
-        throw Error("Exception to block dialog close");
-    }
-    const context: IContextOptions = {
-        query,
-        save,
-        close,
-        loaded: async (callbacks) => {
-            okCallback = callbacks.okCallback;
-            dialog.updateOkButton(true);
-        },
-    };
-    const dialogOptions: IHostDialogOptions = {
-        title: query.name,
-        width: Number.MAX_VALUE,
-        height: Number.MAX_VALUE,
-        getDialogResult: save,
-        okText: "Save Query",
-        resizable: true,
-    };
-    const extInfo = VSS.getExtensionContext();
+    
+    
+    
 
+
+    const context: IContextOptions = {
+        query: query,
+        initialValue: false,
+         loaded: async (callbacks) => {
+            okCallback = callbacks.okCallback;
+        }
+    }
+
+    const panelOptions: IPanelOptions<any> = {
+        title: query.name,
+        configuration: context,
+        size: PanelSize.Large,
+        onClose: (result) => {
+            if (result !== undefined) {
+                // save();
+            }
+        }
+    }
+  
+    const extInfo = SDK.getExtensionContext();
     const contentContribution = `${extInfo.publisherId}.${extInfo.extensionId}.contextForm`;
-    const dialog = await dialogService.openDialog(contentContribution, dialogOptions, context);
-    closeDialog = () => dialog.close();
+    dialogService.openPanel(contentContribution, panelOptions);
 }
 
 namespace WellKnownQueries {

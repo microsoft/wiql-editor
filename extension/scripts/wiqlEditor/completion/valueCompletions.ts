@@ -5,6 +5,7 @@ import { relationTypes } from "../../cachedData/relationTypes";
 import { getTagsForProjects } from "../../cachedData/tags";
 import { getCategories } from "../../cachedData/workitemTypeCategories";
 import { getStatesByProjects, getWitNamesByProjects, witNames } from "../../cachedData/workItemTypes";
+import { getProject } from "../../getProject";
 import * as Symbols from "../compiler/symbols";
 import { getFilters } from "../parseAnalysis/whereClauses";
 import { ICompletionContext } from "./completionContext";
@@ -33,7 +34,8 @@ async function getStateCompletions(ctx: ICompletionContext): Promise<string[]> {
 async function getTagCompletions(ctx: ICompletionContext) {
     const { projects } = await getFilters(ctx.getAssumedParse());
     if (projects.length === 0) {
-        projects.push(VSS.getWebContext().project.id);
+        const project = await getProject();   
+        projects.push(project.id);
     }
     return getTagsForProjects(projects);
 }

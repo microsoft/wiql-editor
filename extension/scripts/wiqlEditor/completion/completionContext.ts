@@ -1,10 +1,10 @@
-import { FieldType } from "TFS/WorkItemTracking/Contracts";
+import { FieldType } from "azure-devops-extension-api/WorkItemTracking/WorkItemTracking";
 
 import { FieldLookup } from "../../cachedData/fields";
 import { IParseResults, parse, ParseError, ParseMode } from "../compiler/parser";
 import * as Symbols from "../compiler/symbols";
 import { getFieldComparisonLookup } from "../errorCheckers/TypeErrorChecker";
-
+import * as monaco from "monaco-editor"
 /**
  * Common values that would otherwise need to be repeatedly recalcualted while providing completion tokens
  */

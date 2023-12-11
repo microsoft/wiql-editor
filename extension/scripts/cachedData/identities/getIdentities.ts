@@ -1,7 +1,7 @@
-import { WebApiTeam } from "TFS/Core/Contracts";
-import { CoreHttpClient4, getClient } from "TFS/Core/RestClient";
-import { IdentityRef } from "VSS/WebApi/Contracts";
 
+import { WebApiTeam, CoreRestClient } from "azure-devops-extension-api/Core";
+import { getClient } from "azure-devops-extension-api";
+import { IdentityRef } from "azure-devops-extension-api/WebApi";
 import { CachedValue } from "../CachedValue";
 import * as ExtensionCache from "./extensionCache";
 import { throttlePromises } from "./throttlePromises";
@@ -18,28 +18,17 @@ interface IProjectIdentities {
 
 async function hardGetAllIdentitiesInTeam(project: { id: string, name: string }, team: WebApiTeam): Promise<ITeamIdentities> {
     const teamIdentity = <IdentityRef> { displayName: `[${project.name}]\\${team.name}`, id: team.id, isContainer: true };
-    const client = getClient();
-
-    if ("getTeamMembers" in client) {
-        const members = await (client as any as CoreHttpClient4).getTeamMembers(project.id, team.id);
-        const teamId: ITeamIdentities = {
-            team: teamIdentity,
-            members,
-        };
-        return teamId;
-
-    } else {
+    const client = getClient(CoreRestClient);
         const members = await client.getTeamMembersWithExtendedProperties(project.id, team.id);
         const teamId: ITeamIdentities = {
             team: teamIdentity,
             members: members.map(({identity}) => identity),
         };
         return teamId;
-    }
 }
 
 async function getTeamsRest(project: string, top: number, skip: number): Promise<WebApiTeam[]> {
-    const client = getClient();
+    const client = getClient(CoreRestClient);
     const get = client.getTeams.bind(client);
     if (get.length === 3) {
         // fallback
@@ -69,7 +58,7 @@ async function hardGetAllIdentitiesInProject(proj: { id: string, name: string })
 }
 
 async function hardGetAllIdentitiesInAllProjects(): Promise<IProjectIdentities[]> {
-    const projects = await getClient().getProjects();
+    const projects = await getClient(CoreRestClient).getProjects();
     return Promise.all(projects.map((p) => hardGetAllIdentitiesInProject(p)));
 }
 

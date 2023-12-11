@@ -1,4 +1,4 @@
-import { FieldType } from "TFS/WorkItemTracking/Contracts";
+import { FieldType } from "azure-devops-extension-api/WorkItemTracking/WorkItemTracking";
 
 import { CachedValue } from "../../cachedData/CachedValue";
 import { FieldLookup, fieldsVal } from "../../cachedData/fields";
@@ -8,7 +8,7 @@ import { symbolsOfType } from "../parseAnalysis/findSymbol";
 import { lowerDefinedVariables } from "../wiqlDefinition";
 import { decorationFromSym } from "./errorDecorations";
 import { IErrorChecker } from "./IErrorChecker";
-
+import * as monaco from 'monaco-editor';
 export interface IComparisonType {
     fieldType: FieldType;
     literal: Function[];

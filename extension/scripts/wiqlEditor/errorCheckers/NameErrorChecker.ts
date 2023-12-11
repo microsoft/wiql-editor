@@ -6,7 +6,7 @@ import { symbolsOfType } from "../parseAnalysis/findSymbol";
 import { definedVariables, lowerDefinedVariables } from "../wiqlDefinition";
 import { decorationFromSym } from "./errorDecorations";
 import { IErrorChecker } from "./IErrorChecker";
-
+import * as monaco from 'monaco-editor';
 export class NameErrorChecker implements IErrorChecker {
     private readonly validFieldIdentifiers: CachedValue<string[]> = new CachedValue(async () => {
         const fields = await fieldsVal.getValue();

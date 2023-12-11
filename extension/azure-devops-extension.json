@@ -1,18 +1,25 @@
 {
     "manifestVersion": 1,
     "id": "wiql-editor",
-    "version": "2.0.97",
+    "version": "2.0.102",
     "name": "Wiql Editor",
-    "scopes": [ "vso.work", "vso.work_write" ],
+    "scopes": [
+        "vso.work",
+        "vso.work_write"
+    ],
     "public": false,
     "description": "Search work items with wiql queries.",
-    "publisher": "ottostreifel",
+    "publisher": "ms-devlabs",
     "icons": {
         "default": "img/logo.png"
     },
     "targets": [
         {
-            "id": "Microsoft.VisualStudio.Services"
+            "id": "Microsoft.VisualStudio.Services.Cloud"
+        },
+        {
+            "id": "Microsoft.TeamFoundation.Server",
+            "version": "[17.0,)"
         }
     ],
     "tags": [
@@ -28,7 +35,7 @@
     },
     "repository": {
         "type": "git",
-        "uri": "https://github.com/ostreifel/wiql-editor"
+        "uri": "https://github.com/microsoft/wiql-editor"
     },
     "branding": {
         "color": "rgb(220, 235, 252)",
@@ -46,22 +53,11 @@
         {
             "path": "styles",
             "addressable": true
-        },
-        {
-            "path": "playground.html",
-            "addressable": true
-        },
-        {
-            "path": "queryEditor.html",
-            "addressable": true
-        },
-        {
-            "path": "queryContext.html",
-            "addressable": true
         }
+       
     ],
     "categories": [
-        "Plan and track"
+        "Azure Boards"
     ],
     "contributions": [
         {
@@ -74,41 +70,60 @@
             "properties": {
                 "name": "Wiql Playground",
                 "uri": "dist/playground.html",
-                "icon": "asset://img/logo.png"
+                "icon": "asset://img/logo.png",
+                "registeredObjectId": "wiql-playground-hub-menu" 
             }
         },
         {
             "id": "query-menu",
-            "type": "ms.vss-web.action-provider",
+            "type": "ms.vss-web.action",
             "description": "Edit query in menu",
             "targets": [
                 "ms.vss-work-web.work-item-query-menu"
             ],
             "properties": {
-                "group": "contributed",
-                "uri": "dist/queryContext.html"
+                 "title": "Edit query wiql",
+                "text": "Edit query wiql",
+                "icon":{
+                    "light": "img/smallDarkThemeLogo.png",
+                    "dark": "img/smallLogo.png"
+                },
+                "group": "actions",
+                "uri": "dist/queryContext.html",
+                "registeredObjectId": "query-menu"
             }
         },
+        
         {
             "id": "query-results-menu",
-            "type": "ms.vss-web.action-provider",
+            "type": "ms.vss-web.action",
             "description": "Edit query in menu",
             "targets": [
                 "ms.vss-work-web.work-item-query-results-toolbar-menu"
+                
             ],
             "properties": {
-                "group": "contributed",
-                "uri": "dist/queryContext.html"
+                "title": "Edit query wiql",
+                "text": "Edit query wiql",
+                "icon":{
+                    "light": "img/smallDarkThemeLogo.png",
+                    "dark": "img/smallLogo.png"
+                },
+                "group": "actions",
+                "uri": "dist/queryContext.html",
+                "registeredObjectId": "query-results-menu"
             }
         },
+       
         {
             "id": "contextForm",
-            "type": "ms.vss-web.control",
+            "type": "ms.vss-web.external-content",
             "description": "Editor for the given query",
-            "targets": [ ],
+            "targets": [],
             "properties": {
-                "uri": "queryEditor.html",
-                "registeredObjectId": "dist/dialogCallbacks"
+                "uri": "dist/queryEditor.html",
+                "registeredObjectId": "contextForm"
+             
             }
         }
     ]

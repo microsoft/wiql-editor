@@ -1,4 +1,4 @@
-import { FieldType } from "TFS/WorkItemTracking/Contracts";
+import { FieldType } from "azure-devops-extension-api/WorkItemTracking/WorkItemTracking";
 
 import { FieldLookup } from "../../cachedData/fields";
 import * as Symbols from "../compiler/symbols";
@@ -6,7 +6,7 @@ import { wiqlPatterns } from "../compiler/tokenPatterns";
 import { getFieldComparisonLookup } from "../errorCheckers/TypeErrorChecker";
 import { conditionSymbols, ICompletionContext } from "./completionContext";
 import { isInVariable, IVariableContext } from "./isIn";
-
+import * as monaco from "monaco-editor"
 interface ISymbolCompletionMap {
     [symbolName: string]: monaco.languages.CompletionItem;
 }
@@ -38,6 +38,9 @@ function getSymbolCompletionMap(
             symbolCompletionMap[symName] = {
                 label: pattern.match,
                 kind: monaco.languages.CompletionItemKind.Keyword,
+                //add to avoid error
+                insertText: "",
+                range: <monaco.IRange>{}
             };
         }
     }

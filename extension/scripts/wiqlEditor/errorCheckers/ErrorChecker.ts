@@ -9,7 +9,7 @@ import { PrefixChecker } from "./PrefixChecker";
 import { SyntaxErrorChecker } from "./SyntaxErrorChecker";
 import { TypeErrorChecker } from "./TypeErrorChecker";
 import { VariableParametersChecker } from "./VariableParametersChecker";
-
+import * as monaco from 'monaco-editor';
 export class ErrorChecker implements IErrorChecker {
     private readonly errorCheckers: IErrorChecker[];
     constructor() {

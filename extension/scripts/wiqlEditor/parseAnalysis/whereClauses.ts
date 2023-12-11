@@ -1,8 +1,10 @@
+import * as VSS from "azure-devops-extension-sdk";
 import { FieldLookup, fieldsVal } from "../../cachedData/fields";
 import { projectsVal } from "../../cachedData/projects";
 import { getWitNamesByProjects } from "../../cachedData/workItemTypes";
 import { IParseResults } from "../compiler/parser";
 import * as Symbols from "../compiler/symbols";
+import { getProject } from "../../getProject";
 
 function getConditionalExpressions(logical: Symbols.LogicalExpression) {
     const conditionals: Symbols.ConditionalExpression[] = [];
@@ -27,7 +29,7 @@ function getConditionalExpressions(logical: Symbols.LogicalExpression) {
     return conditionals;
 }
 
-function getProjects(fields: FieldLookup, conditionals: Symbols.ConditionalExpression[]): string[] {
+ async function getProjects(fields: FieldLookup, conditionals: Symbols.ConditionalExpression[]): Promise<string[]> {
     const projectConditions = conditionals.filter((c) => c.field && fields.equalFields("System.TeamProject", c.field.identifier.text));
     if (projectConditions.some((c) =>
         !c.conditionalOperator ||
@@ -39,13 +41,14 @@ function getProjects(fields: FieldLookup, conditionals: Symbols.ConditionalExpre
         ))) {
         return [];
     }
-    return projectConditions.map((c) => {
+     const project = await getProject();
+    return projectConditions.map( (c) => {
         if (c.value && c.value.value instanceof Symbols.String) {
             const str = c.value.value.text;
             // Remove the quotes on the string text
             return str.substr(1, str.length - 2);
         } else if (c.value && c.value.value instanceof Symbols.Variable) {
-            return VSS.getWebContext().project.name;
+            return project.name;
         }
         throw new Error("Value is unexpected type reading projects");
     });
@@ -105,7 +108,7 @@ export async function getFilters(parse: IParseResults): Promise<IQueryFilters> {
         parse.whereExp
     ) {
         const conditionalExpressions = getConditionalExpressions(parse.whereExp);
-        foundProjects.push(...getProjects(fields, conditionalExpressions));
+        foundProjects.push(...await getProjects(fields, conditionalExpressions));
         foundWits.push(...getWits(fields, conditionalExpressions));
 
     }

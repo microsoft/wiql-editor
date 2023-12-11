@@ -1,9 +1,9 @@
-import { FieldType } from "TFS/WorkItemTracking/Contracts";
+import { FieldType } from "azure-devops-extension-api/WorkItemTracking/WorkItemTracking";
 
 import * as Symbols from "../compiler/symbols";
 import { definedVariables } from "../wiqlDefinition";
 import { ICompletionContext } from "./completionContext";
-
+import * as monaco from 'monaco-editor';
 export function getStandardVariableCompletions(type: FieldType | null) {
     const completions: monaco.languages.CompletionItem[] = [];
     for (const variable in definedVariables) {
@@ -32,7 +32,7 @@ export async function getCurrentVariableCompletions(ctx: ICompletionContext, pos
             return {
                 label: s.label,
                 kind: monaco.languages.CompletionItemKind.Variable,
-                insertText: s.label.replace("@", ""),
+                insertText: s.label.toString().replace("@", ""),
             } as monaco.languages.CompletionItem;
         });
     }

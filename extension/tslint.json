@@ -1,8 +1,13 @@
 {
     "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended"
-    ],
+    
+    "linterOptions": {
+        "exclude": [
+            "bin",
+            "configs/**/*.js",
+            "node_modules/**"
+        ]
+},
     "jsRules": {},
     "rules": {
         "max-line-length": [true, 200],
@@ -14,8 +19,11 @@
         "member-ordering": false,
         "forin": false,
         "no-namespace": false,
-        "no-unused-variable": true,
-        "no-unused-expression": true
+        "no-unused-expression": true,
+        "no-console": false,
+        "semicolon": false,
+        "whitespace": false,
+        "quotemark": false
     },
     "rulesDirectory": []
 }

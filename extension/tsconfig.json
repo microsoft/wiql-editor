@@ -1,20 +1,31 @@
 {
     "compilerOptions": {
-        "module": "es6",
+        "module": "ES6",
         "moduleResolution": "node",
         "target": "es5",
-        "noImplicitAny": true,
-        "noUnusedParameters": true,
+        "noImplicitAny": false,
         "noImplicitThis": true,
-        "pretty": true,
-        "noUnusedLocals": true,
+        "noUnusedParameters": false,
+        "noUnusedLocals": false,
         "jsx": "react",
         "sourceMap": true,
-        "strictNullChecks": true,
-        "lib": [
-            "es2015.promise",
-            "dom",
-            "es5"
-        ]
-    }
+        "strictNullChecks": false,
+        "rootDir": "scripts/",
+        "outDir": "dist/",
+        "skipLibCheck": true,
+       "lib": [
+          "es5",
+          "es6",
+          "dom",
+          "es2015.promise",
+        ],
+         "types": [
+            "react",
+            "react-dom",
+            "monaco-editor",
+            "jquery"
+        ],
+        "esModuleInterop": true
+    },
+    "exclude": ["node_modules", "**/node_modules/**"]
 }

@@ -1,3 +1,4 @@
+import * as VSS from "azure-devops-extension-sdk";
 import { callApi } from "../RestCall";
 import { CachedValue } from "./CachedValue";
 import { projectsVal } from "./projects";
@@ -47,8 +48,8 @@ async function getTagsForProject(project: string): Promise<string[]> {
         }
     }
 
-    const webContext = VSS.getWebContext();
-    let tagsUrl = webContext.account.uri;
+    const host = VSS.getHost();
+    let tagsUrl = host.name + "/";
     if (!tagsUrl.match(/DefaultCollection/i)) {
         tagsUrl += "DefaultCollection/";
     }

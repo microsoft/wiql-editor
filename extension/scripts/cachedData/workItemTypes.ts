@@ -1,6 +1,7 @@
-import { TeamProjectReference } from "TFS/Core/Contracts";
-import { WorkItemType } from "TFS/WorkItemTracking/Contracts";
-import { getClient as getWitClient } from "TFS/WorkItemTracking/RestClient";
+import { TeamProjectReference } from "azure-devops-extension-api/Core";
+import { WorkItemType } from "azure-devops-extension-api/WorkItemTracking";
+import { getClient } from "azure-devops-extension-api";
+import { WorkItemTrackingRestClient } from "azure-devops-extension-api/WorkItemTracking";
 
 import { CachedValue } from "./CachedValue";
 import { projectsVal } from "./projects";
@@ -22,7 +23,7 @@ const projectsToWit: { [project: string]: CachedValue<WorkItemType[]> } = {};
 export async function getWitsByProjects(projects: string[], searchWits?: string[]): Promise<WorkItemType[]> {
     for (const project of projects) {
         if (!(project in projectsToWit)) {
-            projectsToWit[project] = new CachedValue(() => getWitClient().getWorkItemTypes(project));
+            projectsToWit[project] = new CachedValue(() => getClient(WorkItemTrackingRestClient).getWorkItemTypes(project));
         }
     }
     const witsArr = await Promise.all(projects.map((p) => projectsToWit[p].getValue()));
