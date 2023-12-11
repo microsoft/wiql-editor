@@ -2,13 +2,13 @@
 ### Structure ###
 
 ```
-/scripts            - Typescript code for extension
-/img                - Image assets for extension and description
-/typings            - Typescript typings
+/scripts                        - Typescript code for extension
+/img                            - Image assets for extension and description
+/typings                        - Typescript typings
 
-details.md          - Description to be shown in marketplace   
-index.html          - Main entry point
-vss-extension.json  - Extension manifest
+details.md                      - Description to be shown in marketplace   
+index.html                      - Main entry point
+azure-devops-extension.json     - Extension manifest
 ```
 
 ### Usage ###
