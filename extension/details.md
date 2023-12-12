@@ -1,5 +1,10 @@
 # wiql editor
 
+> **Note:** This is the supported [Microsoft DevLabs](https://marketplace.visualstudio.com/publishers/Microsoft%20DevLabs) version of the original [Wiql Editor](https://marketplace.visualstudio.com/items?itemName=ottostreifel.wiql-editor), written by [Otto Streifel](https://github.com/ostreifel).
+> 
+> If you are using Azure DevOps Service (cloud) or Server version 2019 and later then you should use this version of the extension. The legacy extension will be available for users of of Azure DevOps server 2018 and earlier. 
+
+
 Search work items with the expressiveness of the work item query language.
 
 ## Explore the wiql syntax on the wiql playground  
