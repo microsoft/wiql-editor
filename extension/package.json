@@ -45,8 +45,8 @@
     "azure-devops-extension-sdk": "^2.0.11",
     "azure-devops-ui": "^2.167.83",
     "jquery": "^3.7.1",
-    "react": "^15.6.2",
-    "react-dom": "^15.6.2"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "name": "wiql-editor",
   "private": true,
