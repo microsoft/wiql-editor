@@ -9,10 +9,6 @@ import { FieldLookup, fieldsVal } from "../cachedData/fields";
 import { getHostUrl, getProject } from "../getProject";
 
 
-const baseUrl = async () => {
-    const  host  =  await   getHostUrl()
-    return host
-}
 
 
 function parseDateString(dateString: string): Date {
@@ -29,7 +25,7 @@ class WorkItemRow extends React.Component<{
 
     public async componentDidMount() {
         const project = await getProject();
-        const baseUrlValue = await baseUrl();
+        const baseUrlValue =  await   getHostUrl()
         this.setState({ project: project.name, baseUrlHost: baseUrlValue })
     }
 
