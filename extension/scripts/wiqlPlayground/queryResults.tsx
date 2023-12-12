@@ -8,6 +8,13 @@ import { dateToString } from "azure-devops-ui/Core/Util/String";
 import { FieldLookup, fieldsVal } from "../cachedData/fields";
 import { getHostUrl, getProject } from "../getProject";
 
+
+const baseUrl = async () => {
+    const  host  =  await   getHostUrl()
+    return host
+}
+
+
 function parseDateString(dateString: string): Date {
     return new Date(dateString);
 }
@@ -17,21 +24,22 @@ class WorkItemRow extends React.Component<{
     columns: WorkItemFieldReference[],
     rel?: string,
     fields: FieldLookup,
-}, {}> {
+}, {project: string;
+    baseUrlHost: string}> {
 
     public async componentDidMount() {
         const project = await getProject();
-        this.setState({ project: project.name });
+        const baseUrlValue = await baseUrl();
+        this.setState({ project: project.name, baseUrlHost: baseUrlValue })
     }
 
     public render() {
         const { fields, columns, wi, rel} = this.props;
-        const project  = this.state;
-        const host = getHostUrl();
-
-        const wiUrl = `${host}${project}/_workitems?id=${wi.id}&_a=edit&fullScreen=true`;
-
-        const tds: JSX.Element[] = [];
+        const project  = this?.state?.project;
+        const baseUrl = this?.state?.baseUrlHost
+      
+        const wiUrl = `${baseUrl}${project}/_workitems?id=${wi.id}&_a=edit&fullScreen=true`;
+       const tds: JSX.Element[] = [];
         if (rel) {
             tds.push(<div className={"cell"} title={"Link Type"}>{rel}</div>);
         }
