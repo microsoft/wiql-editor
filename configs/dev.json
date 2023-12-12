@@ -3,5 +3,5 @@
     "name": "Wiql Editor (dev)",
     "publisher": "solidify-labs",
     "public": false,
-    "baseUri": "https://localhost:3000"    
+    "baseUri": "http://localhost:3000"    
 }
