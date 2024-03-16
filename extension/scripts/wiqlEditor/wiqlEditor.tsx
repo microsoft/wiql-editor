@@ -12,6 +12,7 @@ import { exportWiq, importWiq, saveQuery } from "./importExport";
 import * as Wiql from "./wiqlDefinition";
 import * as monaco from 'monaco-editor';
 import { getHostUrl, getProject } from "../getProject";
+import { ReturnMatchingChildren } from "./compiler/symbols";
 
 
 const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -122,12 +123,24 @@ WHERE
 ORDER BY [System.ChangedDate] DESC
 
 `;
-  const editor = monaco.editor.create(target, {
+
+const darkModeCheck = ()=>{
+    if(getCurrentTheme() === "light"  && target){
+        return "vs-dark"
+    }
+    else if(getCurrentTheme() === "dark" ){
+        return "vs-dark"
+    }
+    return "vs"
+
+}
+ console.log(getCurrentTheme())
+  const editor = monaco.editor.create( target, {
         language: Wiql.def.id,
         value: intialValue || defaultVal,
         automaticLayout: true,
         wordWrap: "on",
-        theme: getCurrentTheme() === "dark" ? "vs-dark" : "vs",
+        theme: darkModeCheck(),
         fontSize: 14, // Set the font size to 14
         lineHeight: 20, // Set the line height to 20
         minimap: { enabled: false }, // Disable the minimap
