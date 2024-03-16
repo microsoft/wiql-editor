@@ -16,6 +16,10 @@ import { getHostUrl, getProject } from "../getProject";
 
 const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
+const linkStyle: React.CSSProperties = {
+    color: "rgba(43, 136, 216)", 
+};
+
 const saveQueryBtmstyles: React.CSSProperties = {
     backgroundColor: "rgba(43, 136, 216)",
     border: "none",
@@ -71,8 +75,8 @@ function renderToolbar(isPanel: boolean, callback: () => void) {
                 ) : null}
             </span>
             <span className="links">
-                <a href="https://marketplace.visualstudio.com/items?itemName=ms-devlabs.wiql-editor" target="_blank">Review</a>{" | "}
-                <a href="https://github.com/microsoft/wiql-editor/issues" target="_blank">Report an issue</a>
+                <a  style={linkStyle} href="https://marketplace.visualstudio.com/items?itemName=ms-devlabs.wiql-editor" target="_blank">Review</a>{" | "}
+                <a  style={linkStyle} href="https://github.com/microsoft/wiql-editor/issues"  target="_blank">Report an issue</a>
             </span>
         </div>
         , elem, callback);
@@ -111,7 +115,16 @@ FROM workitems
 WHERE
         [System.TeamProject] = @project
 ORDER BY [System.ChangedDate] DESC
+
 `;
+
+
+
+
+
+
+
+
     const editor = monaco.editor.create(target, {
         language: Wiql.def.id,
         value: intialValue || defaultVal,

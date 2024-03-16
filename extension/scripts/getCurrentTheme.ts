@@ -9,4 +9,5 @@ export function getCurrentTheme(): "light" | "dark" {
     const backgroundRed = themeStyle.match(/--palette-neutral-0: (\d+)/);
     const amountofRed = backgroundRed && +backgroundRed[1];
     return amountofRed === 255 ? "light" : "dark";
+
 }
