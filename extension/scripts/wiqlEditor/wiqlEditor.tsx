@@ -13,10 +13,30 @@ import * as Wiql from "./wiqlDefinition";
 import * as monaco from 'monaco-editor';
 import { getHostUrl, getProject } from "../getProject";
 
-const styles: React.CSSProperties = {
-    backgroundColor: "rgba(var(--palette-neutral-4,244, 244, 244),1)",
+
+const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+const saveQueryBtmstyles: React.CSSProperties = {
+    backgroundColor: "rgba(43, 136, 216)",
     border: "none",
+    color:  "rgba(248, 248, 248)",
     padding: "10px 20px",
+    borderRadius: "2px",
+    fontSize: "14px",
+    cursor: "pointer",
+    textAlign: "center",
+    display: "none",
+    boxShadow: isDarkMode ? "0 1px 4px rgba(255, 255, 255, 0.2)" : "0 1px 4px rgba(0, 0, 0, 0.2)",
+    transition: "background-color 0.2s ease",
+    fontWeight: "bold",
+    fontFamily: "sans-serif",
+};
+
+const styles: React.CSSProperties = {
+    backgroundColor: "rgba(43, 136, 216)",
+    color:  "rgba(248, 248, 248)",
+    border: "none",
+     padding: "10px 20px",
     borderRadius: "2px",
     fontSize: "14px",
     cursor: "pointer",
@@ -29,21 +49,6 @@ const styles: React.CSSProperties = {
     fontFamily: "sans-serif",
 };
 
-const saveQueryBtmstyles: React.CSSProperties = {
-    backgroundColor: "#0078d4",
-    color: "white",
-    border: "none",
-    padding: "10px 20px",
-    borderRadius: "2px",
-    fontSize: "14px",
-    cursor: "pointer",
-    textAlign: "center",
-    display: "inline-block",
-    boxShadow: "0 1px 4px rgba(0, 0, 0, 0.2)",
-    transition: "background-color 0.2s ease",
-    fontWeight: "bold",
-    fontFamily: "sans-serif",
-};
 
 function renderToolbar(isPanel: boolean, callback: () => void) {
     const elem = document.getElementById("header-bar");
