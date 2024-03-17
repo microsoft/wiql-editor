@@ -106,8 +106,13 @@ export function setupEditor(target: HTMLElement, onChange?: (errorCount: number)
     monaco.languages.onLanguage(Wiql.def.id, () => {
         monaco.languages.setMonarchTokensProvider(Wiql.def.id, Wiql.language);
         monaco.languages.setLanguageConfiguration(Wiql.def.id, Wiql.conf);
+        monaco.languages.CompletionItemKind.Keyword
+        
+        
+        
       
     });
+
 
     const defaultVal =
         `SELECT
@@ -116,7 +121,7 @@ export function setupEditor(target: HTMLElement, onChange?: (errorCount: number)
         [System.Title],
         [System.State],
         [System.AreaPath],
-        [System.IterationPath]
+   run     [System.IterationPath]
 FROM workitems
 WHERE
         [System.TeamProject] = @project
@@ -134,7 +139,7 @@ const darkModeCheck = ()=>{
     return "vs"
 
 }
- console.log(getCurrentTheme())
+
   const editor = monaco.editor.create( target, {
         language: Wiql.def.id,
         value: intialValue || defaultVal,
