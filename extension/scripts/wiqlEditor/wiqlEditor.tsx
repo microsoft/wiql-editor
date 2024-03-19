@@ -129,23 +129,14 @@ ORDER BY [System.ChangedDate] DESC
 
 `;
 
-const darkModeCheck = ()=>{
-    if(getCurrentTheme() === "light"  && target){
-        return "vs-dark"
-    }
-    else if(getCurrentTheme() === "dark" ){
-        return "vs-dark"
-    }
-    return "vs"
 
-}
 
   const editor = monaco.editor.create( target, {
         language: Wiql.def.id,
         value: intialValue || defaultVal,
         automaticLayout: true,
         wordWrap: "on",
-        theme: darkModeCheck(),
+        theme: getCurrentTheme() === "dark" ? "vs-dark" : "vs",
         fontSize: 14, // Set the font size to 14
         lineHeight: 20, // Set the line height to 20
         minimap: { enabled: false }, // Disable the minimap
