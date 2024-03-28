@@ -34,7 +34,8 @@ $colors: (
     palette-accent2-dark: createColor(--palette-accent2-dark, 16, 124, 16),         // rgb(16, 124, 16)
     palette-accent3-light: createColor(--palette-accent3-light, 255, 244, 206),     // rgb(255, 244, 206)
     palette-accent3: createColor(--palette-accent3, 248, 168, 0),                   // rgb(248, 168, 0)
-    palette-accent3-dark: createColor(--palette-accent3-dark, 220, 182, 122),       // rgb(220, 182, 122)
+    palette-accent3-dark: createColor(--palette-accent3-dark, 220, 182, 122),  
+  
 );
 @function getColorLiteral($name) {
     @return map-get(map-get($colors, $name), literal);
