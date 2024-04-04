@@ -12,9 +12,17 @@ import { exportWiq, importWiq, saveQuery } from "./importExport";
 import * as Wiql from "./wiqlDefinition";
 import * as monaco from 'monaco-editor';
 import { getHostUrl, getProject } from "../getProject";
+import { ReturnMatchingChildren } from "./compiler/symbols";
+
+
+const linkStyle: React.CSSProperties = {
+    color: "var(--communication-tint-10,rgba(43, 136, 216))",
+  };
+  
 
 const styles: React.CSSProperties = {
-    backgroundColor: "rgba(var(--palette-neutral-4,244, 244, 244),1)",
+    backgroundColor: "var(--communication-tint-10,rgba(43, 136, 216))",
+    color: "var(--neutral-2,rgba(248, 248, 248))",
     border: "none",
     padding: "10px 20px",
     borderRadius: "2px",
@@ -27,25 +35,13 @@ const styles: React.CSSProperties = {
     margin: "12px 10px",
     fontWeight: "bold",
     fontFamily: "sans-serif",
-};
+  };
 
-const saveQueryBtmstyles: React.CSSProperties = {
-    backgroundColor: "#0078d4",
-    color: "white",
-    border: "none",
-    padding: "10px 20px",
-    borderRadius: "2px",
-    fontSize: "14px",
-    cursor: "pointer",
-    textAlign: "center",
-    display: "inline-block",
-    boxShadow: "0 1px 4px rgba(0, 0, 0, 0.2)",
-    transition: "background-color 0.2s ease",
-    fontWeight: "bold",
-    fontFamily: "sans-serif",
-};
+
+ 
 
 function renderToolbar(isPanel: boolean, callback: () => void) {
+ 
     const elem = document.getElementById("header-bar");
     if (!elem) {
         return;
@@ -57,7 +53,7 @@ function renderToolbar(isPanel: boolean, callback: () => void) {
                 <button onClick={() => $(".wiq-input").click()} style={styles}>Import</button>
                 <button className="wiq-export" style={styles}>Export</button>
                 {isPanel && (
-                    <button onClick={() => $("#save").click()} id="saveQueryBtn" className="saveQueryBtn" style={saveQueryBtmstyles}>Save query</button>
+                    <button onClick={() => $("#save").click()} id="saveQueryBtn" className="saveQueryBtn" style={styles}>Save query</button>
 
                 )}
                 {!isPanel ? (
@@ -66,8 +62,8 @@ function renderToolbar(isPanel: boolean, callback: () => void) {
                 ) : null}
             </span>
             <span className="links">
-                <a href="https://marketplace.visualstudio.com/items?itemName=ms-devlabs.wiql-editor" target="_blank">Review</a>{" | "}
-                <a href="https://github.com/microsoft/wiql-editor/issues" target="_blank">Report an issue</a>
+                <a href="https://marketplace.visualstudio.com/items?itemName=ms-devlabs.wiql-editor" target="_blank" style={linkStyle}>Review</a>{" | "}
+                <a href="https://github.com/microsoft/wiql-editor/issues" target="_blank" style={linkStyle}>Report an issue</a>
             </span>
         </div>
         , elem, callback);
@@ -75,10 +71,17 @@ function renderToolbar(isPanel: boolean, callback: () => void) {
 
 export function setupEditor(target: HTMLElement, onChange?: (errorCount: number) => void, intialValue?: string, queryName?: string, configuration?: any, isPanel?: boolean): monaco.editor.IStandaloneCodeEditor {
     //set isPanel default value to false if not provided
+ 
+       
     renderToolbar(isPanel, async () => {
         if (queryName) {
             return;
-        }
+        }   
+
+  
+
+   
+  
 
         const baseUrl = await getHostUrl();
         const project = await getProject();
