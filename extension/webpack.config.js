@@ -1,8 +1,8 @@
 const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const TerserPlugin = require('terser-webpack-plugin');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 
 module.exports = {
@@ -40,7 +40,7 @@ module.exports = {
     },
     
   },
-
+  
   externals: [{
     "q": true,
     "monaco": true,
@@ -62,15 +62,15 @@ module.exports = {
         test: /\.tsx?$/, 
         loader: "ts-loader",
         options: {
-           //transpileOnly: true,// - should help with HMR
+       transpileOnly: true,// - should help with HMR
         },
       },
       {
-        test: /\.scss$/,
+        test:  /\.s[ac]ss$/i, 
         use: [
-          "style-loader",
-          "css-loader",
           "sass-loader",
+          "css-loader",
+          "style-loader",
         ]
       },
       {
@@ -79,7 +79,7 @@ module.exports = {
           "style-loader", 
           "css-loader",
           "azure-devops-ui/buildScripts/css-variables-loader",
-          "sass-loader"
+        
         ]
       },
       {
@@ -88,7 +88,8 @@ module.exports = {
       },
      
       {
-        test: /\.(ttf)$/,
+       
+    test: /\.ttf$/,
         use: [
           {
             loader: 'file-loader',
@@ -98,11 +99,8 @@ module.exports = {
     ]
   },
   plugins: [
-    // new BundleAnalyzerPlugin({
-    //   openAnalyzer: false,
-    //   reportFilename: "bundle-analysis.html",
-    //   analyzerMode: "static"
-    // }),
+   
+    new MonacoWebpackPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',

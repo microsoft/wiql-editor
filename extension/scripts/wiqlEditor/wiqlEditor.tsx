@@ -77,13 +77,7 @@ export function setupEditor(target: HTMLElement, onChange?: (errorCount: number)
         if (queryName) {
             return;
         }   
-
-  
-
-   
-  
-
-        const baseUrl = await getHostUrl();
+      const baseUrl = await getHostUrl();
         const project = await getProject();
         const navigationService = await VSS.getService(CommonServiceIds.HostNavigationService) as IHostNavigationService;
         $(".open-in-queries").show().click(() => {
@@ -137,6 +131,8 @@ ORDER BY [System.ChangedDate] DESC
     $("#saveQueryBtn").click(() => saveQuery(editor, configuration));
     monaco.languages.registerHoverProvider(Wiql.def.id, getHoverProvider());
     monaco.languages.registerCompletionItemProvider(Wiql.def.id, completionProvider);
+
+    console.log("editor", completionProvider)
 
     const model = editor.getModel();
     const errorChecker = new ErrorChecker();

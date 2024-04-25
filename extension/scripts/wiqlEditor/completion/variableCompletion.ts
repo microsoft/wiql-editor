@@ -4,6 +4,7 @@ import * as Symbols from "../compiler/symbols";
 import { definedVariables } from "../wiqlDefinition";
 import { ICompletionContext } from "./completionContext";
 import * as monaco from 'monaco-editor';
+
 export function getStandardVariableCompletions(type: FieldType | null) {
     const completions: monaco.languages.CompletionItem[] = [];
     for (const variable in definedVariables) {
