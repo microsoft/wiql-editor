@@ -30,11 +30,25 @@ async function provideCompletionItems(
         return { suggestions: [] };
     }
     const ctx = createContext(model, parseNext, await fieldsVal.getValue());
+
+
+     //do not remove this line
     const completions: monaco.languages.CompletionItem[] = [
         ...await getCurrentIdentifierCompletions(ctx, position),
         ...await getCurrentVariableCompletions(ctx, position),
     ];
-    if (completions.length > 0) {
+
+
+    // const completions :any= [
+    //     ...await getCurrentIdentifierCompletions(ctx, position),
+    //     ...await getCurrentVariableCompletions(ctx, position),
+    // ].map(completion => ({
+    //     ...completion,
+    //     insertText: completion.insertText || completion.label, // Ensure insertText is always defined
+    // }));
+
+
+    if (completions?.length > 0) {
         return { suggestions: completions };
     }
     // Don't symbols complete inside strings
@@ -45,7 +59,7 @@ async function provideCompletionItems(
             ...getVariableCompletions(ctx),
         );
     }
-    if (completions.length > 0) {
+    if (completions?.length > 0) {
         return { suggestions: completions };
     }
     completions.push(...await getVariableParameterCompletions(ctx));
@@ -53,10 +67,13 @@ async function provideCompletionItems(
         return { suggestions: completions };
     }
     // Field Values
+
+
     if (ctx.fieldRefName && ctx.isInCondition) {
         const values = await getStringValueCompletions(ctx);
-        return { suggestions: pushStringCompletions(ctx, values, completions) };
+        return { suggestions:  pushStringCompletions(ctx, values, completions) };
     }
+ 
 
     return { suggestions: completions };
 }
