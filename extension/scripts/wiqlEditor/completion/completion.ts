@@ -33,19 +33,19 @@ async function provideCompletionItems(
 
 
      //do not remove this line
-    const completions: monaco.languages.CompletionItem[] = [
+    const cplt: monaco.languages.CompletionItem[] = [
         ...await getCurrentIdentifierCompletions(ctx, position),
         ...await getCurrentVariableCompletions(ctx, position),
     ];
 
 
-    // const completions :any= [
-    //     ...await getCurrentIdentifierCompletions(ctx, position),
-    //     ...await getCurrentVariableCompletions(ctx, position),
-    // ].map(completion => ({
-    //     ...completion,
-    //     insertText: completion.insertText || completion.label, // Ensure insertText is always defined
-    // }));
+    const completions :any= [
+        ...await getCurrentIdentifierCompletions(ctx, position),
+        ...await getCurrentVariableCompletions(ctx, position),
+    ].map(completion => ({
+        ...completion,
+        insertText: completion.insertText || completion.label, // Ensure insertText is always defined
+    }));
 
 
     if (completions?.length > 0) {

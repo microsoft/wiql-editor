@@ -132,7 +132,6 @@ ORDER BY [System.ChangedDate] DESC
     monaco.languages.registerHoverProvider(Wiql.def.id, getHoverProvider());
     monaco.languages.registerCompletionItemProvider(Wiql.def.id, completionProvider);
 
-    console.log("editor", completionProvider)
 
     const model = editor.getModel();
     const errorChecker = new ErrorChecker();
