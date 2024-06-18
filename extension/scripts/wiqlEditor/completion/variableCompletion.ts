@@ -4,6 +4,7 @@ import * as Symbols from "../compiler/symbols";
 import { definedVariables } from "../wiqlDefinition";
 import { ICompletionContext } from "./completionContext";
 import * as monaco from 'monaco-editor';
+
 export function getStandardVariableCompletions(type: FieldType | null) {
     const completions: monaco.languages.CompletionItem[] = [];
     for (const variable in definedVariables) {
@@ -27,7 +28,7 @@ export function getVariableCompletions(ctx: ICompletionContext): monaco.language
 
 export async function getCurrentVariableCompletions(ctx: ICompletionContext, position: monaco.Position): Promise<monaco.languages.CompletionItem[]> {
     if (ctx.prevToken instanceof Symbols.Variable
-        && position.column - 1 === ctx.prevToken.endColumn) {
+        && position?.column - 1 === ctx.prevToken.endColumn) {
         return getStandardVariableCompletions(ctx.isInCondition ? ctx.fieldType : null).map((s) => {
             return {
                 label: s.label,
