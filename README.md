@@ -1,28 +1,30 @@
-# Work Item Query Language Editor
-#### Structure
-```
-buildTable         - builds parse table for query language
-extension          - code packaged into the extension
-```
+# Wiql Editor
+
+The WIQL Editor by Microsoft DevLabs enhances work item query management in Azure DevOps Service (cloud) and Server 2019+. This tool leverages the Work Item Query Language (WIQL) for complex searches. Features include an interactive WIQL Playground, easy query modifications, direct save options, and improved query readability. Additionally, the editor offers import/export capabilities and faster load times, making it essential for efficient work item query management.
+
+
+# Documentation
+ 
+ For detailed instructions on using the Wiql Editor, please refer to the official documentation. You can access the comprehensive guide by clicking [Market place](https://marketplace.visualstudio.com/items?itemName=ms-devlabs.wiql-editor). This resource provides step-by-step information to help you effectively utilize the Wiql Editorwithin your Azure DevOps environment.estimation
+
+# Support
+
+## How to file issues and get help
+
+This project uses [GitHub Issues](https://github.com/microsoft/wiql-editor) to track bugs and feature requests. Please search the existing issues before filing new issues to avoid duplicates. For new issues, file your bug or feature request as a new Issue. 
+
+
 
 ## Contributing
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+We welcome contributions to improve the Planning Poker for Azure DevOps extension. If you would like to contribute, please fork the repository and create a pull request with your changes. Alternatively, you can contact us to request the necessary permissions for direct access to the repository. Your contributions help enhance the functionality and usability of the extension for the entire community.
 
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+### Developing and Testing
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+1. Run `npm run dev` and upload the package as a private extension to your  Azure DevOps publisher account
 
-## Trademarks
+ - Be sure to update the `manifest.json` to use your publisher's ID before running the script.
+2. Install the private extension on your Azure DevOps oragnization and test your changes.
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
-trademarks or logos is subject to and must follow 
-[Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
-Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
-Any use of third-party trademarks or logos are subject to those third-party's policies.
+## Microsoft DevLabs
+Microsoft DevLabs is an outlet for experiments from Microsoft, experiments that represent some of the latest ideas around developer tools. Solutions in this category are designed for broad usage, and you are encouraged to use and provide feedback on them; however, these extensions are not supported nor are any commitments made as to their longevity.
