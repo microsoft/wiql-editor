@@ -11,10 +11,11 @@ The WIQL Editor by Microsoft DevLabs enhances work item query management in Azur
 
 ### Developing and Testing
 
-1. Run `npm run dev` and upload the package as a private extension to your  Azure DevOps publisher account
-
- - Be sure to update the `manifest.json` to use your publisher's ID before running the script.
-2. Install the private extension on your Azure DevOps oragnization and test your changes.
+```
+npm install
+npm run dev
+npm run build
+```
 
 
 # Support
@@ -22,6 +23,10 @@ The WIQL Editor by Microsoft DevLabs enhances work item query management in Azur
 ## How to file issues and get help
 
 This project uses [GitHub Issues](https://github.com/microsoft/wiql-editor) to track bugs and feature requests. Please search the existing issues before filing new issues to avoid duplicates. For new issues, file your bug or feature request as a new Issue. 
+
+## Microsoft Support Policy
+Support for this project is limited to the resources listed above.
+
 
 ## Contributing
 
