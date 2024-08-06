@@ -12,9 +12,9 @@ The WIQL Editor by Microsoft DevLabs enhances work item query management in Azur
 - Click on "Run" to execute the query.
   ![WiQL](img/Query.png)
 
-2. Save the Query
+2. Export the Query
 
-- Click on "Export" to save the query.
+- Click on "Export".
 
 3. Import an Existing Query
 
