@@ -22,6 +22,9 @@ The wiql editor provides additional features to manage work item queries, includ
 - Import export queries
 - Better editor load times for exceptionally large queries
 
+## Reference 
+https://docs.microsoft.com/en-us/vsts/collaborate/wiql-syntax?view=vsts
+
 ### Managing WIQL Queries: A Step-by-Step Guide
 
 1. Create WIQL Query
