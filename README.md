@@ -4,7 +4,7 @@ The WIQL Editor by Microsoft DevLabs enhances work item query management in Azur
 
 # Documentation
 
-For detailed instructions on using the Wiql Editor, please refer to the official documentation. You can access the comprehensive guide by clicking [Market place](https://marketplace.visualstudio.com/items?itemName=ms-devlabs.wiql-editor). This resource provides step-by-step information to help you effectively utilize the Wiql Editorwithin your Azure DevOps environment.estimation
+For detailed instructions on using the Wiql Editor, please refer to the official documentation. You can access the comprehensive guide by clicking [Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-devlabs.wiql-editor). This resource provides step-by-step information to help you effectively utilize the Wiql Editor within your Azure DevOps environment.
 
 # Support
 
@@ -16,7 +16,7 @@ This project uses [GitHub Issues](https://github.com/microsoft/wiql-editor) to t
 
 Support for this project is limited to the resources listed above.
 
-## Contributing
+# Contributing
 
 We welcome contributions to improve the extension. If you would like to contribute, please fork the repository and create a pull request with your changes. Your
 contributions help enhance the functionality and usability of the extension for the entire community.

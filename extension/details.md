@@ -4,6 +4,24 @@ The WIQL Editor by Microsoft DevLabs enhances work item query management in Azur
 
 # Documentation
 
+> **Note:** This is the supported [Microsoft DevLabs](https://marketplace.visualstudio.com/publishers/Microsoft%20DevLabs) version of the original [Wiql Editor](https://marketplace.visualstudio.com/items?itemName=ottostreifel.wiql-editor), written by [Otto Streifel](https://github.com/ostreifel).
+>
+> If you are using Azure DevOps Service (cloud) or Server version 2019 and later then you should use this version of the extension. The legacy extension will be available for users of of Azure DevOps server 2018 and earlier.
+
+Search work items with the expressiveness of the work item query language.
+
+## Why?
+
+The wiql editor provides additional features to manage work item queries, including
+
+- Access hidden wiql features
+  - asof queries
+  - ever contains words
+- Bulk move/copy/paste query clauses
+- Easier to read queries with lots of clauses or heavily nested clauses.
+- Import export queries
+- Better editor load times for exceptionally large queries
+
 ### Managing WIQL Queries: A Step-by-Step Guide
 
 1. Create WIQL Query
@@ -20,19 +38,20 @@ The WIQL Editor by Microsoft DevLabs enhances work item query management in Azur
 
 - Click on "Import" to load an existing query.
 
-4. Open Queries View
+4. Open in Queries view
 
-- Click on "Open Queries" to access the queries view.
+- Click on "Queries" to access the queries view.
   ![Query](img/Queries.png)
 
 5. Edit Query
 
 - Click on "Edit Query" in the queries view.
-  [Edit Query](img/EditQuery.png)
+  ![Edit Query](img/EditQuery.png)
 
 6. Save Edited Query
 
 - Click on "Save" to save the edited query.
+  ![Save Query](img/saveQuery.png)
 
 # Support
 
