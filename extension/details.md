@@ -23,14 +23,17 @@ The wiql editor provides additional features to manage work item queries, includ
 - Better editor load times for exceptionally large queries
 
 ## Reference 
-https://docs.microsoft.com/en-us/vsts/collaborate/wiql-syntax?view=vsts
+Check out the WIQL documentation learn more about the query language:
 
-### Managing WIQL Queries: A Step-by-Step Guide
+* https://docs.microsoft.com/en-us/vsts/collaborate/wiql-syntax?view=vsts
+
+## Managing WIQL Queries: A Step-by-Step Guide
 
 1. Create WIQL Query
 
 - Write your WIQL query in the editor.
 - Click on "Run" to execute the query.
+
   ![WiQL](img/Query.png)
 
 2. Export the Query
@@ -41,19 +44,18 @@ https://docs.microsoft.com/en-us/vsts/collaborate/wiql-syntax?view=vsts
 
 - Click on "Import" to load an existing query.
 
-4. Open in Queries view
+4. Edit in the Queries view
 
 - Click on "Queries" to access the queries view.
-  ![Query](img/Queries.png)
-
-5. Edit Query
 
 - Click on "Edit Query" in the queries view.
+
   ![Edit Query](img/EditQuery.png)
 
 6. Save Edited Query
 
 - Click on "Save" to save the edited query.
+ 
   ![Save Query](img/saveQuery.png)
 
 # Support
