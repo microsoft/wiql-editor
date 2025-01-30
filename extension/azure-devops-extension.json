@@ -54,7 +54,6 @@
             "path": "styles",
             "addressable": true
         }
-       
     ],
     "categories": [
         "Azure Boards"
@@ -84,10 +83,7 @@
             "properties": {
                  "title": "Edit query wiql",
                 "text": "Edit query wiql",
-                "icon":{
-                    "light": "img/smallDarkThemeLogo.png",
-                    "dark": "img/smallLogo.png"
-                },
+                "icon": "img/smallLogo.png",
                 "group": "actions",
                 "uri": "dist/queryContext.html",
                 "registeredObjectId": "query-menu"
@@ -105,16 +101,12 @@
             "properties": {
                 "title": "Edit query wiql",
                 "text": "Edit query wiql",
-                "icon":{
-                    "light": "img/smallDarkThemeLogo.png",
-                    "dark": "img/smallLogo.png"
-                },
+                "icon": "img/smallLogo.png",
                 "group": "actions",
                 "uri": "dist/queryContext.html",
                 "registeredObjectId": "query-results-menu"
             }
-        },
-       
+        },      
         {
             "id": "contextForm",
             "type": "ms.vss-web.external-content",
@@ -122,8 +114,7 @@
             "targets": [],
             "properties": {
                 "uri": "dist/queryEditor.html",
-                "registeredObjectId": "contextForm"
-             
+                "registeredObjectId": "contextForm"             
             }
         }
     ]
