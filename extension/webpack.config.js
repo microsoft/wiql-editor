@@ -111,7 +111,7 @@ module.exports = {
       patterns: [
         { from: "./*.html", to: "./", },
         { from: "img/*.png", to: "./" },
-        { from: "../LICENSE", to: "./" },
+        { from: "../LICENSE", to: "../LICENSE" },
         { from: "./azure-devops-extension.json", to: "./azure-devops-extension.json" },
         { from: "./node_modules/azure-devops-extension-sdk/SDK.min.js", to: "./" },
       ]
