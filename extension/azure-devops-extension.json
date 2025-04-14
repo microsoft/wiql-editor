@@ -31,6 +31,9 @@
     "content": {
         "details": {
             "path": "details.md"
+        },
+        "license": {
+            "path": "LICENSE"
         }
     },
     "repository": {
@@ -54,7 +57,6 @@
             "path": "styles",
             "addressable": true
         }
-       
     ],
     "categories": [
         "Azure Boards"
@@ -71,7 +73,7 @@
                 "name": "Wiql Playground",
                 "uri": "dist/playground.html",
                 "icon": "asset://img/logo.png",
-                "registeredObjectId": "wiql-playground-hub-menu" 
+                "registeredObjectId": "wiql-playground-hub-menu"
             }
         },
         {
@@ -82,9 +84,9 @@
                 "ms.vss-work-web.work-item-query-menu"
             ],
             "properties": {
-                 "title": "Edit query wiql",
+                "title": "Edit query wiql",
                 "text": "Edit query wiql",
-                "icon":{
+                "icon": {
                     "light": "img/smallDarkThemeLogo.png",
                     "dark": "img/smallLogo.png"
                 },
@@ -93,19 +95,17 @@
                 "registeredObjectId": "query-menu"
             }
         },
-        
         {
             "id": "query-results-menu",
             "type": "ms.vss-web.action",
             "description": "Edit query in menu",
             "targets": [
                 "ms.vss-work-web.work-item-query-results-toolbar-menu"
-                
             ],
             "properties": {
                 "title": "Edit query wiql",
                 "text": "Edit query wiql",
-                "icon":{
+                "icon": {
                     "light": "img/smallDarkThemeLogo.png",
                     "dark": "img/smallLogo.png"
                 },
@@ -114,7 +114,6 @@
                 "registeredObjectId": "query-results-menu"
             }
         },
-       
         {
             "id": "contextForm",
             "type": "ms.vss-web.external-content",
@@ -123,7 +122,6 @@
             "properties": {
                 "uri": "dist/queryEditor.html",
                 "registeredObjectId": "contextForm"
-             
             }
         }
     ]
