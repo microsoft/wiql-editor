@@ -1,0 +1,15 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "module": "commonjs",
+        // ES5 is required: getSymbolName() parses `function Name(` out of Function.toString()
+        "target": "es5",
+        "rootDir": ".",
+        "downlevelIteration": true,
+        "isolatedModules": true,
+        "sourceMap": true,
+        "lib": ["es2017", "dom"],
+        "types": ["jest", "node", "jquery", "react"]
+    },
+    "include": ["scripts/**/*", "tests/**/*"]
+}
